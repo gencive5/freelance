@@ -1,32 +1,31 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-const LiquidDistortionText = ({ text }: { text: string }) => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+const VasarelyRippleText = ({ text }: { text: string }) => {
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  // Liquid distortion effect parameters
-  const getDistortion = (i: number) => ({
-    scale: [1, 1.4, 1.2],
-    rotate: [
-      0, 
-      Math.random() * 15 - 7.5, 
-      Math.random() * 10 - 5, 
-      0
-    ],
-    y: [0, -10, 0],
-    x: [0, Math.random() * 6 - 3, 0],
-    skewX: [0, Math.random() * 10 - 5, 0],
-    skewY: [0, Math.random() * 10 - 5, 0],
-    filter: [
-      'blur(0px)',
-      `blur(${Math.random() * 1.5}px)`,
-      'blur(0px)'
-    ],
-    transition: {
-      duration: 0.8,
-      ease: [0.2, 0.8, 0.4, 1]
-    }
-  });
+  // Enhanced ripple effect with quadratic falloff
+  const getRippleEffect = (i: number) => {
+    if (hoverIndex === null) return {};
+    
+    const distance = Math.abs(i - hoverIndex);
+    // Quadratic falloff for smoother gradient (Vasarely style)
+    const strength = Math.max(0, 1 - Math.pow(distance * 0.2, 2));
+    
+    return {
+      scale: 1 + strength * 0.8, // Stronger scaling (1.8x max)
+      rotate: strength * (Math.random() * 30 - 15), // Wider angle range
+      y: -8 * strength, // Bigger vertical movement
+      x: (Math.random() * 10 - 5) * strength, // Increased horizontal range
+      textShadow: strength > 0.5 ? 
+        `0 0 ${strength * 8}px rgba(240, 248, 181, ${strength * 0.7})` : 'none',
+      zIndex: Math.floor(strength * 10),
+      transition: {
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1] // More elastic easing
+      }
+    };
+  };
 
   return (
     <motion.div 
@@ -34,12 +33,14 @@ const LiquidDistortionText = ({ text }: { text: string }) => {
         display: 'inline-flex',
         flexWrap: 'wrap',
         perspective: '1000px',
-        fontFamily: 'sans-serif',
+        fontFamily: '"Helvetica Neue", sans-serif',
         fontSize: 'clamp(1rem, 3vw, 2rem)',
         lineHeight: '1.6',
         padding: '20px',
         backgroundColor: '#242424',
-        borderRadius: '8px'
+        borderRadius: '8px',
+        color: '#f0f8b5',
+        willChange: 'contents' // Optimizes rendering
       }}
     >
       {text.split('').map((char, i) => (
@@ -48,12 +49,14 @@ const LiquidDistortionText = ({ text }: { text: string }) => {
           style={{ 
             display: 'inline-block',
             transformOrigin: 'center bottom',
-            whiteSpace: 'pre' // Preserves spaces
+            whiteSpace: 'pre',
+            willChange: 'transform', // Only transform will change
+            backfaceVisibility: 'hidden', // Prevents blurriness
+            WebkitFontSmoothing: 'subpixel-antialiased' // Crisp text
           }}
-          whileHover={getDistortion(i)}
-          onHoverStart={() => setActiveIndex(i)}
-          onHoverEnd={() => setActiveIndex(null)}
-          animate={activeIndex === i ? getDistortion(i) : {}}
+          onMouseEnter={() => setHoverIndex(i)}
+          onMouseLeave={() => setHoverIndex(null)}
+          animate={getRippleEffect(i)}
         >
           {char === ' ' ? '\u00A0' : char}
         </motion.span>
@@ -81,10 +84,11 @@ export default function InteractiveText() {
       padding: '2rem',
       display: 'flex',
       flexDirection: 'column',
-      gap: '1.5rem'
+      gap: '1.5rem',
+      backgroundColor: '#121212'
     }}>
       {portfolioText.map((line, index) => (
-        <LiquidDistortionText key={index} text={line} />
+        <VasarelyRippleText key={index} text={line} />
       ))}
     </div>
   );
