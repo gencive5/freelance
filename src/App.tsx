@@ -7,12 +7,10 @@ function App() {
 
   return (
     <>
-     
+     <div className="app-container">
       <h1>Gencives</h1>
-      
-      <div>
-       <InteractiveText />
-      </div>
+      <InteractiveText />
+    </div>
      
     </>
   )

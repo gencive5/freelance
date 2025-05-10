@@ -5,6 +5,57 @@
   text-align: center;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 5%; /* 5% padding on sides */
+  background-color: #121212;
+}
+
+.text-container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.text-line {
+  width: 100%;
+  overflow: hidden;
+}
+
+h1 {
+  color: #f0f8b5;
+  margin-bottom: 2rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  width: 90%;
+  text-align: center;
+}
+
+/* Responsive font sizing */
+@media (max-width: 768px) {
+  .text-line {
+    padding: 15px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .text-container {
+    width: 90%;
+    max-width: none; /* Remove max-width constraint */
+  }
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;
