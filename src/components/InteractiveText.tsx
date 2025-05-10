@@ -38,7 +38,7 @@ const LiquidDistortionText = ({ text }: { text: string }) => {
         fontSize: 'clamp(1rem, 3vw, 2rem)',
         lineHeight: '1.6',
         padding: '20px',
-        backgroundColor: '#f0f8b5',
+        backgroundColor: '#242424',
         borderRadius: '8px'
       }}
     >
@@ -67,11 +67,11 @@ export default function InteractiveText() {
     "Gencives - développeur créatif",
     "Designer et développeur front-end basé à Paris.",
     "SERVICES: DESIGN - IDENTITÉ DE MARQUE - CONCEPT",
-    "- DEVELOPPEMENT WEB RENNES -",
+    "- DEVELOPPEMENT WEB RESPONSIVE -",
     "TYPOGRAPHIE - DÉVELOPPEMENT CRÉATIF",
     "disponible internationalement heure locale: 13:00",
     "TECHNIQUES: React, Next.js, Node, Java, HTML/CSS",
-    "CONTACTEZ MOI vic.seqen@gmail.com"
+    "CONTACTEZ MOI vic.segen@gmail.com"
   ];
 
   return (
