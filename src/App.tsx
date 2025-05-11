@@ -5,9 +5,11 @@ const App = () => {
     <div className="container">
       <div className="Figure-Demo">
 
-  <span className="text-fit">
-   <span>G E N C i V E S</span>
-    <span aria-hidden="true">GENCIVES</span>
+  
+
+   <span className="text-fit">
+    <span><span>gencives</span></span>
+    <span aria-hidden="true">gencives</span>
   </span>
   
   <span className="text-fit">
