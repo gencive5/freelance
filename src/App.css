@@ -1,12 +1,15 @@
 .container {
    width: 100vw;
-   
+   height: 100vh;
+   align-content: center;
+   overflow-x: hidden;
 }
 
 
 .Figure-Demo {
   padding: 1rem;
 }
+
 
 .text-fit {
   display: flex;

@@ -15,6 +15,7 @@ const App = () => {
     <span aria-hidden="true">creative developer</span>
   </span>
 
+
   <em className="text-fit">
     <span><span>SERVICES: responsive development</span></span>
     <span aria-hidden="true">SERVICES: responsive development</span>
@@ -25,10 +26,27 @@ const App = () => {
     <span aria-hidden="true">DESIGN - UX/UI - BRAND IDENTITY</span>
   </em>
 
+  <em className="text-fit">
+    <span><span>based in Paris & available internationally</span></span>
+    <span aria-hidden="true">based in Paris & available internationally</span>
+  </em>
+
+    <em className="text-fit">
+    <span><span>available internationally</span></span>
+    <span aria-hidden="true">available internationally</span>
+  </em>
+
 </div>
+
+
     </div>
+    
   );
 };
 
 export default App;
 
+
+
+
+  
