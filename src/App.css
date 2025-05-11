@@ -3,6 +3,11 @@
    
 }
 
+
+.Figure-Demo {
+  padding: 1rem;
+}
+
 .text-fit {
   display: flex;
   container-type: inline-size;
