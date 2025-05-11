@@ -51,7 +51,7 @@ const VasarelyRippleText = ({ text }: { text: string }) => {
             willChange: 'transform',
             backfaceVisibility: 'hidden',
             WebkitFontSmoothing: 'subpixel-antialiased',
-            fontSize: 'clamp(1rem, 1.5vw, 1.5rem)'
+            fontSize: 'clamp(2rem, 1.5vw, 2.5rem)'
           }}
           onMouseEnter={() => setHoverIndex(i)}
           onMouseLeave={() => setHoverIndex(null)}

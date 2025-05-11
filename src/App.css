@@ -8,7 +8,7 @@
 
 
 .app-container {
-  width: 100%;
+  width: 100vw;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -17,40 +17,25 @@
 }
 
 .text-container {
-  width: 100%;
+  width:  90vw;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   background-color: #a11616;
 }
 
-.text-line {
-  width: 100%;
-  overflow: hidden;
-  justify-content: center;
-}
+
 
 h1 {
   color: #f0f8b5;
   margin-bottom: 2rem;
   font-size: clamp(2rem, 5vw, 3.5rem);
-  width: 90%;
+  width: 90vw;
   text-align: center;
 }
 
-/* Responsive font sizing */
-@media (max-width: 768px) {
-  .text-line {
-    padding: 15px;
-  }
-}
 
-@media (min-width: 1200px) {
-  .text-container {
-    width: 90%;
-    max-width: none; /* Remove max-width constraint */
-  }
-}
+
 
 
 
