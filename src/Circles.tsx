@@ -9,6 +9,12 @@ const Circles = () => {
   <div className="circle"></div>
   <div className="circle"></div>
   <div className="circle"></div>
+   <div className="circle"></div>
+  <div className="circle"></div>
+  <div className="circle"></div>
+  <div className="circle"></div>
+  <div className="circle"></div>
+  
 </div>
 
   )

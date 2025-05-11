@@ -87,13 +87,11 @@
   padding: 1rem;
 }
 
-
-
 .circle {
-   position: relative;
-   z-index: 2;
-   background: #fff;
-   width:5vw;
-   height:5vh;
-   border-radius:50%;
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  width: clamp(20px, 5vw, 60px);
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
 }
