@@ -6,7 +6,7 @@ const App = () => {
       <div className="Figure-Demo">
 
   <span className="text-fit">
-   <span>GENCIVES</span>
+   <span>G E N C i V E S</span>
     <span aria-hidden="true">GENCIVES</span>
   </span>
   
@@ -32,8 +32,13 @@ const App = () => {
   </em>
 
     <em className="text-fit">
-    <span><span>available internationally</span></span>
-    <span aria-hidden="true">available internationally</span>
+    <span><span>For one landing page, count between 2 and 4 weeks of production.</span></span>
+    <span aria-hidden="true">For one landing page, count between 2 and 4 weeks of production.</span>
+  </em>
+
+   <em className="text-fit">
+    <span><span>A more elaborate website will take between 6 and 8 weeks</span></span>
+    <span aria-hidden="true">A more elaborate website will take between 6 and 8 weeks</span>
   </em>
 
 </div>
