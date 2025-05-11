@@ -31,7 +31,7 @@ const VasarelyRippleText = ({ text }: { text: string }) => {
       style={{
         display: 'flex',
         flexWrap: 'wrap',
-        perspective: '1000px',
+        perspective: '2000px',
         fontFamily: '"Helvetica Neue", sans-serif',
         lineHeight: '1.6',
         padding: '20px',
