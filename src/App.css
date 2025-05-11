@@ -2,16 +2,6 @@
    width: 100vw;
 }
 
-.FigureDemo {
-
-}
-
-.text-fit:not(.text-fit *) {
-  line-height: 0.95;
-  margin: 0.25em 0;
-  --max-font-size: 10em;
-}
-
 .text-fit {
   display: flex;
   container-type: inline-size;
