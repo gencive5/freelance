@@ -3,7 +3,7 @@ import './App.css';
 const Circles = () => {
   return (
 
-<div className="container1">
+<div className="circlesbox">
   <div className="circle"></div>
   <div className="circle"></div>
   <div className="circle"></div>

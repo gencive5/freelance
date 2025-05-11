@@ -75,3 +75,25 @@
   initial-value: 0px;
   inherits: true;
 }
+
+
+
+.circlesbox {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+
+
+.circle {
+   position: relative;
+   z-index: 2;
+   background: #fff;
+   width:5vw;
+   height:5vh;
+   border-radius:50%;
+}
