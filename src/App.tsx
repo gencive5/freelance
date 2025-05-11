@@ -4,21 +4,27 @@ const App = () => {
   return (
     <div className="container">
       <div className="Figure-Demo">
-<p>
+
   <span className="text-fit">
-   <span>What if I will tell you</span>
-    <span aria-hidden="true">What if I will tell you</span>
+   <span>GENCIVES</span>
+    <span aria-hidden="true">GENCIVES</span>
   </span>
+  
   <span className="text-fit">
-    <span><span>how we could use</span></span>
-    <span aria-hidden="true">how we could use</span>
+    <span><span>creative developer</span></span>
+    <span aria-hidden="true">creative developer</span>
   </span>
+
   <em className="text-fit">
-    <span><span>registered custom properties</span></span>
-    <span aria-hidden="true">registered custom properties</span>
+    <span><span>SERVICES: responsive development</span></span>
+    <span aria-hidden="true">SERVICES: responsive development</span>
   </em>
   
-</p>
+   <em className="text-fit">
+    <span><span>DESIGN - UX/UI - BRAND IDENTITY</span></span>
+    <span aria-hidden="true">DESIGN - UX/UI - BRAND IDENTITY</span>
+  </em>
+
 </div>
     </div>
   );
