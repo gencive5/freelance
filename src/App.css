@@ -18,11 +18,24 @@
 }
 
 .text-container {
-  width:  90vw;
+  width: 90vw;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  background-color: #a11616;
+}
+
+.text-line {
+  width: 100%;
+  font-family: '"Helvetica Neue", sans-serif';
+  line-height: 1.6;
+  padding: 20px;
+  background-color: #242424;
+  border-radius: 8px;
+  color: #f0f8b5;
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  text-align: justify;
+  text-justify: inter-word;
+  word-spacing: -0.1em; /* Adjust as needed */
 }
 
 
