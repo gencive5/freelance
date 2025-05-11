@@ -1,55 +1,78 @@
-#root {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  width: 100vw;
-  height:100vh;
-  overflow-x: hidden;
+.container {
+   width: 100vw;
 }
 
+.FigureDemo {
 
-.app-container {
-  width: 100vw;
-  height: auto;
+}
+
+.text-fit:not(.text-fit *) {
+  line-height: 0.95;
+  margin: 0.25em 0;
+  --max-font-size: 10em;
+}
+
+.text-fit {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #421515;
+  container-type: inline-size;
+
+  --captured-length: initial;
+  --support-sentinel: var(--captured-length, 9999px);
+
+  & > [aria-hidden] {
+    visibility: hidden;
+  }
+
+  & > :not([aria-hidden]) {
+    flex-grow: 1;
+    container-type: inline-size;
+
+    --captured-length: 100cqi;
+    --available-space: var(--captured-length);
+
+    & > * {
+      --support-sentinel: inherit;
+      --captured-length: 100cqi;
+      --ratio: tan(atan2(
+        var(--available-space),
+        var(--available-space) - var(--captured-length)
+      ));
+      --font-size: clamp(
+        1em,
+        1em * var(--ratio),
+        var(--max-font-size, infinity * 1px)
+        -
+        var(--support-sentinel)
+      );
+      inline-size: var(--available-space);
+
+      &:not(.text-fit) {
+        display: block;
+        font-size: var(--font-size);
+
+        @container (inline-size > 0) {
+          white-space: nowrap;
+        }
+      }
+
+      &.text-fit {
+        --captured-length2: var(--font-size);
+        font-variation-settings:
+          'opsz'
+          tan(atan2(var(--captured-length2), 1px));
+      }
+    }
+  }
 }
 
-.text-container {
-  width: 90vw;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+@property --captured-length {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: true;
 }
 
-.text-line {
-  width: 100%;
-  font-family: '"Helvetica Neue", sans-serif';
-  line-height: 1.6;
-  padding: 20px;
-  background-color: #242424;
-  border-radius: 8px;
-  color: #f0f8b5;
-  font-size: clamp(1.2rem, 2vw, 2rem);
-  text-align: justify;
-  text-justify: inter-word;
-  word-spacing: -0.1em; /* Adjust as needed */
+@property --captured-length2 {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: true;
 }
-
-
-
-h1 {
-  color: #f0f8b5;
-  margin-bottom: 2rem;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  width: 90vw;
-  text-align: center;
-}
-
-
-
-
-
-
