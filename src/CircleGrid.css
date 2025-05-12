@@ -1,0 +1,23 @@
+.circle-grid {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--diameter));
+  grid-auto-rows: var(--diameter);
+  gap: var(--gap);
+  justify-content: center;
+  padding: var(--gap);
+  box-sizing: border-box;
+}
+
+.circle {
+  width: var(--diameter);
+  height: var(--diameter);
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+
+/* Individual circle styling */
+#c1 { background: #ff6b6b; }
+#c4 { background: #4ecdc4; }
+#c9 { opacity: 0.9; }

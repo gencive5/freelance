@@ -1,11 +1,11 @@
 import './App.css';
-import Circles from './Circles';
+import CircleGrid from './CircleGrid';
 import TextFit from './TextFit';
 
 const App = () => {
   return (
     <div className="container">
-      <Circles />
+      <CircleGrid />
       <TextFit />
     </div>
   );
