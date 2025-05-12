@@ -6,8 +6,6 @@
 }
 
 
-
-
 .Figure-Demo {
   padding: 1rem;
 }
@@ -114,7 +112,3 @@
 #c9 { opacity: 0.9; }
 
 
-background-color: #e5e5f7;
-opacity: 1;
-background-image: radial-gradient(#444cf7 2px, #e5e5f7 2px);
-background-size: 40px 40px;

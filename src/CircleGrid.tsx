@@ -3,63 +3,84 @@ import type { CSSProperties } from 'react';
 import './CircleGrid.css';
 
 interface CircleGridProps {
-  circleDiameter?: number; // Fixed pixel size
-  gapSize?: number;       // Fixed pixel gap
+  minCircleSize?: number;  // Minimum circle size in pixels
+  maxCircleSize?: number;  // Maximum circle size in pixels
+  gapRatio?: number;       // Gap ratio relative to circle size
   rows?: number;
   circleStyle?: CSSProperties;
   customCircles?: { [key: string]: CSSProperties };
 }
 
 const CircleGrid: React.FC<CircleGridProps> = ({
-  circleDiameter = 40,
-  gapSize = 20,
+  minCircleSize = 20,
+  maxCircleSize = 40,
+  gapRatio = 0.5,
   rows = 5,
   circleStyle = {},
   customCircles = {},
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
+  const [circleSize, setCircleSize] = useState(maxCircleSize);
   const [cols, setCols] = useState(0);
 
   useEffect(() => {
-    const calculateCols = () => {
+    const calculateLayout = () => {
       if (!gridRef.current) return;
-      const viewportWidth = gridRef.current.clientWidth;
-      const colCount = Math.floor(viewportWidth / (circleDiameter + gapSize));
-      setCols(Math.max(1, colCount)); // Ensure at least 1 column
+      
+      const containerWidth = gridRef.current.clientWidth;
+      const containerHeight = gridRef.current.clientHeight;
+      
+      // Calculate maximum possible circle size that fits both width and height
+      const widthBasedSize = containerWidth / (Math.floor(containerWidth / (maxCircleSize * (1 + gapRatio))) * (1 + gapRatio));
+      const heightBasedSize = containerHeight / (rows * (1 + gapRatio * 0.5));
+      
+      const newCircleSize = Math.max(
+        minCircleSize,
+        Math.min(maxCircleSize, widthBasedSize, heightBasedSize)
+      );
+      
+      setCircleSize(newCircleSize);
+      setCols(Math.floor(containerWidth / (newCircleSize * (1 + gapRatio))));
     };
 
-    calculateCols();
-    window.addEventListener('resize', calculateCols);
-    return () => window.removeEventListener('resize', calculateCols);
-  }, [circleDiameter, gapSize]);
+    calculateLayout();
+    const resizeObserver = new ResizeObserver(calculateLayout);
+    if (gridRef.current) resizeObserver.observe(gridRef.current);
+
+    return () => resizeObserver.disconnect();
+  }, [minCircleSize, maxCircleSize, gapRatio, rows]);
+
+  const gapSize = circleSize * gapRatio;
 
   return (
     <div 
       ref={gridRef}
-      className="circle-grid"
+      className="circle-grid-container"
       style={{
-        '--diameter': `${circleDiameter}px`,
-        '--gap': `${gapSize}px`,
+        '--circle-size': `${circleSize}px`,
+        '--gap-size': `${gapSize}px`,
         '--rows': rows,
         '--cols': cols,
       } as CSSProperties}
     >
-      {Array.from({ length: rows * cols }).map((_, index) => {
-        const id = `c${index + 1}`;
-        return (
-          <div
-            key={id}
-            id={id}
-            className="circle"
-            style={{
-              width: `${circleDiameter}px`,
-              height: `${circleDiameter}px`,
-              ...circleStyle,
-              ...(customCircles[id] || {})
-            }}
-          />
-        );
-      })}
+      <div className="circle-grid">
+        {Array.from({ length: rows * cols }).map((_, index) => {
+          const id = `c${index + 1}`;
+          return (
+            <div
+              key={id}
+              id={id}
+              className="circle"
+              style={{
+                width: `${circleSize}px`,
+                height: `${circleSize}px`,
+                ...circleStyle,
+                ...(customCircles[id] || {})
+              }}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
