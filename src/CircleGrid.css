@@ -22,3 +22,40 @@
 #c4 { background: #4ecdc4; }
 #c16 { background: #119e30; }
 #c17 { background: #cd4eb1;  }
+
+
+/* ... (keep all your existing styles) ... */
+
+/* Individual circle styling with hover effects */
+#c1 { 
+  background: #ff6b6b;
+  transition: transform 0.3s ease;
+}
+#c1:hover {
+  transform: scale(1.2, 0.8); /* Horizontal squash */
+}
+
+#c4 { 
+  background: #4ecdc4;
+  transition: transform 0.3s ease;
+}
+#c4:hover {
+  transform: scale(1.2, 0.8);
+}
+
+#c16 { 
+  background: #119e30;
+  transition: transform 0.3s ease;
+}
+#c16:hover {
+  transform: scale(1.2, 0.8);
+}
+
+#c17 { 
+  background: #cd4eb1;
+  transition: transform 0.3s ease;
+}
+#c17:hover {
+  transform: scale(1.2, 0.8);
+}
+
