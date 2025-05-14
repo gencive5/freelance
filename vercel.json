@@ -1,12 +1,20 @@
 {
   "version": 2,
-  "public": true,
+  "builds": [
+    {
+      "src": "src/api/send-email.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["src/**/*.ts"],
+        "runtime": "nodejs20.x"
+      }
+    }
+  ],
   "routes": [
     {
-      "src": "/api/.*",
-      "dest": "/api",
-      "methods": ["POST", "OPTIONS"]
+      "src": "/api/send-email",
+      "dest": "/src/api/send-email",
+      "methods": ["POST"]
     }
   ]
-  
 }
