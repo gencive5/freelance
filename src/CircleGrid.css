@@ -1,6 +1,6 @@
 .circle-grid-container {
   width: 100vw;
-  height: auto;
+  height: 100vh;
   padding: 1rem;
   box-sizing: border-box;
   overflow: hidden;
