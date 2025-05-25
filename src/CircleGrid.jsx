@@ -1,17 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import type { CSSProperties } from 'react';
 import './CircleGrid.css';
 
-interface CircleGridProps {
-  minCircleSize?: number;  // Minimum circle size in pixels
-  maxCircleSize?: number;  // Maximum circle size in pixels
-  gapRatio?: number;       // Gap ratio relative to circle size
-  rows?: number;
-  circleStyle?: CSSProperties;
-  customCircles?: { [key: string]: CSSProperties };
-}
-
-const CircleGrid: React.FC<CircleGridProps> = ({
+const CircleGrid = ({
   minCircleSize = 20,
   maxCircleSize = 40,
   gapRatio = 0.5,
@@ -19,7 +9,7 @@ const CircleGrid: React.FC<CircleGridProps> = ({
   circleStyle = {},
   customCircles = {},
 }) => {
-  const gridRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef(null);
   const [circleSize, setCircleSize] = useState(maxCircleSize);
   const [cols, setCols] = useState(0);
 
@@ -31,7 +21,7 @@ const CircleGrid: React.FC<CircleGridProps> = ({
       const containerHeight = gridRef.current.clientHeight;
       
       // Calculate maximum possible circle size that fits both width and height
-      const widthBasedSize = containerWidth / (Math.floor(containerWidth / (maxCircleSize * (1 + gapRatio))) * (1 + gapRatio));
+      const widthBasedSize = (containerWidth / Math.floor(containerWidth / (maxCircleSize * (1 + gapRatio)))) * (1 + gapRatio);
       const heightBasedSize = containerHeight / (rows * (1 + gapRatio * 0.5));
       
       const newCircleSize = Math.max(
@@ -61,7 +51,7 @@ const CircleGrid: React.FC<CircleGridProps> = ({
         '--gap-size': `${gapSize}px`,
         '--rows': rows,
         '--cols': cols,
-      } as CSSProperties}
+      }}
     >
       <div className="circle-grid">
         {Array.from({ length: rows * cols }).map((_, index) => {
