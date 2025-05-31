@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@types/nodemailer": "^6.4.17",
     "@vercel/node": "^2.3.0",
+    "dotenv": "^16.5.0",
     "framer-motion": "^12.10.5",
     "nodemailer": "^7.0.3",
     "react": "^19.1.0",
