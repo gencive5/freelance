@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';  // Add useEffect to the import
 import emailjs from '@emailjs/browser';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
   
+  // Add this useEffect hook right after your other state declarations
+  useEffect(() => {
+    console.log({
+      serviceId: import.meta.env.VITE_SERVICE_ID,
+      templateId: import.meta.env.VITE_TEMPLATE_ID,
+      publicKey: import.meta.env.VITE_PUBLIC_KEY
+    });
+  }, []);
+
   const sendEmail = (e) => {
     e.persist();
     e.preventDefault();
