@@ -15,15 +15,10 @@ const TextFit = () => {
 
 
       <em className="text-fit">
-        <span><span>SERVICES: responsive development</span></span>
-        <span aria-hidden="true">SERVICES: responsive development</span>
+        <span><span>SERVICES: DESIGN - UX/UI - BRAND IDENTITY - FRONT-END DEVELOPMENT</span></span>
+        <span aria-hidden="true">SERVICES: DESIGN - UX/UI - BRAND IDENTITY - FRONT-END DEVELOPMENT</span>
       </em>
       
-      <em className="text-fit">
-        <span><span>DESIGN - UX/UI - BRAND IDENTITY - FRONT-END DEVELOPMENT</span></span>
-        <span aria-hidden="true">DESIGN - UX/UI - BRAND IDENTITY - FRONT-END DEVELOPMENT</span>
-      </em>
-
 
       <em className="text-fit">
         <span><span>based in Paris & available internationally</span></span>
