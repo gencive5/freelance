@@ -1,12 +1,12 @@
 import './App.css';
-import CircleGrid from './CircleGrid';
+// import CircleGrid from './CircleGrid';
 import TextFit from './TextFit';
 import ContactForm from './ContactForm';
 
 const App = () => {
   return (
     <div className="container">
-      <CircleGrid />
+      {/* <CircleGrid /> */}
       <TextFit />
       <div style={{ backgroundColor: 'red', padding: '20px' }} className="Figure-Demo">
       <span className="text-fit">
@@ -20,6 +20,7 @@ const App = () => {
         <span aria-hidden="true">Leave your contact details below and I will get back to you today</span>
       </span>
       </div>
+
       <ContactForm />
       <div className="Figure-Demo">
       <span className="text-fit">
