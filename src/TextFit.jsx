@@ -4,8 +4,8 @@ const TextFit = () => {
   return (
     <div className="Figure-Demo">
       <span className="text-fit">
-        <span><span>gencives</span></span>
-        <span aria-hidden="true">gencives</span>
+        <span><span>GENCiVES</span></span>
+        <span aria-hidden="true">GENCiVES</span>
       </span>
       
       <span className="text-fit">
@@ -13,19 +13,26 @@ const TextFit = () => {
         <span aria-hidden="true">creative developer</span>
       </span>
 
+
       <em className="text-fit">
         <span><span>SERVICES: responsive development</span></span>
         <span aria-hidden="true">SERVICES: responsive development</span>
       </em>
       
       <em className="text-fit">
-        <span><span>DESIGN - UX/UI - BRAND IDENTITY</span></span>
-        <span aria-hidden="true">DESIGN - UX/UI - BRAND IDENTITY</span>
+        <span><span>DESIGN - UX/UI - BRAND IDENTITY - FRONT-END DEVELOPMENT</span></span>
+        <span aria-hidden="true">DESIGN - UX/UI - BRAND IDENTITY - FRONT-END DEVELOPMENT</span>
       </em>
+
 
       <em className="text-fit">
         <span><span>based in Paris & available internationally</span></span>
         <span aria-hidden="true">based in Paris & available internationally</span>
+      </em>
+
+        <em className="text-fit">
+        <span><span>I DELiVER HiGH CONCEPT WEBSiTES</span></span>
+        <span aria-hidden="true">I DELiVER HiGH CONCEPT WEBSiTES</span>
       </em>
 
       <em className="text-fit">
@@ -34,8 +41,8 @@ const TextFit = () => {
       </em>
 
       <em className="text-fit">
-        <span><span>A more elaborate website will take between 6 and 8 weeks</span></span>
-        <span aria-hidden="true">A more elaborate website will take between 6 and 8 weeks</span>
+        <span><span>A more elaborate website will take between 6 and 8 weeks.</span></span>
+        <span aria-hidden="true">A more elaborate website will take between 6 and 8 weeks.</span>
       </em>
     </div>
   );

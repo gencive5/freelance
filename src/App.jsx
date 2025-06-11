@@ -8,8 +8,10 @@ const App = () => {
     <div className="container">
       <CircleGrid />
       <TextFit />
-      <div style={{ backgroundColor: 'red', padding: '20px' }}>TEST DIV</div>
+      <div style={{ backgroundColor: 'red', padding: '20px' }}>ASK FOR YOUR WEBSITE NOW</div>
+      <p>Leave your contact details below and I will get back to you today</p>
       <ContactForm />
+      <p>or contact me at vic.segen@gmail.com</p>
     </div>
   );
 };
