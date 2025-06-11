@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';  // Add useEffect to the import
+import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
   
-  // Add this useEffect hook right after your other state declarations
   useEffect(() => {
     console.log({
       serviceId: import.meta.env.VITE_SERVICE_ID,
@@ -47,18 +46,46 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={sendEmail}>
-      <label>Name</label>
-      <input type="text" name="user_name" required />
-      <br></br>
-      <label>Email</label>
-      <input type="email" name="user_email" required />
-      <br></br>
-      <label>Message</label>
-      <textarea name="message" required />
-      <br></br>
-      <input type="submit" value="Send" disabled={isSubmitting} />
-      {stateMessage && <p>{stateMessage}</p>}
+    <form onSubmit={sendEmail} style={{ width: '100vw', padding: '20px', boxSizing: 'border-box' }}>
+      <div style={{ width: '100%', marginBottom: '15px' }}>
+        <label style={{ display: 'block', marginBottom: '5px' }}>Name</label>
+        <input 
+          type="text" 
+          name="user_name" 
+          required 
+          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} 
+        />
+      </div>
+      
+      <div style={{ width: '100%', marginBottom: '15px' }}>
+        <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
+        <input 
+          type="email" 
+          name="user_email" 
+          required 
+          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} 
+        />
+      </div>
+      
+      <div style={{ width: '100%', marginBottom: '15px' }}>
+        <label style={{ display: 'block', marginBottom: '5px' }}>Message</label>
+        <textarea 
+          name="message" 
+          required 
+          style={{ width: '100%', padding: '8px', boxSizing: 'border-box', minHeight: '100px' }} 
+        />
+      </div>
+      
+      <div style={{ width: '100%' }}>
+        <input 
+          type="submit" 
+          value="Send" 
+          disabled={isSubmitting} 
+          style={{ width: '100%', padding: '10px', cursor: isSubmitting ? 'not-allowed' : 'pointer' }} 
+        />
+      </div>
+      
+      {stateMessage && <p style={{ textAlign: 'center', marginTop: '10px' }}>{stateMessage}</p>}
     </form>
   );
 };
