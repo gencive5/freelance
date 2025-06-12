@@ -1,8 +1,9 @@
+// src/TextFit.jsx
 import './App.css';
-import { useState } from 'react';
+import { useLanguage } from './context/LanguageContext';
 
 const TextFit = () => {
-  const [language, setLanguage] = useState('en'); // 'en', 'fr', or 'es'
+  const { language } = useLanguage();
 
   const texts = {
     title: {
@@ -44,52 +45,6 @@ const TextFit = () => {
 
   return (
     <div className="Figure-Demo">
-      <div style={{
-        position: 'fixed',
-        top: '20px',
-        right: '20px',
-        display: 'flex',
-        gap: '8px',
-        zIndex: 1000
-      }}>
-        <button 
-          onClick={() => setLanguage('en')}
-          style={{
-            padding: '8px 16px',
-            background: language === 'en' ? 'black' : 'white',
-            color: language === 'en' ? 'white' : 'black',
-            border: '1px solid black',
-            cursor: 'pointer'
-          }}
-        >
-          EN
-        </button>
-        <button 
-          onClick={() => setLanguage('fr')}
-          style={{
-            padding: '8px 16px',
-            background: language === 'fr' ? 'black' : 'white',
-            color: language === 'fr' ? 'white' : 'black',
-            border: '1px solid black',
-            cursor: 'pointer'
-          }}
-        >
-          FR
-        </button>
-        <button 
-          onClick={() => setLanguage('es')}
-          style={{
-            padding: '8px 16px',
-            background: language === 'es' ? 'black' : 'white',
-            color: language === 'es' ? 'white' : 'black',
-            border: '1px solid black',
-            cursor: 'pointer'
-          }}
-        >
-          ES
-        </button>
-      </div>
-
       <span className="text-fit">
         <span><span>{texts.title[language]}</span></span>
         <span aria-hidden="true">{texts.title[language]}</span>
