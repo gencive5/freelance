@@ -1,10 +1,45 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import { useLanguage } from './context/LanguageContext';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
-  
+  const { language } = useLanguage();
+
+  const translations = {
+    name: {
+      en: "Name",
+      fr: "Nom",
+      es: "Nombre"
+    },
+    email: {
+      en: "Email",
+      fr: "Email",
+      es: "Correo electrónico"
+    },
+    message: {
+      en: "Message",
+      fr: "Message",
+      es: "Mensaje"
+    },
+    send: {
+      en: "Send",
+      fr: "Envoyer",
+      es: "Enviar"
+    },
+    success: {
+      en: "Message sent!",
+      fr: "Message envoyé !",
+      es: "¡Mensaje enviado!"
+    },
+    error: {
+      en: "Something went wrong, please try again later",
+      fr: "Quelque chose s'est mal passé, veuillez réessayer plus tard",
+      es: "Algo salió mal, por favor inténtalo más tarde"
+    }
+  };
+
   useEffect(() => {
     console.log({
       serviceId: import.meta.env.VITE_SERVICE_ID,
@@ -27,14 +62,14 @@ const ContactForm = () => {
       )
       .then(
         (result) => {
-          setStateMessage('Message sent!');
+          setStateMessage(translations.success[language]);
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
           }, 5000);
         },
         (error) => {
-          setStateMessage('Something went wrong, please try again later');
+          setStateMessage(translations.error[language]);
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
@@ -48,7 +83,9 @@ const ContactForm = () => {
   return (
     <form onSubmit={sendEmail} style={{ width: '100vw', padding: '20px', boxSizing: 'border-box' }}>
       <div style={{ width: '100%', marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>Name</label>
+        <label style={{ display: 'block', marginBottom: '5px' }}>
+          {translations.name[language]}
+        </label>
         <input 
           type="text" 
           name="user_name" 
@@ -58,7 +95,9 @@ const ContactForm = () => {
       </div>
       
       <div style={{ width: '100%', marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
+        <label style={{ display: 'block', marginBottom: '5px' }}>
+          {translations.email[language]}
+        </label>
         <input 
           type="email" 
           name="user_email" 
@@ -68,7 +107,9 @@ const ContactForm = () => {
       </div>
       
       <div style={{ width: '100%', marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>Message</label>
+        <label style={{ display: 'block', marginBottom: '5px' }}>
+          {translations.message[language]}
+        </label>
         <textarea 
           name="message" 
           required 
@@ -79,7 +120,7 @@ const ContactForm = () => {
       <div style={{ width: '100%' }}>
         <input 
           type="submit" 
-          value="Send" 
+          value={translations.send[language]}
           disabled={isSubmitting} 
           style={{ width: '100%', padding: '10px', cursor: isSubmitting ? 'not-allowed' : 'pointer' }} 
         />
