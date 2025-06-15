@@ -7,8 +7,8 @@ const LanguageSwitcher = () => {
   return (
     <div style={{
       position: 'fixed',
-      top: '20px',
-      right: '20px',
+      top: '2rem',
+      right: '2rem',
       display: 'flex',
       gap: '8px',
       zIndex: 1000
