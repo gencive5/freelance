@@ -16,11 +16,6 @@ const TextFit = () => {
       fr: "développeur créatif",
       es: "desarrollador creativo"
     },
-    services: {
-      en: "SERVICES: DESIGN - UX/UI - BRAND IDENTITY - FRONT-END DEVELOPMENT",
-      fr: "SERVICES: DESIGN - UX/UI - IDENTITÉ DE MARQUE - DÉVELOPPEMENT FRONT-END",
-      es: "SERVICIOS: DISEÑO - UX/UI - IDENTIDAD DE MARCA - DESARROLLO FRONT-END"
-    },
     location: {
       en: "based in Paris & available internationally",
       fr: "basé à Paris & disponible à l'international",
@@ -55,10 +50,7 @@ const TextFit = () => {
         <span aria-hidden="true">{texts.subtitle[language]}</span>
       </span>
 
-      <em className="text-fit">
-        <span><span>{texts.services[language]}</span></span>
-        <span aria-hidden="true">{texts.services[language]}</span>
-      </em>
+  
       
       <em className="text-fit">
         <span><span>{texts.location[language]}</span></span>

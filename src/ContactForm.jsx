@@ -113,7 +113,7 @@ const ContactForm = () => {
         <textarea 
           name="message" 
           required 
-          style={{ width: '100%', padding: '8px', boxSizing: 'border-box', minHeight: '100px' }} 
+          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} 
         />
       </div>
       
