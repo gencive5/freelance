@@ -6,7 +6,7 @@ const LanguageSwitcher = () => {
 
   return (
     <div style={{
-      position: 'fixed',
+      position: 'relative',
       top: '2rem',
       right: '2rem',
       display: 'flex',
