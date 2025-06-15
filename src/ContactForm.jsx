@@ -34,9 +34,9 @@ const ContactForm = () => {
       es: "¡Mensaje enviado!"
     },
     error: {
-      en: "Something went wrong, please try again later",
-      fr: "Quelque chose s'est mal passé, veuillez réessayer plus tard",
-      es: "Algo salió mal, por favor inténtalo más tarde"
+      en: "Something went wrong, please try again later or contact me directly at vic.segen@gmail.com",
+      fr: "Quelque chose s'est mal passé, veuillez réessayer plus tard ou contactez moi directement à vic.segen@gmail.com",
+      es: "Algo salió mal, por favor inténtalo más tarde o contáctame directamente en vic.segen@gmail.com"
     }
   };
 

@@ -24,11 +24,11 @@ const TextFit = () => {
     location: {
       en: "based in Paris & available internationally",
       fr: "basé à Paris & disponible à l'international",
-      es: "con sede en París & disponible internacionalmente"
+      es: "basado en París & disponible internacionalmente"
     },
     deliver: {
       en: "I DELiVER HiGH CONCEPT WEBSiTES",
-      fr: "JE LIVRE DES SITES WEB HAUT DE GAMME",
+      fr: "JE LIVRE DES SITES WEB HAUT CONCEPT",
       es: "CREO SITIOS WEB DE ALTO CONCEPTO"
     },
     timeline1: {

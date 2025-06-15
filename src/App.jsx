@@ -13,7 +13,7 @@ const AppContent = () => {
     askForWebsite: {
       en: "ASK FOR YOUR WEBSITE NOW",
       fr: "DEMANDEZ VOTRE SITE WEB MAINTENANT",
-      es: "SOLICITA TU SITIO WEB AHORA"
+      es: "SOLICITA SU SITIO WEB AHORA"
     },
     leaveContact: {
       en: "Leave your contact details below and I will get back to you today",
