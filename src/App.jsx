@@ -13,12 +13,12 @@ const AppContent = () => {
     askForWebsite: {
       en: "ASK FOR YOUR WEBSITE NOW",
       fr: "DEMANDEZ VOTRE SITE WEB MAINTENANT",
-      es: "SOLICITA SU SITIO WEB AHORA"
+      es: "SOLICITA TU SITIO WEB AHORA"
     },
     leaveContact: {
-      en: "Leave your contact details below and I will get back to you today",
-      fr: "Laissez vos coordonnées ci-dessous et je vous répondrai aujourd'hui",
-      es: "Deja tus datos de contacto abajo y me pondré en contacto contigo hoy"
+      en: "Leave your contact details and I will get back to you today",
+      fr: "Laissez vos coordonnées et je vous répondrai aujourd'hui",
+      es: "Deja tus datos de contacto y me pondré en contacto contigo hoy"
     },
     orContact: {
       en: "or contact me at vic.segen@gmail.com",

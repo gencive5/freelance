@@ -26,16 +26,6 @@ const TextFit = () => {
       fr: "JE LIVRE DES SITES WEB HAUT CONCEPT",
       es: "CREO SITIOS WEB DE ALTO CONCEPTO"
     },
-    timeline1: {
-      en: "For one landing page, count between 2 and 4 weeks of production.",
-      fr: "Pour une page d'accueil, comptez entre 2 et 4 semaines de production.",
-      es: "Para una página de destino, calcula entre 2 y 4 semanas de producción."
-    },
-    timeline2: {
-      en: "A more elaborate website will take between 6 and 8 weeks.",
-      fr: "Un site web plus élaboré prendra entre 6 et 8 semaines.",
-      es: "Un sitio web más elaborado tomará entre 6 y 8 semanas."
-    }
   };
 
   return (
@@ -49,8 +39,6 @@ const TextFit = () => {
         <span><span>{texts.subtitle[language]}</span></span>
         <span aria-hidden="true">{texts.subtitle[language]}</span>
       </span>
-
-  
       
       <em className="text-fit">
         <span><span>{texts.location[language]}</span></span>
@@ -62,15 +50,6 @@ const TextFit = () => {
         <span aria-hidden="true">{texts.deliver[language]}</span>
       </em>
 
-      <em className="text-fit">
-        <span><span>{texts.timeline1[language]}</span></span>
-        <span aria-hidden="true">{texts.timeline1[language]}</span>
-      </em>
-
-      <em className="text-fit">
-        <span><span>{texts.timeline2[language]}</span></span>
-        <span aria-hidden="true">{texts.timeline2[language]}</span>
-      </em>
     </div>
   );
 };
