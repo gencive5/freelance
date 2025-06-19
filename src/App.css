@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'acumin';
+  src: url('/fonts/src/acumin-bdpro-webfont.woff2') format('woff2'),
+       url('/fonts/src/acumin-bdpro-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .container {
    width: 100vw;
    height: 100vh;
@@ -12,6 +21,7 @@
 
 
 .text-fit {
+   font-family: 'acumin', sans-serif;
   display: flex;
   container-type: inline-size;
 
