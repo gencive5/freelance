@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { useLanguage } from './context/LanguageContext';
+import './App.css';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,52 +82,60 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={sendEmail} style={{ width: '100vw', padding: '20px', boxSizing: 'border-box' }}>
-      <div style={{ width: '100%', marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>
+    <form onSubmit={sendEmail} className="contact-form">
+      <div className="contact-form__group">
+        <label className="contact-form__label">
           {translations.name[language]}
         </label>
         <input 
           type="text" 
           name="user_name" 
           required 
-          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} 
+          className="contact-form__input"
         />
       </div>
       
-      <div style={{ width: '100%', marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>
+      <div className="contact-form__group">
+        <label className="contact-form__label">
           {translations.email[language]}
         </label>
         <input 
           type="email" 
           name="user_email" 
           required 
-          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} 
+          className="contact-form__input"
         />
       </div>
       
-      <div style={{ width: '100%', marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>
+      <div className="contact-form__group">
+        <label className="contact-form__label">
           {translations.message[language]}
         </label>
         <textarea 
           name="message" 
           required 
-          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} 
+          className="contact-form__textarea"
         />
       </div>
       
-      <div style={{ width: '100%' }}>
+      <div className="contact-form__group">
         <input 
           type="submit" 
           value={translations.send[language]}
           disabled={isSubmitting} 
-          style={{ width: '100%', padding: '10px', cursor: isSubmitting ? 'not-allowed' : 'pointer' }} 
+          className="contact-form__submit"
         />
       </div>
       
-      {stateMessage && <p style={{ textAlign: 'center', marginTop: '10px' }}>{stateMessage}</p>}
+      {stateMessage && (
+        <p className={`contact-form__message ${
+          stateMessage === translations.success[language] 
+            ? 'contact-form__message--success' 
+            : 'contact-form__message--error'
+        }`}>
+          {stateMessage}
+        </p>
+      )}
     </form>
   );
 };
