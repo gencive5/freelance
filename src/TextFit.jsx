@@ -29,10 +29,10 @@ const TextFit = () => {
 
   return (
     <div className="textfit-container">
-      <BlotterText text={texts.title[language]} size={70} />
-      <BlotterText text={texts.subtitle[language]} size={32} />
-      <BlotterText text={texts.location[language]} size={24} />
-      <BlotterText text={texts.deliver[language]} size={28} />
+      <BlotterText text={texts.title[language]} initialSize={100} />
+<BlotterText text={texts.subtitle[language]} initialSize={60} />
+<BlotterText text={texts.location[language]} initialSize={50} />
+<BlotterText text={texts.deliver[language]} initialSize={20} />
     </div>
   );
 };
