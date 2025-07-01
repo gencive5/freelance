@@ -1,5 +1,4 @@
-// src/TextFit.jsx
-import './App.css';
+import BlotterText from './BlotterText';
 import { useLanguage } from './context/LanguageContext';
 
 const TextFit = () => {
@@ -29,27 +28,11 @@ const TextFit = () => {
   };
 
   return (
-    <div className="Figure-Demo">
-      <span className="text-fit">
-        <span><span>{texts.title[language]}</span></span>
-        <span aria-hidden="true">{texts.title[language]}</span>
-      </span>
-      
-      <span className="text-fit">
-        <span><span>{texts.subtitle[language]}</span></span>
-        <span aria-hidden="true">{texts.subtitle[language]}</span>
-      </span>
-      
-      <em className="text-fit">
-        <span><span>{texts.location[language]}</span></span>
-        <span aria-hidden="true">{texts.location[language]}</span>
-      </em>
-
-      <em className="text-fit">
-        <span><span>{texts.deliver[language]}</span></span>
-        <span aria-hidden="true">{texts.deliver[language]}</span>
-      </em>
-
+    <div className="textfit-container">
+      <BlotterText text={texts.title[language]} size={70} />
+      <BlotterText text={texts.subtitle[language]} size={32} />
+      <BlotterText text={texts.location[language]} size={24} />
+      <BlotterText text={texts.deliver[language]} size={28} />
     </div>
   );
 };

@@ -1,10 +1,9 @@
 @font-face {
-  font-family: 'acumin';
-  src: url('/fonts/src/acumin-bdpro-webfont.woff2') format('woff2'),
-       url('/fonts/src/acumin-bdpro-webfont.woff') format('woff');
+  font-family: 'Acumin';
+  src: url('/fonts/acumin-bdpro-webfont.woff2') format('woff2'),
+       url('/fonts/acumin-bdpro-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
 }
 
 .container {
@@ -17,6 +16,20 @@
 
 .Figure-Demo {
   padding: 1rem;
+}
+
+
+.textfit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 
