@@ -6,6 +6,31 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Mutlu';
+  src: url('/fonts/mutlu__ornamental-webfont.woff2') format('woff2'),
+       url('/fonts/mutlu__ornamental-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sniglet';
+  src: url('/fonts/sniglet_regular-webfont.woff2') format('woff2'),
+       url('/fonts/sniglet_regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Unormative';
+  src: url('/fonts/unormativefraktur-webfont.woff2') format('woff2'),
+       url('/fonts/unormativefraktur-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 .container {
    width: 100vw;
    height: 100vh;
@@ -45,7 +70,7 @@ canvas {
 }
 
 .text-fit {
-  font-family: 'acumin', sans-serif;
+  font-family: 'Mutlu', sans-serif;
   display: flex;
   container-type: inline-size;
 
@@ -151,7 +176,7 @@ canvas {
   width: 100vw;
   padding: 20px;
   box-sizing: border-box;
-  font-family: 'acumin', sans-serif;/* or your preferred font */
+  font-family: '', sans-serif;/* or your preferred font */
 }
 
 .contact-form__group {
