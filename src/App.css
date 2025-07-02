@@ -24,7 +24,7 @@
   flex-direction: column;
   gap: 1.5rem;
   align-items: flex-start;
-  width:100%;
+  width: 100%;
 }
 
 canvas {
@@ -33,6 +33,16 @@ canvas {
   height: auto;
 }
 
+@media (max-width: 768px) {
+  .textfit-container {
+    align-items: center; /* Center the text on mobile */
+    gap: 1rem; /* Reduce gap between lines on mobile */
+  }
+  
+  canvas {
+    width: 100% !important;
+  }
+}
 
 .text-fit {
   font-family: 'acumin', sans-serif;

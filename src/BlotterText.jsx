@@ -30,7 +30,7 @@ const BlotterText = ({ text, className = "" }) => {
       const chars = Math.max(text.length, 25);
       
       // Increase size multiplier for mobile
-      const sizeMultiplier = isMobile ? 3 : 1.8;
+      const sizeMultiplier = isMobile ? 2 : 1.8;
       const estimatedSize = (containerWidth / chars) * sizeMultiplier;
       setBaseSize(estimatedSize);
 
