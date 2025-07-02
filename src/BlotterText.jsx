@@ -30,7 +30,7 @@ const BlotterText = ({ text, className = "" }) => {
       const chars = Math.max(text.length, 25);
       
       // Increase size multiplier for mobile
-      const sizeMultiplier = isMobile ? 2 : 2.8;
+      const sizeMultiplier = isMobile ? 2 : 1.8;
       const estimatedSize = (containerWidth / chars) * sizeMultiplier;
       setBaseSize(estimatedSize);
 
@@ -47,17 +47,17 @@ const BlotterText = ({ text, className = "" }) => {
       });
 
       const material = new LiquidDistortMaterial();
-      material.uniforms.uSpeed.value = 0.1;
-      material.uniforms.uVolatility.value = 0.5;
-      material.uniforms.uSeed.value = 0.3;
+      material.uniforms.uSpeed.value = 0.8;
+      material.uniforms.uVolatility.value = 2.5;
+      material.uniforms.uSeed.value = 1.3;
 
       const blotter = new Blotter(material, { texts: textObj });
       const scope = blotter.forText(textObj);
       scope.appendTo(containerRef.current);
       canvasRef.current = containerRef.current.querySelector("canvas");
 
-      const triggerOn = () => (material.uniforms.uVolatility.value = 0.03);
-      const triggerOff = () => (material.uniforms.uVolatility.value = 0.0);
+      const triggerOn = () => (material.uniforms.uVolatility.value = 0.3);
+      const triggerOff = () => (material.uniforms.uVolatility.value = 0.8);
       const el = containerRef.current;
       el.addEventListener("mouseenter", triggerOn);
       el.addEventListener("mouseleave", triggerOff);
