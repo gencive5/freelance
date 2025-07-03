@@ -6,6 +6,7 @@ import LanguageSwitcher from './components/LanguageSwitcher';  // Updated import
 import { useLanguage } from './context/LanguageContext';
 import { LanguageProvider } from './context/LanguageContext';
 import BlotterText from "./BlotterText";
+import DistortedText from './DistortedText';
 
 const AppContent = () => {
   const { language } = useLanguage();
@@ -56,14 +57,12 @@ const AppContent = () => {
         </span>
       </div>
     
-      <div>
-      <BlotterText 
-        text="observation" 
-        fontFamily="'EB Garamond', serif" 
-        size={27} 
-        color="#202020" 
-      />
-    </div>
+    <DistortedText 
+  text="YOUR TEXT HERE" 
+  size={60}
+  color="#FF0A54"
+  speed={0.3}
+/>
     </div>
     
   );
