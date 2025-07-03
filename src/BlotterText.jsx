@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 const BlotterText = ({ text, className = "" }) => {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
-  const [baseSize, setBaseSize] = useState(100);
   const [scale, setScale] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -32,7 +31,6 @@ const BlotterText = ({ text, className = "" }) => {
       // Increase size multiplier for mobile
       const sizeMultiplier = isMobile ? 2 : 1.8;
       const estimatedSize = (containerWidth / chars) * sizeMultiplier;
-      setBaseSize(estimatedSize);
 
       containerRef.current.innerHTML = "";
 
