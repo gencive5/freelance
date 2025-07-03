@@ -17,6 +17,37 @@ const DistortedText = ({
   const materialRef = useRef(null);
   const lastMousePosition = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
   const currentVolatility = useRef(0);
+  const animationFrameId = useRef(null);
+  const mousePosRef = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
+
+  // Helper functions
+  const lineEq = (y2, y1, x2, x1, currentVal) => {
+    const m = (y2 - y1) / (x2 - x1);
+    const b = y1 - m * x1;
+    return m * currentVal + b;
+  };
+
+  const lerp = (a, b, n) => (1 - n) * a + n * b;
+
+  const render = () => {
+    if (!materialRef.current) return;
+    
+    const mouseDistance = Math.hypot(
+      lastMousePosition.current.x - mousePosRef.current.x,
+      lastMousePosition.current.y - mousePosRef.current.y
+    );
+    
+    currentVolatility.current = lerp(
+      currentVolatility.current, 
+      Math.min(lineEq(0.9, 0, 100, 0, mouseDistance), 0.9), 
+      0.05
+    );
+    
+    materialRef.current.uniforms.uVolatility.value = currentVolatility.current;
+    lastMousePosition.current = { ...mousePosRef.current };
+    
+    animationFrameId.current = requestAnimationFrame(render);
+  };
 
   useEffect(() => {
     if (!window.Blotter || !containerRef.current) return;
@@ -49,33 +80,19 @@ const DistortedText = ({
     scopeRef.current.appendTo(containerRef.current);
 
     const handleMouseMove = (ev) => {
-      if (!materialRef.current) return;
-      
-      const mousePos = {
+      mousePosRef.current = {
         x: ev.clientX,
         y: ev.clientY
       };
-      
-      const mouseDistance = Math.hypot(
-        lastMousePosition.current.x - mousePos.x,
-        lastMousePosition.current.y - mousePos.y
-      );
-      
-      // Calculate new volatility based on mouse movement speed
-      currentVolatility.current = lerp(
-        currentVolatility.current, 
-        Math.min(lineEq(0.9, 0, 100, 0, mouseDistance), 0.9), 
-        0.05
-      );
-      
-      materialRef.current.uniforms.uVolatility.value = currentVolatility.current;
-      lastMousePosition.current = {x: mousePos.x, y: mousePos.y};
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    animationFrameId.current = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrameId.current);
+      
       // Safe cleanup
       if (scopeRef.current && scopeRef.current.element) {
         try {
@@ -89,15 +106,6 @@ const DistortedText = ({
       materialRef.current = null;
     };
   }, [text, fontFamily, size, color, padding, speed, seed]);
-
-  // Helper functions from the original component
-  const lineEq = (y2, y1, x2, x1, currentVal) => {
-    const m = (y2 - y1) / (x2 - x1);
-    const b = y1 - m * x1;
-    return m * currentVal + b;
-  };
-
-  const lerp = (a, b, n) => (1 - n) * a + n * b;
 
   return (
     <div
