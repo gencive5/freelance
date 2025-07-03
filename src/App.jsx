@@ -54,7 +54,9 @@ const AppContent = () => {
           <span aria-hidden="true">{translations.orContact[language]}</span>
         </span>
       </div>
+      <p className="Test">Test UnormativeFraktur font</p>
     </div>
+    
   );
 };
 

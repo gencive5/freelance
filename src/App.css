@@ -4,12 +4,13 @@
        url('/fonts/acumin-bdpro-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap; 
 }
 
 @font-face {
-  font-family: 'Mutlu';
-  src: url('/fonts/mutlu__ornamental-webfont.woff2') format('woff2'),
-       url('/fonts/mutlu__ornamental-webfont.woff') format('woff');
+  font-family: 'Seaweed';
+  src: url('/fonts/SeaweedSans-Regular.woff2') format('woff2'),
+       url('/fonts/SeaweedSans-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -22,14 +23,14 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Unormative';
-  src: url('/fonts/unormativefraktur-webfont.woff2') format('woff2'),
-       url('/fonts/unormativefraktur-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 
+@font-face {
+  font-family: 'UnormativeFraktur';
+  src: local('UnormativeFraktur'), url('assets/fonts/UnormativeFraktur.woff') format('woff'), 
+  url('assets/fonts/UnormativeFraktur.woff2') format('woff2');
+  font-weight: normal; /* Adjust font weight if necessary */
+  font-style: normal; /* Adjust font style if necessary */
+}
 
 .container {
    width: 100vw;
@@ -43,6 +44,10 @@
   padding: 1rem;
 }
 
+.Test {
+  padding: 1rem;
+   font-family: 'Sniglet';
+}
 
 .textfit-container {
   display: flex;
@@ -70,7 +75,7 @@ canvas {
 }
 
 .text-fit {
-  font-family: 'Mutlu', sans-serif;
+  font-family: 'Acumin', sans-serif;
   display: flex;
   container-type: inline-size;
 
@@ -135,6 +140,7 @@ canvas {
   inherits: true;
 }
 
+/* Circles */
 
 .circle-grid {
   width: 100vw;

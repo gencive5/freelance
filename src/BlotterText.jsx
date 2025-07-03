@@ -9,7 +9,7 @@ const BlotterText = ({ text, className = "" }) => {
   useEffect(() => {
     // Check if mobile
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth <= 768); // 768px is a common breakpoint for mobile
+      setIsMobile(window.innerWidth <= 768);
     };
 
     checkIfMobile();
@@ -28,13 +28,11 @@ const BlotterText = ({ text, className = "" }) => {
       const containerWidth = containerRef.current.offsetWidth;
       const chars = Math.max(text.length, 25);
       
-      // Increase size multiplier for mobile
       const sizeMultiplier = isMobile ? 2 : 1.8;
       const estimatedSize = (containerWidth / chars) * sizeMultiplier;
 
       containerRef.current.innerHTML = "";
 
-      // Adjust padding for mobile
       const padding = isMobile ? 20 : 60;
       
       const textObj = new Blotter.Text(text, {
@@ -42,6 +40,8 @@ const BlotterText = ({ text, className = "" }) => {
         fill: "#ffffff",
         paddingLeft: padding,
         paddingRight: padding,
+        family: "UnormativeFraktur", // This is where we set the font
+        weight: 400 // Normal weight
       });
 
       const material = new LiquidDistortMaterial();
@@ -68,7 +68,6 @@ const BlotterText = ({ text, className = "" }) => {
         const containerWidth = containerRef.current.offsetWidth;
         if (canvasWidth === 0) return;
         
-        // Adjust scale calculation for mobile
         const targetScale = isMobile ? 
           Math.min(containerWidth / canvasWidth, 1.2) : 
           containerWidth / canvasWidth;
