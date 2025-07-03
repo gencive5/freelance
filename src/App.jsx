@@ -5,6 +5,7 @@ import ContactForm from './ContactForm';
 import LanguageSwitcher from './components/LanguageSwitcher';  // Updated import path
 import { useLanguage } from './context/LanguageContext';
 import { LanguageProvider } from './context/LanguageContext';
+import BlotterText from "./BlotterText";
 
 const AppContent = () => {
   const { language } = useLanguage();
@@ -54,7 +55,15 @@ const AppContent = () => {
           <span aria-hidden="true">{translations.orContact[language]}</span>
         </span>
       </div>
-      <p className="Test">Test UnormativeFraktur font</p>
+    
+      <div>
+      <BlotterText 
+        text="observation" 
+        fontFamily="'EB Garamond', serif" 
+        size={27} 
+        color="#202020" 
+      />
+    </div>
     </div>
     
   );
