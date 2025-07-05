@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const DistortedText = ({ 
   text = "observation",
@@ -19,6 +19,10 @@ const DistortedText = ({
   const currentVolatility = useRef(0);
   const animationFrameId = useRef(null);
   const mousePosRef = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
 
   // Helper functions
   const lineEq = (y2, y1, x2, x1, currentVal) => {
@@ -49,19 +53,29 @@ const DistortedText = ({
     animationFrameId.current = requestAnimationFrame(render);
   };
 
-  useEffect(() => {
+  const handleResize = () => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+    
+    if (blotterInstance.current && scopeRef.current && containerRef.current) {
+      initializeBlotter();
+    }
+  };
+
+  const initializeBlotter = () => {
     if (!window.Blotter || !containerRef.current) return;
 
-    const { Text, LiquidDistortMaterial } = window.Blotter;
-
-    // Clear previous content safely
     while (containerRef.current.firstChild) {
       containerRef.current.removeChild(containerRef.current.firstChild);
     }
 
-    const textObj = new Text(text, {
+    const responsiveSize = Math.min(size, dimensions.width * 0.15);
+
+    const textObj = new window.Blotter.Text(text, {
       family: fontFamily,
-      size: size,
+      size: responsiveSize,
       fill: color,
       paddingLeft: padding,
       paddingRight: padding,
@@ -69,16 +83,25 @@ const DistortedText = ({
       paddingBottom: padding,
     });
 
-    const material = new LiquidDistortMaterial();
+    const material = new window.Blotter.LiquidDistortMaterial();
     material.uniforms.uSpeed.value = speed;
     material.uniforms.uVolatility.value = volatility;
     material.uniforms.uSeed.value = seed;
     materialRef.current = material;
 
-    blotterInstance.current = new window.Blotter(material, { texts: textObj });
+    blotterInstance.current = new window.Blotter(material, { 
+      texts: textObj,
+      width: containerRef.current.offsetWidth,
+      height: containerRef.current.offsetHeight
+    });
+
     scopeRef.current = blotterInstance.current.forText(textObj);
     scopeRef.current.appendTo(containerRef.current);
+  };
 
+  useEffect(() => {
+    initializeBlotter();
+    
     const handleMouseMove = (ev) => {
       mousePosRef.current = {
         x: ev.clientX,
@@ -87,13 +110,14 @@ const DistortedText = ({
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleResize);
     animationFrameId.current = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId.current);
       
-      // Safe cleanup
       if (scopeRef.current && scopeRef.current.element) {
         try {
           scopeRef.current.element.remove();
@@ -105,18 +129,12 @@ const DistortedText = ({
       scopeRef.current = null;
       materialRef.current = null;
     };
-  }, [text, fontFamily, size, color, padding, speed, seed]);
+  }, [text, fontFamily, size, color, padding, speed, seed, dimensions]);
 
   return (
     <div
       ref={containerRef}
-      className={className}
-      style={{
-        display: 'inline-block',
-        margin: '0 auto',
-        width: '100%',
-        textAlign: 'center'
-      }}
+      className={`distorted-text-container ${className}`}
     />
   );
 };

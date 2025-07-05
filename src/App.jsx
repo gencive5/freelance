@@ -59,7 +59,7 @@ const AppContent = () => {
     
     <DistortedText 
   text="YOUR TEXT HERE" 
-  size={60}
+  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
   color="#FF0A54"
   speed={0.3}
 />
