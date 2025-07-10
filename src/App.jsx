@@ -33,7 +33,7 @@ const AppContent = () => {
       <LanguageSwitcher />
       <TextFit />
       
-      <div style={{ backgroundColor: '#FF0A54', padding: '20px' }} className="Figure-Demo">
+      <div style={{ padding: '20px' }} className="Figure-Demo">
         <span className="text-fit">
           <span><span>{translations.askForWebsite[language]}</span></span>
           <span aria-hidden="true">{translations.askForWebsite[language]}</span>
