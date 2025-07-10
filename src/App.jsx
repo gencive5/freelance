@@ -2,10 +2,9 @@
 import './App.css';
 import TextFit from './TextFit';
 import ContactForm from './ContactForm';
-import LanguageSwitcher from './components/LanguageSwitcher';  // Updated import path
+import LanguageSwitcher from './components/LanguageSwitcher'; 
 import { useLanguage } from './context/LanguageContext';
 import { LanguageProvider } from './context/LanguageContext';
-import BlotterText from "./BlotterText";
 import DistortedText from './DistortedText';
 
 const AppContent = () => {
