@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 const DistortedText = ({ 
   text = "observation",
   fontFamily = "'EB Garamond', serif",
-  size = 100,
+  size = 60, // Default size in pixels
   color = "#202020",
   padding = 40,
   speed = 1,
@@ -15,14 +15,13 @@ const DistortedText = ({
   const blotterInstance = useRef(null);
   const scopeRef = useRef(null);
   const materialRef = useRef(null);
+  const textObjRef = useRef(null);
   const lastMousePosition = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
   const currentVolatility = useRef(0);
   const animationFrameId = useRef(null);
   const mousePosRef = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
+  const resizeTimeout = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Helper functions
   const lineEq = (y2, y1, x2, x1, currentVal) => {
@@ -33,7 +32,7 @@ const DistortedText = ({
 
   const lerp = (a, b, n) => (1 - n) * a + n * b;
 
-  const render = () => {
+  const render = useCallback(() => {
     if (!materialRef.current) return;
     
     const mouseDistance = Math.hypot(
@@ -47,33 +46,28 @@ const DistortedText = ({
       0.05
     );
     
-    materialRef.current.uniforms.uVolatility.value = currentVolatility.current;
-    lastMousePosition.current = { ...mousePosRef.current };
-    
-    animationFrameId.current = requestAnimationFrame(render);
-  };
-
-  const handleResize = () => {
-    setDimensions({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-    
-    if (blotterInstance.current && scopeRef.current && containerRef.current) {
-      initializeBlotter();
+    // Ensure uniform values are properly set
+    if (materialRef.current.uniforms) {
+      materialRef.current.uniforms.uVolatility.value = Math.min(Math.max(currentVolatility.current, 0), 1);
     }
-  };
+    
+    lastMousePosition.current = { ...mousePosRef.current };
+    animationFrameId.current = requestAnimationFrame(render);
+  }, []);
 
-  const initializeBlotter = () => {
+  const initializeBlotter = useCallback(() => {
     if (!window.Blotter || !containerRef.current) return;
 
-    while (containerRef.current.firstChild) {
-      containerRef.current.removeChild(containerRef.current.firstChild);
+    // Clean up previous instance
+    if (scopeRef.current?.element) {
+      scopeRef.current.element.remove();
     }
 
-    const responsiveSize = Math.min(size, dimensions.width * 0.15);
+    // Calculate responsive size based on window width
+    const responsiveSize = windowWidth > 768 ? size : size * 0.7;
 
-    const textObj = new window.Blotter.Text(text, {
+    // Create new text object
+    textObjRef.current = new window.Blotter.Text(text, {
       family: fontFamily,
       size: responsiveSize,
       fill: color,
@@ -83,25 +77,55 @@ const DistortedText = ({
       paddingBottom: padding,
     });
 
+    // Create material with validated uniform values
     const material = new window.Blotter.LiquidDistortMaterial();
-    material.uniforms.uSpeed.value = speed;
-    material.uniforms.uVolatility.value = volatility;
-    material.uniforms.uSeed.value = seed;
+    material.uniforms.uSpeed.value = Number(speed) || 0;
+    material.uniforms.uVolatility.value = Math.min(Math.max(Number(volatility), 0), 1);
+    material.uniforms.uSeed.value = Number(seed) || 0.1;
     materialRef.current = material;
 
+    // Initialize Blotter
     blotterInstance.current = new window.Blotter(material, { 
-      texts: textObj,
-      width: containerRef.current.offsetWidth,
-      height: containerRef.current.offsetHeight
+      texts: textObjRef.current
     });
 
-    scopeRef.current = blotterInstance.current.forText(textObj);
+    // Create scope and append to container
+    scopeRef.current = blotterInstance.current.forText(textObjRef.current);
     scopeRef.current.appendTo(containerRef.current);
-  };
+
+    // Start render loop
+    animationFrameId.current = requestAnimationFrame(render);
+  }, [text, fontFamily, size, color, padding, speed, volatility, seed, windowWidth, render]);
+
+  const handleResize = useCallback(() => {
+    setWindowWidth(window.innerWidth);
+    
+    // Debounce resize events
+    clearTimeout(resizeTimeout.current);
+    resizeTimeout.current = setTimeout(() => {
+      if (textObjRef.current && blotterInstance.current) {
+        // Only update at breakpoints to save performance
+        const newSize = window.innerWidth > 768 ? size : size * 0.7;
+        textObjRef.current.properties.size = newSize;
+        textObjRef.current.needsUpdate = true;
+        
+        // Update canvas dimensions
+        if (scopeRef.current?.element) {
+          const canvas = scopeRef.current.element.querySelector('canvas');
+          if (canvas) {
+            const containerWidth = containerRef.current.offsetWidth;
+            const containerHeight = containerRef.current.offsetHeight;
+            canvas.width = containerWidth;
+            canvas.height = containerHeight;
+            canvas.style.width = `${containerWidth}px`;
+            canvas.style.height = `${containerHeight}px`;
+          }
+        }
+      }
+    }, 200);
+  }, [size]);
 
   useEffect(() => {
-    initializeBlotter();
-    
     const handleMouseMove = (ev) => {
       mousePosRef.current = {
         x: ev.clientX,
@@ -111,30 +135,32 @@ const DistortedText = ({
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', handleResize);
-    animationFrameId.current = requestAnimationFrame(render);
+
+    // Initialize after a small delay to ensure container is rendered
+    const initTimeout = setTimeout(initializeBlotter, 100);
 
     return () => {
+      clearTimeout(initTimeout);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout.current);
       cancelAnimationFrame(animationFrameId.current);
       
-      if (scopeRef.current && scopeRef.current.element) {
-        try {
-          scopeRef.current.element.remove();
-        } catch (e) {
-          console.warn("Cleanup error:", e);
-        }
+      if (scopeRef.current?.element) {
+        scopeRef.current.element.remove();
       }
-      blotterInstance.current = null;
-      scopeRef.current = null;
-      materialRef.current = null;
     };
-  }, [text, fontFamily, size, color, padding, speed, seed, dimensions]);
+  }, [initializeBlotter, handleResize]);
 
   return (
     <div
       ref={containerRef}
       className={`distorted-text-container ${className}`}
+      style={{
+        width: '100%',
+        height: 'auto',
+        position: 'relative'
+      }}
     />
   );
 };

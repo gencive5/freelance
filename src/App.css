@@ -147,22 +147,19 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-/* Ensure the canvas fits properly */
 .distorted-text-container canvas {
+  width: 100% !important;
+  height: auto !important;
   max-width: 100%;
-  height: auto;
+  display: block;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .distorted-text-container {
-    padding: 10px;
-  }
-  
-  .distorted-text-container canvas {
-    width: 100% !important;
+    padding: 0 10px;
   }
 }
 
