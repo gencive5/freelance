@@ -25,9 +25,9 @@ const ContactForm = () => {
       es: "Mensaje"
     },
     send: {
-      en: "Send",
-      fr: "Envoyer",
-      es: "Enviar"
+      en: "Send to vic.segen@gmail.com",
+      fr: "Envoyer à vic.segen@gmail.com",
+      es: "Enviar a vic.segen@gmail.com"
     },
     success: {
       en: "Message sent!",

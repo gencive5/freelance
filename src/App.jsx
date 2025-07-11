@@ -20,11 +20,6 @@ const AppContent = () => {
       en: "Leave your contact details below and I will get back to you today",
       fr: "Laissez vos coordonnées ci-dessous et je vous répondrai aujourd'hui",
       es: "Deja tus datos de contacto abajo y me pondré en contacto contigo hoy"
-    },
-    orContact: {
-      en: "or contact me at vic.segen@gmail.com",
-      fr: "ou contactez-moi à vic.segen@gmail.com",
-      es: "o contáctame en vic.segen@gmail.com"
     }
   };
 
@@ -49,12 +44,6 @@ const AppContent = () => {
 
       <ContactForm />
       
-      <div className="Figure-Demo">
-        <span className="text-fit">
-          <span><span>{translations.orContact[language]}</span></span>
-          <span aria-hidden="true">{translations.orContact[language]}</span>
-        </span>
-      </div>
     
     <DistortedText 
   text="YOUR TEXT HERE" 
