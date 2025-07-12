@@ -26,10 +26,12 @@
 
 @font-face {
   font-family: 'UnormativeFraktur';
-  src: local('UnormativeFraktur'), url('assets/fonts/UnormativeFraktur.woff') format('woff'), 
-  url('assets/fonts/UnormativeFraktur.woff2') format('woff2');
-  font-weight: normal; /* Adjust font weight if necessary */
-  font-style: normal; /* Adjust font style if necessary */
+  src: local('UnormativeFraktur'),
+       url('/fonts/UnormativeFraktur.woff2') format('woff2'),
+       url('/fonts/UnormativeFraktur.woff') format('woff');
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .container {
