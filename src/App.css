@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Univers';
-  src: url('/fonts/Univers-UltraCondensed.woff2') format('woff2'),
-       url('/fonts/Univers-UltraCondensed.woff') format('woff');
+  src: url('./fonts/Univers-UltraCondensed.woff2') format('woff2'),
+       url('./fonts/Univers-UltraCondensed.woff') format('woff');
   font-display: swap;
   font-weight: normal;
   font-style: normal;
@@ -27,8 +27,8 @@
 @font-face {
   font-family: 'UnormativeFraktur';
   src: local('UnormativeFraktur'),
-       url('/fonts/UnormativeFraktur.woff2') format('woff2'),
-       url('/fonts/UnormativeFraktur.woff') format('woff');
+       url('./fonts/UnormativeFraktur.woff2') format('woff2'),
+       url('./fonts/UnormativeFraktur.woff') format('woff');
   font-display: swap;
   font-weight: normal;
   font-style: normal;
