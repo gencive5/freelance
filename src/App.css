@@ -54,9 +54,9 @@
 .textfit-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
   align-items: flex-start;
   width: 100%;
+  
 }
 
 canvas {
@@ -69,6 +69,7 @@ canvas {
   .textfit-container {
     align-items: center; /* Center the text on mobile */
     gap: 1rem; /* Reduce gap between lines on mobile */
+    
   }
   
   canvas {
@@ -275,4 +276,12 @@ canvas {
 
 .contact-form__message--error {
   color: #f44336;
+}
+
+.title-text {
+  margin-bottom: -0.5rem; /* Pull the subtitle closer */
+}
+
+.subtitle-text {
+  margin-top: -0.5rem; /* Pull closer to the title */
 }

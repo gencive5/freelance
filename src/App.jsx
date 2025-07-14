@@ -6,6 +6,7 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 import { useLanguage } from './context/LanguageContext';
 import { LanguageProvider } from './context/LanguageContext';
 import DistortedText from './DistortedText';
+import Distorted from './Distorted';
 
 const AppContent = () => {
   const { language } = useLanguage();
@@ -26,8 +27,21 @@ const AppContent = () => {
   return (
     <div className="container">
       <LanguageSwitcher />
-      <TextFit />
       
+
+       <Distorted
+  text="Gencives" 
+  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
+  color="#ffffffff"
+  speed={0.3}
+/>
+<Distorted
+  text="creative developer" 
+  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
+  color="#ffffffff"
+  speed={0.3}
+/>
+
       <div style={{ padding: '20px' }} className="Figure-Demo">
         <span className="text-fit">
           <span><span>{translations.askForWebsite[language]}</span></span>
