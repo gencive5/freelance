@@ -118,14 +118,18 @@ const ContactForm = () => {
         />
       </div>
       
-      <div className="contact-form__group">
-        <input 
-          type="submit" 
-          value={translations.send[language]}
-          disabled={isSubmitting} 
-          className="contact-form__submit"
-        />
-      </div>
+     <div className="contact-form__group contact-form__submit-container">
+  <button 
+    type="submit" 
+    disabled={isSubmitting} 
+    className="contact-form__submit"
+  >
+    <span className="contact-form__submit-text">
+      <span><span>{translations.send[language]}</span></span>
+      <span aria-hidden="true" style={{ display: 'none' }}>{translations.send[language]}</span>
+    </span>
+  </button>
+</div>
       
       {stateMessage && (
         <p className={`contact-form__message ${

@@ -285,3 +285,49 @@ canvas {
 .subtitle-text {
   margin-top: -0.5rem; /* Pull closer to the title */
 }
+
+/* Mobile-only text-fit behavior for submit button */
+@media (max-width: 768px) {
+  .contact-form__submit-container {
+    width: 100%;
+  }
+
+  .contact-form__submit-text {
+    font-family: 'Univers', sans-serif;
+    display: flex;
+    container-type: inline-size;
+    width: 100%;
+  }
+
+  .contact-form__submit-text span {
+    flex-grow: 1;
+    container-type: inline-size;
+    --captured-length: 100cqi;
+    --available-space: var(--captured-length);
+  }
+
+  .contact-form__submit-text span > span {
+    --support-sentinel: inherit;
+    --captured-length: 100cqi;
+    --ratio: tan(atan2(
+      var(--available-space),
+      var(--available-space) - var(--captured-length)
+    ));
+    --font-size: clamp(
+      1em,
+      1em * var(--ratio),
+      var(--max-font-size, infinity * 1px) - var(--support-sentinel)
+    );
+    inline-size: var(--available-space);
+    display: block;
+    font-size: var(--font-size);
+    white-space: nowrap;
+  }
+
+  .contact-form__submit {
+    font-size: inherit !important;
+    padding: 10px 0 !important;
+    display: flex;
+    justify-content: center;
+  }
+}
