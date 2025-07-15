@@ -29,18 +29,21 @@ const AppContent = () => {
       <LanguageSwitcher />
       
 
-       <Distorted
-  text="Gencives" 
-  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
-  color="#ffffffff"
-  speed={0.3}
-/>
-<Distorted
-  text="creative developer" 
-  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
-  color="#ffffffff"
-  speed={0.3}
-/>
+ <div className="title-wrapper">
+  <Distorted
+    text="Gencives" 
+    size={window.innerWidth > 768 ? 60 : 40}
+    color="#ffffffff"
+    speed={0.3}
+  />
+  <Distorted
+    text="creative developer" 
+    size={window.innerWidth > 768 ? 60 : 40}
+    color="#ffffffff"
+    speed={0.3}
+  />
+</div>
+
 
       <div style={{ padding: '20px' }} className="Figure-Demo">
         <span className="text-fit">

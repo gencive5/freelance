@@ -174,6 +174,25 @@ canvas {
   margin-top: -0.5rem; /* Pull closer to the title */
 }
 
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* Default spacing */
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .title-wrapper {
+    gap: 2.5rem; /* More gap between title & subtitle on mobile */
+    margin-bottom: 3rem; /* Extra gap before 'Ask for your website' */
+  }
+
+  .Figure-Demo:first-of-type {
+    margin-top: 2rem;
+  }
+}
+
 
 /* Circles */
 
