@@ -166,6 +166,14 @@ canvas {
   }
 }
 
+.title-text {
+  margin-bottom: -0.5rem; /* Pull the subtitle closer */
+}
+
+.subtitle-text {
+  margin-top: -0.5rem; /* Pull closer to the title */
+}
+
 
 /* Circles */
 
@@ -203,7 +211,6 @@ canvas {
 #c4 { background: #167e77; }
 #c9 { opacity: 0.9; }
 
-
 /* Contact Form Styles */
 .contact-form {
   width: 100vw;
@@ -233,12 +240,15 @@ canvas {
   border-radius: 4px;
   font-family: inherit;
   font-size: 3rem;
-
 }
 
 .contact-form__textarea {
   min-height: 120px;
   resize: vertical;
+}
+
+.contact-form__submit-container {
+  width: 100%;
 }
 
 .contact-form__submit {
@@ -249,7 +259,6 @@ canvas {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
   transition: background-color 0.3s;
   font-family: 'Univers', sans-serif;
   font-size: 3rem;
@@ -278,35 +287,53 @@ canvas {
   color: #f44336;
 }
 
-.title-text {
-  margin-bottom: -0.5rem; /* Pull the subtitle closer */
+/* Text Fit Properties */
+@property --captured-length {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: true;
 }
 
-.subtitle-text {
-  margin-top: -0.5rem; /* Pull closer to the title */
+@property --captured-length2 {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: true;
 }
 
-/* Mobile-only text-fit behavior for submit button */
+/* Mobile styles */
 @media (max-width: 768px) {
-  .contact-form__submit-container {
-    width: 100%;
+  .contact-form {
+    padding: 20px 10px;
+    font-size: 2rem;
   }
-
-  .contact-form__submit-text {
-    font-family: 'Univers', sans-serif;
+  
+  .contact-form__submit {
+    font-size: inherit;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .text-fit {
     display: flex;
     container-type: inline-size;
     width: 100%;
+    --captured-length: initial;
+    --support-sentinel: var(--captured-length, 9999px);
   }
-
-  .contact-form__submit-text span {
+  
+  .text-fit > [aria-hidden] {
+    visibility: hidden;
+  }
+  
+  .text-fit > :not([aria-hidden]) {
     flex-grow: 1;
     container-type: inline-size;
     --captured-length: 100cqi;
     --available-space: var(--captured-length);
   }
-
-  .contact-form__submit-text span > span {
+  
+  .text-fit > :not([aria-hidden]) > * {
     --support-sentinel: inherit;
     --captured-length: 100cqi;
     --ratio: tan(atan2(
@@ -323,11 +350,17 @@ canvas {
     font-size: var(--font-size);
     white-space: nowrap;
   }
+}
 
+/* Desktop adjustments */
+@media (min-width: 769px) {
+  .contact-form {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
   .contact-form__submit {
-    font-size: inherit !important;
-    padding: 10px 0 !important;
-    display: flex;
-    justify-content: center;
+    width: 100%;
   }
 }
