@@ -3,13 +3,14 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const DistortedText = ({ 
   text = "observation",
   fontFamily = "'EB Garamond', serif",
-  size = 60,
+  baseSize = 60, // Renamed from 'size' to 'baseSize' for clarity
   color = "#ffffffff",
   padding = 40,
   speed = 1,
   volatility = 0.8,
   seed = 0.8,
-  className = ""
+  className = "",
+  desktopSizeMultiplier = 2 // New prop to control size increase on desktop
 }) => {
   const containerRef = useRef(null);
   const blotterInstance = useRef(null);
@@ -19,14 +20,17 @@ const DistortedText = ({
   const resizeTimeout = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const timeRef = useRef(0);
-  const lastYPosition = useRef(0);
+
+  // Calculate responsive size
+  const getResponsiveSize = useCallback(() => {
+    const isDesktop = windowWidth > 1024; // Using 1024px as desktop breakpoint
+    return isDesktop ? baseSize * desktopSizeMultiplier : baseSize;
+  }, [windowWidth, baseSize, desktopSizeMultiplier]);
 
   const render = useCallback(() => {
     if (!materialRef.current) return;
     
     timeRef.current += 0.01;
-    
-    // Constant movement
     const autoVolatility = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
     materialRef.current.uniforms.uVolatility.value = autoVolatility;
     materialRef.current.uniforms.uSpeed.value = speed;
@@ -38,7 +42,7 @@ const DistortedText = ({
     if (!window.Blotter || !containerRef.current) return;
 
     const prevCanvas = containerRef.current.querySelector('canvas');
-    const responsiveSize = windowWidth > 768 ? size : size * 0.7;
+    const responsiveSize = getResponsiveSize();
 
     const textObj = new window.Blotter.Text(text, {
       family: fontFamily,
@@ -56,8 +60,12 @@ const DistortedText = ({
     material.uniforms.uSeed.value = seed;
     materialRef.current = material;
 
+    // Add quality improvements
     blotterInstance.current = new window.Blotter(material, { 
-      texts: textObj
+      texts: textObj,
+      antialiasing: true,
+      webgl2: true,
+      resolutionScale: windowWidth > 1024 ? 1.3 : 1 // Slightly higher resolution on desktop
     });
 
     scopeRef.current = blotterInstance.current.forText(textObj);
@@ -65,6 +73,12 @@ const DistortedText = ({
     const tempDiv = document.createElement('div');
     scopeRef.current.appendTo(tempDiv);
     const newCanvas = tempDiv.querySelector('canvas');
+    
+    if (newCanvas) {
+      // Apply quality improvements to canvas
+      newCanvas.style.imageRendering = 'optimizeQuality';
+      newCanvas.style.willChange = 'transform';
+    }
     
     if (prevCanvas && newCanvas) {
       newCanvas.style.opacity = '0';
@@ -88,7 +102,7 @@ const DistortedText = ({
     if (!animationFrameId.current) {
       animationFrameId.current = requestAnimationFrame(render);
     }
-  }, [text, fontFamily, size, color, padding, speed, volatility, seed, windowWidth, render]);
+  }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize]);
 
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -98,24 +112,12 @@ const DistortedText = ({
     }, 100);
   }, [initializeBlotter]);
 
-  // Prevent accidental scrolling
-  const handleTouchMove = useCallback((e) => {
-    const currentY = e.touches[0].clientY;
-    if (Math.abs(currentY - lastYPosition.current) > 10) {
-      e.preventDefault();
-    }
-    lastYPosition.current = currentY;
-  }, []);
-
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    containerRef.current?.addEventListener('touchmove', handleTouchMove, { passive: false });
-    
     const initTimeout = setTimeout(initializeBlotter, 50);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      containerRef.current?.removeEventListener('touchmove', handleTouchMove);
       clearTimeout(initTimeout);
       clearTimeout(resizeTimeout.current);
       cancelAnimationFrame(animationFrameId.current);
@@ -127,18 +129,18 @@ const DistortedText = ({
         }
       }
     };
-  }, [initializeBlotter, handleResize, handleTouchMove]);
+  }, [initializeBlotter, handleResize]);
 
   return (
     <div
       ref={containerRef}
       className={`distorted-text-container ${className}`}
       style={{
-        width: '100%',
-        height: 'auto',
+        display: 'inline-block',
         position: 'relative',
-        overflow: 'hidden',
-        touchAction: 'none' // Prevent scroll on touch devices
+        lineHeight: 0, // Prevents extra space
+        transform: 'translateZ(0)', // GPU acceleration
+        backfaceVisibility: 'hidden'
       }}
     />
   );
