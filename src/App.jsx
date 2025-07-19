@@ -43,6 +43,13 @@ const AppContent = () => {
   />
 </div>
 
+<DistortedText 
+  text="ASK FOR YOUR WEBSITE NOW" 
+  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
+
+  
+/>
+
 
       <div style={{ padding: '20px' }} className="Figure-Demo">
         <span className="text-fit">

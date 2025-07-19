@@ -6,11 +6,11 @@ const DistortedText = ({
   baseSize = 60,
   color = "#ffffffff",
   padding = 40,
-  speed = 0.5,
-  volatility = 0.8,
+  speed = 0.1,
+  volatility = 0.2,
   seed = 0.8,
   className = "",
-  desktopSizeMultiplier = 2
+  desktopSizeMultiplier = 1.5
 }) => {
   const containerRef = useRef(null);
   const blotterInstance = useRef(null);
@@ -107,8 +107,8 @@ const DistortedText = ({
     // NEW: Add hover/touch interactions
     const el = containerRef.current;
     const handleHoverStart = () => {
-      material.uniforms.uSpeed.value = 1.5;
-      hoverMultiplierRef.current = 6;
+      material.uniforms.uSpeed.value = 1;
+      hoverMultiplierRef.current = '';
     };
     const handleHoverEnd = () => {
       material.uniforms.uSpeed.value = speed;
