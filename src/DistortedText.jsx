@@ -6,8 +6,8 @@ const DistortedText = ({
   size = 60,
   color = "#202020",
   padding = 40,
-  speed = 1.5, // Increased default speed
-  volatility = 0.3, // Adjusted default volatility
+  speed = 1.5,
+  volatility = 0.5,
   seed = 0.1,
   className = ""
 }) => {
@@ -15,53 +15,46 @@ const DistortedText = ({
   const blotterInstance = useRef(null);
   const scopeRef = useRef(null);
   const materialRef = useRef(null);
-  const lastMousePosition = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
-  const currentVolatility = useRef(0);
   const animationFrameId = useRef(null);
-  const mousePosRef = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
   const resizeTimeout = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [isResizing, setIsResizing] = useState(false);
-
-  // Helper functions
-  const lineEq = (y2, y1, x2, x1, currentVal) => {
-    const m = (y2 - y1) / (x2 - x1);
-    const b = y1 - m * x1;
-    return m * currentVal + b;
-  };
+  const [isHovered, setIsHovered] = useState(false);
+  const timeRef = useRef(0);
+  const lastYPosition = useRef(0);
 
   const lerp = (a, b, n) => (1 - n) * a + n * b;
 
   const render = useCallback(() => {
     if (!materialRef.current) return;
     
-    const mouseDistance = Math.hypot(
-      lastMousePosition.current.x - mousePosRef.current.x,
-      lastMousePosition.current.y - mousePosRef.current.y
-    );
+    timeRef.current += 0.01;
     
-    // Smoother volatility calculation with performance optimization
-    currentVolatility.current = lerp(
-      currentVolatility.current, 
-      Math.min(mouseDistance * 0.015, 0.9), // Simplified calculation
-      0.08 // Slightly faster interpolation
-    );
-    
-    materialRef.current.uniforms.uVolatility.value = Math.min(
-      Math.max(currentVolatility.current, 0), 
-      1
-    );
-    lastMousePosition.current = { ...mousePosRef.current };
+    // Automatic movement when not hovered
+    if (!isHovered) {
+      const autoVolatility = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
+      materialRef.current.uniforms.uVolatility.value = autoVolatility;
+      materialRef.current.uniforms.uSpeed.value = speed;
+    } else {
+      // When hovered, reduce movement
+      materialRef.current.uniforms.uVolatility.value = lerp(
+        materialRef.current.uniforms.uVolatility.value,
+        0.1,
+        0.1
+      );
+      materialRef.current.uniforms.uSpeed.value = lerp(
+        materialRef.current.uniforms.uSpeed.value,
+        0,
+        0.1
+      );
+    }
     
     animationFrameId.current = requestAnimationFrame(render);
-  }, []);
+  }, [isHovered, speed, volatility]);
 
   const initializeBlotter = useCallback(() => {
     if (!window.Blotter || !containerRef.current) return;
 
-    // Store reference to previous canvas
     const prevCanvas = containerRef.current.querySelector('canvas');
-    
     const responsiveSize = windowWidth > 768 ? size : size * 0.7;
 
     const textObj = new window.Blotter.Text(text, {
@@ -75,7 +68,7 @@ const DistortedText = ({
     });
 
     const material = new window.Blotter.LiquidDistortMaterial();
-    material.uniforms.uSpeed.value = speed * 1.5; // Increased speed multiplier
+    material.uniforms.uSpeed.value = speed;
     material.uniforms.uVolatility.value = volatility;
     material.uniforms.uSeed.value = seed;
     materialRef.current = material;
@@ -86,12 +79,10 @@ const DistortedText = ({
 
     scopeRef.current = blotterInstance.current.forText(textObj);
     
-    // Create new canvas in memory first
     const tempDiv = document.createElement('div');
     scopeRef.current.appendTo(tempDiv);
     const newCanvas = tempDiv.querySelector('canvas');
     
-    // Smooth transition between canvases
     if (prevCanvas && newCanvas) {
       newCanvas.style.opacity = '0';
       newCanvas.style.transition = 'opacity 0.15s ease-out';
@@ -111,46 +102,41 @@ const DistortedText = ({
       scopeRef.current.appendTo(containerRef.current);
     }
 
-    // Start optimized render loop
     if (!animationFrameId.current) {
       animationFrameId.current = requestAnimationFrame(render);
     }
   }, [text, fontFamily, size, color, padding, speed, volatility, seed, windowWidth, render]);
 
   const handleResize = useCallback(() => {
-    setIsResizing(true);
     setWindowWidth(window.innerWidth);
-    
-    // More responsive debounce with quick initial response
     clearTimeout(resizeTimeout.current);
     resizeTimeout.current = setTimeout(() => {
       initializeBlotter();
-      setIsResizing(false);
-    }, 100); // Reduced debounce time
+    }, 100);
   }, [initializeBlotter]);
 
-  useEffect(() => {
-    const handleMouseMove = (ev) => {
-      mousePosRef.current = {
-        x: ev.clientX,
-        y: ev.clientY
-      };
-    };
+  // Prevent accidental scrolling
+  const handleTouchMove = useCallback((e) => {
+    const currentY = e.touches[0].clientY;
+    if (Math.abs(currentY - lastYPosition.current) > 10) {
+      e.preventDefault();
+    }
+    lastYPosition.current = currentY;
+  }, []);
 
-    window.addEventListener('mousemove', handleMouseMove);
+  useEffect(() => {
     window.addEventListener('resize', handleResize);
+    containerRef.current?.addEventListener('touchmove', handleTouchMove, { passive: false });
     
-    // Initialize with slight delay to ensure container is ready
     const initTimeout = setTimeout(initializeBlotter, 50);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
+      containerRef.current?.removeEventListener('touchmove', handleTouchMove);
       clearTimeout(initTimeout);
       clearTimeout(resizeTimeout.current);
       cancelAnimationFrame(animationFrameId.current);
       
-      // Clean up canvas element
       if (containerRef.current) {
         const canvas = containerRef.current.querySelector('canvas');
         if (canvas) {
@@ -158,7 +144,7 @@ const DistortedText = ({
         }
       }
     };
-  }, [initializeBlotter, handleResize]);
+  }, [initializeBlotter, handleResize, handleTouchMove]);
 
   return (
     <div
@@ -168,8 +154,11 @@ const DistortedText = ({
         width: '100%',
         height: 'auto',
         position: 'relative',
-        overflow: 'hidden' // Prevent scroll jumps during resize
+        overflow: 'hidden',
+        touchAction: 'none' // Prevent scroll on touch devices
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     />
   );
 };

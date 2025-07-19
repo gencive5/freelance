@@ -33,13 +33,13 @@ const AppContent = () => {
     text="Gencives" 
     size={window.innerWidth > 768 ? 60 : 40}
     color="#ffffffff"
-    speed={0.3}
+    
   />
   <Distorted
     text="creative developer" 
     size={window.innerWidth > 768 ? 60 : 40}
     color="#ffffffff"
-    speed={0.3}
+    
   />
 </div>
 
@@ -65,7 +65,7 @@ const AppContent = () => {
   text="TEST TEST!" 
   size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
   color="#FF0A54"
-  speed={0.3}
+  
 />
     </div>
     

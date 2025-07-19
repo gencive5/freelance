@@ -45,9 +45,9 @@ const BlotterText = ({ text, className = "" }) => {
       });
 
       const material = new LiquidDistortMaterial();
-      material.uniforms.uSpeed.value = 0.8;
-      material.uniforms.uVolatility.value = 2.5;
-      material.uniforms.uSeed.value = 1.3;
+      material.uniforms.uSpeed.value = 0.5;
+      material.uniforms.uVolatility.value = 2.7;
+      material.uniforms.uSeed.value = 1.7;
 
       const blotter = new Blotter(material, { texts: textObj });
       const scope = blotter.forText(textObj);
@@ -57,10 +57,10 @@ const BlotterText = ({ text, className = "" }) => {
       const triggerOn = () => (material.uniforms.uVolatility.value = 0.3);
       const triggerOff = () => (material.uniforms.uVolatility.value = 0.8);
       const el = containerRef.current;
-      el.addEventListener("mouseenter", triggerOn);
-      el.addEventListener("mouseleave", triggerOff);
-      el.addEventListener("touchstart", triggerOn);
-      el.addEventListener("touchend", triggerOff);
+      el.addEventListener("mouseenter", triggerOff);
+      el.addEventListener("mouseleave", triggerOn);
+      el.addEventListener("touchstart", triggerOff);
+      el.addEventListener("touchend", triggerOn);
 
       const resize = () => {
         if (!canvasRef.current || !containerRef.current) return;
