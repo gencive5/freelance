@@ -6,11 +6,11 @@ const DistortedText = ({
   baseSize = 60,
   color = "#ffffffff",
   padding = 40,
-  speed = 0.1,
-  volatility = 0.2,
+  speed = 0.5,
+  volatility = 0.8,
   seed = 0.8,
   className = "",
-  desktopSizeMultiplier = 1.5
+  desktopSizeMultiplier = 2
 }) => {
   const containerRef = useRef(null);
   const blotterInstance = useRef(null);
@@ -84,6 +84,7 @@ const DistortedText = ({
     if (newCanvas) {
       newCanvas.style.imageRendering = "optimizeQuality";
       newCanvas.style.willChange = "transform";
+
     }
 
     if (prevCanvas && newCanvas) {
@@ -94,6 +95,7 @@ const DistortedText = ({
       requestAnimationFrame(() => {
         newCanvas.style.opacity = "1";
         prevCanvas.style.opacity = "0";
+
         setTimeout(() => {
           if (prevCanvas.parentNode === containerRef.current) {
             containerRef.current.removeChild(prevCanvas);
@@ -107,8 +109,8 @@ const DistortedText = ({
     // NEW: Add hover/touch interactions
     const el = containerRef.current;
     const handleHoverStart = () => {
-      material.uniforms.uSpeed.value = 1;
-      hoverMultiplierRef.current = '';
+      material.uniforms.uSpeed.value = 1.5;
+      hoverMultiplierRef.current = 6;
     };
     const handleHoverEnd = () => {
       material.uniforms.uSpeed.value = speed;
