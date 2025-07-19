@@ -3,14 +3,14 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const DistortedText = ({ 
   text = "observation",
   fontFamily = "'EB Garamond', serif",
-  baseSize = 60, // Renamed from 'size' to 'baseSize' for clarity
+  baseSize = 60,
   color = "#ffffffff",
   padding = 40,
-  speed = 1,
+  speed = 0.5,
   volatility = 0.8,
   seed = 0.8,
   className = "",
-  desktopSizeMultiplier = 2 // New prop to control size increase on desktop
+  desktopSizeMultiplier = 2
 }) => {
   const containerRef = useRef(null);
   const blotterInstance = useRef(null);
@@ -21,27 +21,32 @@ const DistortedText = ({
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const timeRef = useRef(0);
 
-  // Calculate responsive size
+  // NEW: Hover multiplier
+  const hoverMultiplierRef = useRef(1);
+
+  // Responsive size calculation
   const getResponsiveSize = useCallback(() => {
-    const isDesktop = windowWidth > 1024; // Using 1024px as desktop breakpoint
+    const isDesktop = windowWidth > 1024;
     return isDesktop ? baseSize * desktopSizeMultiplier : baseSize;
   }, [windowWidth, baseSize, desktopSizeMultiplier]);
 
+  // Animation with hover multiplier
   const render = useCallback(() => {
     if (!materialRef.current) return;
-    
+
     timeRef.current += 0.01;
-    const autoVolatility = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
-    materialRef.current.uniforms.uVolatility.value = autoVolatility;
+
+    const baseMovement = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
+    materialRef.current.uniforms.uVolatility.value = baseMovement * hoverMultiplierRef.current;
     materialRef.current.uniforms.uSpeed.value = speed;
-    
+
     animationFrameId.current = requestAnimationFrame(render);
   }, [speed, volatility]);
 
   const initializeBlotter = useCallback(() => {
     if (!window.Blotter || !containerRef.current) return;
 
-    const prevCanvas = containerRef.current.querySelector('canvas');
+    const prevCanvas = containerRef.current.querySelector("canvas");
     const responsiveSize = getResponsiveSize();
 
     const textObj = new window.Blotter.Text(text, {
@@ -60,35 +65,35 @@ const DistortedText = ({
     material.uniforms.uSeed.value = seed;
     materialRef.current = material;
 
-    // Add quality improvements
-    blotterInstance.current = new window.Blotter(material, { 
+    // Hover control
+    hoverMultiplierRef.current = 1;
+
+    blotterInstance.current = new window.Blotter(material, {
       texts: textObj,
       antialiasing: true,
       webgl2: true,
-      resolutionScale: windowWidth > 1024 ? 1.3 : 1 // Slightly higher resolution on desktop
+      resolutionScale: windowWidth > 1024 ? 1.3 : 1,
     });
 
     scopeRef.current = blotterInstance.current.forText(textObj);
-    
-    const tempDiv = document.createElement('div');
+
+    const tempDiv = document.createElement("div");
     scopeRef.current.appendTo(tempDiv);
-    const newCanvas = tempDiv.querySelector('canvas');
-    
+    const newCanvas = tempDiv.querySelector("canvas");
+
     if (newCanvas) {
-      // Apply quality improvements to canvas
-      newCanvas.style.imageRendering = 'optimizeQuality';
-      newCanvas.style.willChange = 'transform';
+      newCanvas.style.imageRendering = "optimizeQuality";
+      newCanvas.style.willChange = "transform";
     }
-    
+
     if (prevCanvas && newCanvas) {
-      newCanvas.style.opacity = '0';
-      newCanvas.style.transition = 'opacity 0.15s ease-out';
+      newCanvas.style.opacity = "0";
+      newCanvas.style.transition = "opacity 0.15s ease-out";
       containerRef.current.appendChild(newCanvas);
-      
+
       requestAnimationFrame(() => {
-        newCanvas.style.opacity = '1';
-        prevCanvas.style.opacity = '0';
-        
+        newCanvas.style.opacity = "1";
+        prevCanvas.style.opacity = "0";
         setTimeout(() => {
           if (prevCanvas.parentNode === containerRef.current) {
             containerRef.current.removeChild(prevCanvas);
@@ -99,9 +104,32 @@ const DistortedText = ({
       scopeRef.current.appendTo(containerRef.current);
     }
 
+    // NEW: Add hover/touch interactions
+    const el = containerRef.current;
+    const handleHoverStart = () => {
+      material.uniforms.uSpeed.value = 1.5;
+      hoverMultiplierRef.current = 6;
+    };
+    const handleHoverEnd = () => {
+      material.uniforms.uSpeed.value = speed;
+      hoverMultiplierRef.current = 1;
+    };
+
+    el.addEventListener("mouseenter", handleHoverStart);
+    el.addEventListener("mouseleave", handleHoverEnd);
+    el.addEventListener("touchstart", handleHoverStart);
+    el.addEventListener("touchend", handleHoverEnd);
+
     if (!animationFrameId.current) {
       animationFrameId.current = requestAnimationFrame(render);
     }
+
+    return () => {
+      el.removeEventListener("mouseenter", handleHoverStart);
+      el.removeEventListener("mouseleave", handleHoverEnd);
+      el.removeEventListener("touchstart", handleHoverStart);
+      el.removeEventListener("touchend", handleHoverEnd);
+    };
   }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize]);
 
   const handleResize = useCallback(() => {
@@ -113,17 +141,17 @@ const DistortedText = ({
   }, [initializeBlotter]);
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     const initTimeout = setTimeout(initializeBlotter, 50);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       clearTimeout(initTimeout);
       clearTimeout(resizeTimeout.current);
       cancelAnimationFrame(animationFrameId.current);
-      
+
       if (containerRef.current) {
-        const canvas = containerRef.current.querySelector('canvas');
+        const canvas = containerRef.current.querySelector("canvas");
         if (canvas) {
           containerRef.current.removeChild(canvas);
         }
@@ -136,11 +164,11 @@ const DistortedText = ({
       ref={containerRef}
       className={`distorted-text-container ${className}`}
       style={{
-        display: 'inline-block',
-        position: 'relative',
-        lineHeight: 0, // Prevents extra space
-        transform: 'translateZ(0)', // GPU acceleration
-        backfaceVisibility: 'hidden'
+        display: "inline-block",
+        position: "relative",
+        lineHeight: 0,
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
       }}
     />
   );
