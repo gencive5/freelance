@@ -153,16 +153,17 @@ canvas {
   position: relative;
 }
 
-.distorted-text-container canvas {
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100%;
-  display: block;
-}
-
 @media (max-width: 768px) {
   .distorted-text-container {
-    padding: 0 10px;
+    margin-left: -3px; /* Counteracts default spacing */
+    left: 0; /* Fine adjustment */
+    overflow: hidden; /* Prevents subpixel bleeding */
+    padding: 0 !important; /* Ensure no padding is interfering */
+  }
+  
+  .distorted-text-container canvas {
+    margin-left: 0;
+    padding-left: 0;
   }
 }
 
