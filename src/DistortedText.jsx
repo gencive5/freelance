@@ -4,11 +4,11 @@ const DistortedText = ({
   text = "observation",
   fontFamily = "'EB Garamond', serif",
   size = 60,
-  color = "#202020",
+  color = "#ffffffff",
   padding = 40,
-  speed = 1.5,
-  volatility = 0.5,
-  seed = 0.1,
+  speed = 1,
+  volatility = 0.8,
+  seed = 0.8,
   className = ""
 }) => {
   const containerRef = useRef(null);
@@ -18,38 +18,21 @@ const DistortedText = ({
   const animationFrameId = useRef(null);
   const resizeTimeout = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [isHovered, setIsHovered] = useState(false);
   const timeRef = useRef(0);
   const lastYPosition = useRef(0);
-
-  const lerp = (a, b, n) => (1 - n) * a + n * b;
 
   const render = useCallback(() => {
     if (!materialRef.current) return;
     
     timeRef.current += 0.01;
     
-    // Automatic movement when not hovered
-    if (!isHovered) {
-      const autoVolatility = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
-      materialRef.current.uniforms.uVolatility.value = autoVolatility;
-      materialRef.current.uniforms.uSpeed.value = speed;
-    } else {
-      // When hovered, reduce movement
-      materialRef.current.uniforms.uVolatility.value = lerp(
-        materialRef.current.uniforms.uVolatility.value,
-        0.1,
-        0.1
-      );
-      materialRef.current.uniforms.uSpeed.value = lerp(
-        materialRef.current.uniforms.uSpeed.value,
-        0,
-        0.1
-      );
-    }
+    // Constant movement
+    const autoVolatility = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
+    materialRef.current.uniforms.uVolatility.value = autoVolatility;
+    materialRef.current.uniforms.uSpeed.value = speed;
     
     animationFrameId.current = requestAnimationFrame(render);
-  }, [isHovered, speed, volatility]);
+  }, [speed, volatility]);
 
   const initializeBlotter = useCallback(() => {
     if (!window.Blotter || !containerRef.current) return;
@@ -157,8 +140,6 @@ const DistortedText = ({
         overflow: 'hidden',
         touchAction: 'none' // Prevent scroll on touch devices
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     />
   );
 };
