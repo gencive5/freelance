@@ -8,6 +8,15 @@
 }
 
 @font-face {
+  font-family: 'Microsoft';
+  src: url('./fonts/MicrosoftSansSerif.woff') format('woff2'),
+       url('./fonts/MicrosoftSansSerif.woff2') format('woff');
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Seaweed';
   src: url('/fonts/SeaweedSans-Regular.woff2') format('woff2'),
        url('/fonts/SeaweedSans-Regular.woff') format('woff');
@@ -78,7 +87,7 @@ canvas {
 }
 
 .text-fit {
-  font-family: 'Univers', sans-serif;
+  font-family: 'Microsoft', sans-serif;
   display: flex;
   container-type: inline-size;
 
@@ -235,7 +244,7 @@ canvas {
   width: 100vw;
   padding: 20px;
   box-sizing: border-box;
-  font-family: 'Univers', sans-serif;
+  font-family: 'Microsoft', sans-serif;
   font-size: 3rem;
 }
 
@@ -279,7 +288,7 @@ canvas {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-  font-family: 'Univers', sans-serif;
+  font-family: 'Microsoft', sans-serif;
   font-size: 3rem;
 }
 

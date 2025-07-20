@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const DistortedText = ({ 
   text = "observation",
-  fontFamily = "'EB Garamond', serif",
+  fontFamily = "'Microsoft', serif",
   baseSize = 60,
   color = "#ffffffff",
   padding = 40,
