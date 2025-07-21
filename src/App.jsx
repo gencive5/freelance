@@ -29,22 +29,18 @@ const AppContent = () => {
       
 
  <div className="title-wrapper">
-  <Distorted
-    text="Gencives" 
-    size={window.innerWidth > 768 ? 60 : 40}
-    color="#ffffffff"
-    
-  />
-  <Distorted
-    text="creative developer" 
-    size={window.innerWidth > 768 ? 60 : 40}
-    color="#ffffffff"
-    
-  />
+ <DistortedText 
+  text="Gencives" 
+  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile  
+/>
+<DistortedText 
+  text="développeur créatif" 
+  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile  
+/>
 </div>
 
 <DistortedText 
-  text="ASK FOR YOUR WEBSITE NOW" 
+  text="DEMANDEZ VOTRE SITE WEB MAINTENANT" 
   size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
 
   
