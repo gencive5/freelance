@@ -171,7 +171,7 @@ canvas {
 
 @media (max-width: 768px) {
   .distorted-text-container {
-    padding: 0 10px;
+    padding: 0;
   }
 }
 
