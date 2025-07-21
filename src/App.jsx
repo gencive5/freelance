@@ -1,11 +1,11 @@
 // src/App.jsx
 import './App.css';
 import ContactForm from './ContactForm';
-import LanguageSwitcher from './components/LanguageSwitcher'; 
+// import LanguageSwitcher from './components/LanguageSwitcher'; 
 import { useLanguage } from './context/LanguageContext';
 import { LanguageProvider } from './context/LanguageContext';
 import DistortedText from './DistortedText';
-import Distorted from './Distorted';
+// import Distorted from './Distorted';
 
 const AppContent = () => {
   const { language } = useLanguage();
@@ -25,7 +25,7 @@ const AppContent = () => {
 
   return (
     <div className="container">
-      <LanguageSwitcher />
+      
       
 
  <div className="title-wrapper">
