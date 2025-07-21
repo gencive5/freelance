@@ -34,7 +34,11 @@ const AppContent = () => {
   size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile  
 />
 <DistortedText 
-  text="développeur créatif" 
+  text="développeur" 
+  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile  
+/>
+<DistortedText 
+  text="créatif" 
   size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile  
 />
 </div>
