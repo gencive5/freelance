@@ -191,7 +191,7 @@ canvas {
 }
 
 .title-gap {
-  margin-bottom: -5rem; /* Pull the subtitle closer */
+  margin-bottom: -10rem; 
 }
 
 @media (max-width: 768px) {
