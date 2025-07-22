@@ -2,23 +2,53 @@
 import './App.css';
 import ContactForm from './ContactForm';
 import DistortedText from './DistortedText';
+import { useState, useEffect } from 'react';
 
 const App = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="container">
       <div className="title-wrapper">
-        <DistortedText 
-          text="Gencives" 
-          size={window.innerWidth > 768 ? 60 : 40}
-        />
-        <DistortedText 
-          text="développeur créatif" 
-          size={window.innerWidth > 768 ? 60 : 40}
-        />
-        <DistortedText 
-          text="créatif" 
-          size={window.innerWidth > 768 ? 60 : 40}
-        />
+        {isMobile ? (
+          // Mobile layout
+          <>
+            <DistortedText 
+              text="Gencives" 
+              size={40}
+            />
+            <DistortedText 
+              text="développeur" 
+              size={40}
+            />
+             <DistortedText 
+              text="créatif" 
+              size={60}
+            />
+          </>
+        ) : (
+          // Desktop layout
+          <>
+            <DistortedText 
+              text="Gencives" 
+              size={60}
+            />
+            <DistortedText 
+              text="développeur créatif" 
+              size={60}
+            />
+           
+          </>
+        )}
       </div>
 
       <div style={{ padding: '20px' }} className="Figure-Demo">
