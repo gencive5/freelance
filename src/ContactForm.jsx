@@ -1,45 +1,10 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import { useLanguage } from './context/LanguageContext';
 import './App.css';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
-  const { language } = useLanguage();
-
-  const translations = {
-    name: {
-      en: "Name",
-      fr: "Nom",
-      es: "Nombre"
-    },
-    email: {
-      en: "Email",
-      fr: "Email",
-      es: "Correo electrónico"
-    },
-    message: {
-      en: "Message",
-      fr: "Message",
-      es: "Mensaje"
-    },
-    send: {
-      en: "Send to vic.segen@gmail.com",
-      fr: "Envoyer à vic.segen@gmail.com",
-      es: "Enviar a vic.segen@gmail.com"
-    },
-    success: {
-      en: "Message sent!",
-      fr: "Message envoyé !",
-      es: "¡Mensaje enviado!"
-    },
-    error: {
-      en: "Something went wrong, please try again later or contact me directly at vic.segen@gmail.com",
-      fr: "Quelque chose s'est mal passé, veuillez réessayer plus tard ou contactez moi directement à vic.segen@gmail.com",
-      es: "Algo salió mal, por favor inténtalo más tarde o contáctame directamente en vic.segen@gmail.com"
-    }
-  };
 
   useEffect(() => {
     console.log({
@@ -63,14 +28,14 @@ const ContactForm = () => {
       )
       .then(
         (result) => {
-          setStateMessage(translations.success[language]);
+          setStateMessage("Message sent!");
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
           }, 5000);
         },
         (error) => {
-          setStateMessage(translations.error[language]);
+          setStateMessage("Something went wrong, please try again later or contact me directly at vic.segen@gmail.com");
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
@@ -84,9 +49,7 @@ const ContactForm = () => {
   return (
     <form onSubmit={sendEmail} className="contact-form">
       <div className="contact-form__group">
-        <label className="contact-form__label">
-          {translations.name[language]}
-        </label>
+        <label className="contact-form__label">Name</label>
         <input 
           type="text" 
           name="user_name" 
@@ -96,9 +59,7 @@ const ContactForm = () => {
       </div>
       
       <div className="contact-form__group">
-        <label className="contact-form__label">
-          {translations.email[language]}
-        </label>
+        <label className="contact-form__label">Email</label>
         <input 
           type="email" 
           name="user_email" 
@@ -108,9 +69,7 @@ const ContactForm = () => {
       </div>
       
       <div className="contact-form__group">
-        <label className="contact-form__label">
-          {translations.message[language]}
-        </label>
+        <label className="contact-form__label">Message</label>
         <textarea 
           name="message" 
           required 
@@ -118,22 +77,22 @@ const ContactForm = () => {
         />
       </div>
       
-     <div className="contact-form__group contact-form__submit-container">
-  <button 
-    type="submit" 
-    disabled={isSubmitting} 
-    className="contact-form__submit"
-  >
-    <span className="contact-form__submit-text">
-      <span><span>{translations.send[language]}</span></span>
-      <span aria-hidden="true" style={{ display: 'none' }}>{translations.send[language]}</span>
-    </span>
-  </button>
-</div>
+      <div className="contact-form__group contact-form__submit-container">
+        <button 
+          type="submit" 
+          disabled={isSubmitting} 
+          className="contact-form__submit"
+        >
+          <span className="contact-form__submit-text">
+            <span><span>Send to vic.segen@gmail.com</span></span>
+            <span aria-hidden="true" style={{ display: 'none' }}>Send to vic.segen@gmail.com</span>
+          </span>
+        </button>
+      </div>
       
       {stateMessage && (
         <p className={`contact-form__message ${
-          stateMessage === translations.success[language] 
+          stateMessage === "Message sent!" 
             ? 'contact-form__message--success' 
             : 'contact-form__message--error'
         }`}>
