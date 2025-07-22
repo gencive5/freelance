@@ -18,11 +18,11 @@ const App = () => {
 
   return (
     <div className="container">
-      <div className="title-wrapper">
+      <div>
         {isMobile ? (
           // Mobile layout
           <>
-            <DistortedText 
+            <DistortedText className="title-wrapper"
               text="Gencives" 
               size={40}
             />
