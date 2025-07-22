@@ -190,6 +190,10 @@ canvas {
   margin-bottom: 2rem;
 }
 
+.title-gap {
+  margin-bottom: -5rem; /* Pull the subtitle closer */
+}
+
 @media (max-width: 768px) {
   .title-wrapper {
     gap: 2.5rem; /* More gap between title & subtitle on mobile */

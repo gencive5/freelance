@@ -28,14 +28,14 @@ const ContactForm = () => {
       )
       .then(
         (result) => {
-          setStateMessage("Message sent!");
+          setStateMessage("Message envoyé!");
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
           }, 5000);
         },
         (error) => {
-          setStateMessage("Something went wrong, please try again later or contact me directly at vic.segen@gmail.com");
+          setStateMessage("Erreur, veuillez rééssayer ou envoyer un mail directement à vic.segen@gmail.com");
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
@@ -49,7 +49,7 @@ const ContactForm = () => {
   return (
     <form onSubmit={sendEmail} className="contact-form">
       <div className="contact-form__group">
-        <label className="contact-form__label">Name</label>
+        <label className="contact-form__label">Nom</label>
         <input 
           type="text" 
           name="user_name" 
@@ -84,8 +84,8 @@ const ContactForm = () => {
           className="contact-form__submit"
         >
           <span className="contact-form__submit-text">
-            <span><span>Send to vic.segen@gmail.com</span></span>
-            <span aria-hidden="true" style={{ display: 'none' }}>Send to vic.segen@gmail.com</span>
+            <span><span>Envoyer à vic.segen@gmail.com</span></span>
+            <span aria-hidden="true" style={{ display: 'none' }}>Envoyer à vic.segen@gmail.com</span>
           </span>
         </button>
       </div>

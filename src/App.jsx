@@ -38,7 +38,7 @@ const App = () => {
         ) : (
           // Desktop layout
           <>
-            <DistortedText 
+            <DistortedText className="title-gap"
               text="Gencives" 
               size={60}
             />
