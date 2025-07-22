@@ -10,19 +10,7 @@ import DistortedText from './DistortedText';
 const AppContent = () => {
   const { language } = useLanguage();
 
-  const translations = {
-    askForWebsite: {
-      en: "ASK FOR YOUR WEBSITE NOW",
-      fr: "DEMANDEZ VOTRE SITE WEB MAINTENANT",
-      es: "SOLICITA TU SITIO WEB AHORA"
-    },
-    leaveContact: {
-      en: "Leave your contact details and I will get back to you today",
-      fr: "Laissez vos coordonnées et je vous répondrai aujourd'hui",
-      es: "Deja tus datos de contacto y me pondré en contacto contigo hoy"
-    }
-  };
-
+  
   return (
     <div className="container">
       
@@ -34,7 +22,7 @@ const AppContent = () => {
   size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile  
 />
 <DistortedText 
-  text="développeur" 
+  text="développeur créatif" 
   size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile  
 />
 <DistortedText 
@@ -43,37 +31,25 @@ const AppContent = () => {
 />
 </div>
 
-<DistortedText 
-  text="DEMANDEZ VOTRE SITE WEB MAINTENANT" 
-  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
-
-  
-/>
 
 
       <div style={{ padding: '20px' }} className="Figure-Demo">
         <span className="text-fit">
-          <span><span>{translations.askForWebsite[language]}</span></span>
-          <span aria-hidden="true">{translations.askForWebsite[language]}</span>
+          <span><span>DEMANDEZ VOTRE SITE WEB MAINTENANT</span></span>
+          <span aria-hidden="true">DEMANDEZ VOTRE SITE WEB MAINTENANT</span>
         </span>
       </div>
       
       <div className="Figure-Demo">
         <span className="text-fit">
-          <span><span>{translations.leaveContact[language]}</span></span>
-          <span aria-hidden="true">{translations.leaveContact[language]}</span>
+          <span><span>Laissez vos coordonnées et je vous répondrai aujourd'hui</span></span>
+          <span aria-hidden="true">Laissez vos coordonnées et je vous répondrai aujourd'hui</span>
         </span>
       </div>
 
       <ContactForm />
       
-    
-    <DistortedText 
-  text="TEST TEST!" 
-  size={window.innerWidth > 768 ? 60 : 40} // Larger on desktop, smaller on mobile
 
-  
-/>
     </div>
     
   );
