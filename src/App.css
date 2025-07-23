@@ -291,6 +291,7 @@ canvas {
   margin-top: 40px; /* More space above button */
 }
 
+/* Updated Contact Form Submit Button Styles */
 .contact-form__submit {
   width: 100%;
   padding: 15px;
@@ -299,9 +300,11 @@ canvas {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
   font-family: 'Microsoft', sans-serif;
   font-size: 3rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .contact-form__submit:hover:not(:disabled) {
@@ -313,19 +316,28 @@ canvas {
   cursor: not-allowed;
 }
 
-.contact-form__message {
-  text-align: center;
-  margin-top: 20px;
-  color: #479E9D;
+.contact-form__submit--success {
+  background-color: #4CAF50 !important;
+  animation: buttonPulse 0.5s ease-out;
 }
 
-.contact-form__message--success {
-  color: #4CAF50;
+.contact-form__submit--error {
+  background-color: #f44336 !important;
+  animation: buttonShake 0.5s ease-out;
 }
 
-.contact-form__message--error {
-  color: #f44336;
+@keyframes buttonPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
 }
+
+@keyframes buttonShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
 
 /* Mobile styles */
 @media (max-width: 768px) {

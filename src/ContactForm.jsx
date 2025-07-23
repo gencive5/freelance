@@ -5,6 +5,7 @@ import './App.css';
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null); // 'success' or 'error'
 
   useEffect(() => {
     console.log({
@@ -29,16 +30,20 @@ const ContactForm = () => {
       .then(
         (result) => {
           setStateMessage("Message envoyé!");
+          setMessageType('success');
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
+            setMessageType(null);
           }, 5000);
         },
         (error) => {
-          setStateMessage("Erreur, veuillez rééssayer ou envoyer un mail directement à vic.segen@gmail.com");
+          setStateMessage("Erreur, veuillez rééssayer");
+          setMessageType('error');
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
+            setMessageType(null);
           }, 5000);
         }
       );
@@ -81,21 +86,14 @@ const ContactForm = () => {
         <button 
           type="submit" 
           disabled={isSubmitting} 
-          className="contact-form__submit"
+          className={`contact-form__submit ${
+            messageType === 'success' ? 'contact-form__submit--success' : 
+            messageType === 'error' ? 'contact-form__submit--error' : ''
+          }`}
         >
-          Envoyer à vic.segen@gmail.com
+          {stateMessage || "Envoyer à vic.segen@gmail.com"}
         </button>
       </div>
-      
-      {stateMessage && (
-        <p className={`contact-form__message ${
-          stateMessage === "Message sent!" 
-            ? 'contact-form__message--success' 
-            : 'contact-form__message--error'
-        }`}>
-          {stateMessage}
-        </p>
-      )}
     </form>
   );
 };
