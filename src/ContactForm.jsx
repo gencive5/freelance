@@ -49,7 +49,7 @@ const ContactForm = () => {
   return (
     <form onSubmit={sendEmail} className="contact-form">
       <div className="contact-form__group">
-        <label className="contact-form__label">Nom</label>
+        <label className="contact-form__label">Nom:</label>
         <input 
           type="text" 
           name="user_name" 
@@ -59,7 +59,7 @@ const ContactForm = () => {
       </div>
       
       <div className="contact-form__group">
-        <label className="contact-form__label">Email</label>
+        <label className="contact-form__label">Email:</label>
         <input 
           type="email" 
           name="user_email" 
@@ -69,7 +69,7 @@ const ContactForm = () => {
       </div>
       
       <div className="contact-form__group">
-        <label className="contact-form__label">Message</label>
+        <label className="contact-form__label">Message:</label>
         <textarea 
           name="message" 
           required 
@@ -77,16 +77,13 @@ const ContactForm = () => {
         />
       </div>
       
-      <div className="contact-form__group contact-form__submit-container">
+      <div className="contact-form__submit-container">
         <button 
           type="submit" 
           disabled={isSubmitting} 
           className="contact-form__submit"
         >
-          <span className="contact-form__submit-text">
-            <span><span>Envoyer à vic.segen@gmail.com</span></span>
-            <span aria-hidden="true" style={{ display: 'none' }}>Envoyer à vic.segen@gmail.com</span>
-          </span>
+          Envoyer à vic.segen@gmail.com
         </button>
       </div>
       
