@@ -74,6 +74,7 @@ const App = () => {
       
 
       <ContactForm />
+      <br></br>
     </div>
   );
 };
