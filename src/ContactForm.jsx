@@ -5,7 +5,6 @@ import './App.css';
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
-  const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
     console.log({
@@ -15,32 +14,10 @@ const ContactForm = () => {
     });
   }, []);
 
-  // Function to create sparkles
-  const createSparkles = (e) => {
-    const buttonRect = e.target.getBoundingClientRect();
-    const newSparkles = [];
-    
-    for (let i = 0; i < 15; i++) {
-      newSparkles.push({
-        id: Math.random(),
-        x: Math.random() * buttonRect.width,
-        y: Math.random() * buttonRect.height,
-        size: Math.random() * 10 + 5,
-        opacity: Math.random() * 0.5 + 0.5,
-        delay: Math.random() * 0.5,
-        duration: Math.random() * 1 + 0.5
-      });
-    }
-    
-    setSparkles(newSparkles);
-    setTimeout(() => setSparkles([]), 2000);
-  };
-
   const sendEmail = (e) => {
     e.persist();
     e.preventDefault();
     setIsSubmitting(true);
-    createSparkles(e); // Trigger sparkles on click
     
     emailjs
       .sendForm(
@@ -110,24 +87,6 @@ const ContactForm = () => {
             <span><span>Envoyer à vic.segen@gmail.com</span></span>
             <span aria-hidden="true" style={{ display: 'none' }}>Envoyer à vic.segen@gmail.com</span>
           </span>
-          
-          {/* Sparkle elements */}
-          {sparkles.map(sparkle => (
-            <span
-              key={sparkle.id}
-              className="sparkle"
-              style={{
-                position: 'absolute',
-                left: `${sparkle.x}px`,
-                top: `${sparkle.y}px`,
-                width: `${sparkle.size}px`,
-                height: `${sparkle.size}px`,
-                opacity: sparkle.opacity,
-                animationDelay: `${sparkle.delay}s`,
-                animationDuration: `${sparkle.duration}s`
-              }}
-            />
-          ))}
         </button>
       </div>
       

@@ -51,6 +51,13 @@ const App = () => {
         )}
       </div>
 
+       <div className="Figure-Demo">
+        <span className="text-fit">
+          <span><span>design - image de marque - développement - typographie</span></span>
+          <span aria-hidden="true">design - image de marque - développement - typographie</span>
+        </span>
+      </div>
+
       <div className="Figure-Demo">
         <span className="text-fit">
           <span><span>DEMANDEZ VOTRE SITE WEB MAINTENANT</span></span>
