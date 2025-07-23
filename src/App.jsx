@@ -71,6 +71,7 @@ const App = () => {
           <span aria-hidden="true">Laissez moi vos coordonnées et je vous contacterai</span>
         </span>
       </div>
+      
 
       <ContactForm />
     </div>
