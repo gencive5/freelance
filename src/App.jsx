@@ -51,7 +51,7 @@ const App = () => {
         )}
       </div>
 
-      <div style={{ padding: '20px' }} className="Figure-Demo">
+      <div className="Figure-Demo">
         <span className="text-fit">
           <span><span>DEMANDEZ VOTRE SITE WEB MAINTENANT</span></span>
           <span aria-hidden="true">DEMANDEZ VOTRE SITE WEB MAINTENANT</span>
@@ -60,8 +60,8 @@ const App = () => {
       
       <div className="Figure-Demo">
         <span className="text-fit">
-          <span><span>Laissez vos coordonnées et je vous répondrai aujourd'hui</span></span>
-          <span aria-hidden="true">Laissez vos coordonnées et je vous répondrai aujourd'hui</span>
+          <span><span>Laissez moi vos coordonnées et je vous contacterai</span></span>
+          <span aria-hidden="true">Laissez moi vos coordonnées et je vous contacterai</span>
         </span>
       </div>
 
