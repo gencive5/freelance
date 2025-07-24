@@ -291,70 +291,86 @@ canvas {
   margin-top: 40px; /* More space above button */
 }
 
-/* Updated Contact Form Submit Button Styles */
+/* Add these to your existing styles */
+
 .contact-form__submit {
+  /* YOUR EXISTING STRUCTURE */
   width: 100%;
   padding: 15px;
-  background-color: #55b455;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s;
   font-family: 'Microsoft', sans-serif;
   font-size: 3rem;
-  position: relative;
-  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+ 
+  
+  /* PASTE THE EXACT STEEL STYLES FROM CODEPEN HERE */
+  background: linear-gradient(to bottom, 
+    hsl(0, 0%, 70%) 0%,
+    hsl(0, 0%, 50%) 50%,
+    hsl(0, 0%, 40%) 51%,
+    hsl(0, 0%, 60%) 100%
+  );
+  box-shadow: 
+    0 1px 0 rgba(255,255,255,0.2) inset,
+    0 -1px 0 rgba(0,0,0,0.2) inset,
+    0 4px 10px rgba(0,0,0,0.5),
+    0 0 20px rgba(255,255,255,0.3) inset;
+  border: none;
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+  
+  /* KEEP YOUR STATES */
+  transition: all 0.3s;
 }
 
-.contact-form__submit:hover:not(:disabled) {
-  background-color: #45a049;
+/* Hover state - make slightly brighter */
+.contact-form__submit:hover {
+  background: linear-gradient(to bottom, 
+    hsl(0, 0%, 75%) 0%,
+    hsl(0, 0%, 55%) 50%,
+    hsl(0, 0%, 45%) 51%,
+    hsl(0, 0%, 65%) 100%
+  );
 }
 
-.contact-form__submit:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+/* Active state - pressed effect */
+.contact-form__submit:active {
+  transform: translateY(2px);
+  background: linear-gradient(to bottom, 
+    hsl(0, 0%, 60%) 0%,
+    hsl(0, 0%, 40%) 50%,
+    hsl(0, 0%, 30%) 51%,
+    hsl(0, 0%, 50%) 100%
+  );
 }
 
+/* Success state - steel with green tint */
 .contact-form__submit--success {
-  background-color: #4CAF50 !important;
-  animation: buttonPulse 0.5s ease-out;
+  background: linear-gradient(to bottom, 
+    hsl(120, 30%, 70%) 0%,
+    hsl(120, 30%, 50%) 50%,
+    hsl(120, 30%, 40%) 51%,
+    hsl(120, 30%, 60%) 100%
+  ) !important;
 }
 
+/* Error state - steel with red tint */
 .contact-form__submit--error {
-  background-color: #f44336 !important;
-  animation: buttonShake 0.5s ease-out;
+  background: linear-gradient(to bottom, 
+    hsl(0, 30%, 70%) 0%,
+    hsl(0, 30%, 50%) 50%,
+    hsl(0, 30%, 40%) 51%,
+    hsl(0, 30%, 60%) 100%
+  ) !important;
 }
 
-@keyframes buttonPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-
-@keyframes buttonShake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-5px); }
-  40%, 80% { transform: translateX(5px); }
-}
-
-
-/* Mobile styles */
+/* Mobile adjustments */
 @media (max-width: 768px) {
-  .contact-form {
-    padding: 20px 10px;
-    font-size: 2rem;
-  }
-  
-  .contact-form__input,
-  .contact-form__textarea {
-    font-size: 2rem;
-  }
-  
   .contact-form__submit {
     font-size: 2rem;
     padding: 10px;
   }
+  
 }
   
   .text-fit {
