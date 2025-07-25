@@ -1,5 +1,6 @@
 // src/components/MetallicButton.jsx
 import { useEffect } from 'react';
+import 'metallicss';
 
 const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
   useEffect(() => {
