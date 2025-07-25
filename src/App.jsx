@@ -2,6 +2,7 @@
 import './App.css';
 import ContactForm from './ContactForm';
 import DistortedText from './DistortedText';
+import MetallicButton from './MetallicButton'; 
 import { useState, useEffect } from 'react';
 
 const App = () => {
@@ -15,6 +16,15 @@ const App = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleMetallicClick = () => {
+    console.log('Metallic button clicked!');
+    // Add your button click logic here
+    // For example, you could show an alert:
+    // alert('Button clicked!');
+    // Or navigate to a new page:
+    // window.location.href = '/contact';
+  };
 
   return (
     <div className="container">
@@ -72,6 +82,18 @@ const App = () => {
         </span>
       </div>
       
+    <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
+        <MetallicButton 
+          onClick={handleMetallicClick}
+          style={{
+            width: isMobile ? '180px' : '240px',
+            height: isMobile ? '60px' : '80px',
+            fontSize: isMobile ? '1rem' : '1.2rem'
+          }}
+        >
+          beep boop
+        </MetallicButton>
+      </div>
 
       <ContactForm />
       <br></br>
