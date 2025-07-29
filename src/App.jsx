@@ -1,7 +1,6 @@
 import './App.css';
 import ContactForm from './ContactForm';
 import DistortedText from './DistortedText';
-import MetallicButton from './MetallicButton';
 import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 
@@ -81,18 +80,6 @@ const App = () => {
           </span>
         </div>
         
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
-          <MetallicButton 
-            onClick={handleMetallicClick}
-            style={{
-              width: isMobile ? '180px' : '240px',
-              height: isMobile ? '60px' : '80px',
-              fontSize: isMobile ? '1rem' : '1.2rem'
-            }}
-          >
-            beep boop
-          </MetallicButton>
-        </div>
 
         <ContactForm />
         <br></br>
