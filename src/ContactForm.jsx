@@ -6,24 +6,15 @@ import MetallicButton from './MetallicButton';
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
-  const [messageType, setMessageType] = useState(null); // 'success' or 'error'
+  const [messageType, setMessageType] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    console.log({
-      serviceId: import.meta.env.VITE_SERVICE_ID,
-      templateId: import.meta.env.VITE_TEMPLATE_ID,
-      publicKey: import.meta.env.VITE_PUBLIC_KEY
-    });
   }, []);
 
   const sendEmail = (e) => {
@@ -64,6 +55,7 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={sendEmail} className="contact-form">
+      {/* Keep your existing form fields */}
       <div className="contact-form__group">
         <label className="contact-form__label">Nom:</label>
         <input 
@@ -93,24 +85,27 @@ const ContactForm = () => {
         />
       </div>
       
-      <div className="contact-form__submit-container" style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        marginTop: '40px'
-      }}>
+      {/* Full-width metallic button */}
+      <div className="contact-form__submit-container">
         <MetallicButton 
-          type="submit" 
-          disabled={isSubmitting}
-          style={{
-            width: isMobile ? '180px' : '240px',
-            height: isMobile ? '60px' : '80px',
-            fontSize: isMobile ? '1rem' : '1.2rem',
-            '--metal': messageType === 'success' ? 'hsl(120, 30%, 50%)' :
-                      messageType === 'error' ? 'hsl(0, 30%, 50%)' : 'neutral'
-          }}
-        >
-          {stateMessage || "Envoyer à vic.segen@gmail.com"}
-        </MetallicButton>
+        type="submit" 
+        disabled={isSubmitting}
+        style={{
+          width: '100%',
+          height: isMobile ? '60px' : '80px',
+          fontSize: isMobile ? '1.5rem' : '2rem',
+          borderRadius: '44px',
+          '--metal': messageType === 'success' ? 'hsl(120, 30%, 50%)' :
+                    messageType === 'error' ? 'hsl(0, 30%, 50%)' : 'neutral',
+          borderLeft: 'none',
+          borderRight: 'none',
+          fontFamily: '"Microsoft", sans-serif',
+          color: 'white',
+          textShadow: '0 -1px 0 rgba(0,0,0,0.5)'
+        }}
+      >
+        {stateMessage || "Envoyer à vic.segen@gmail.com"}
+      </MetallicButton>
       </div>
     </form>
   );
