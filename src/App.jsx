@@ -1,8 +1,8 @@
-// src/App.jsx
 import './App.css';
 import ContactForm from './ContactForm';
 import DistortedText from './DistortedText';
-import MetallicButton from './MetallicButton'; 
+import MetallicButton from './MetallicButton';
+import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 
 const App = () => {
@@ -19,85 +19,85 @@ const App = () => {
 
   const handleMetallicClick = () => {
     console.log('Metallic button clicked!');
-    // Add your button click logic here
-    // For example, you could show an alert:
-    // alert('Button clicked!');
-    // Or navigate to a new page:
-    // window.location.href = '/contact';
   };
 
   return (
-    <div className="container">
-      <div>
-        {isMobile ? (
-          // Mobile layout
-          <>
-            <DistortedText className="title-wrapper"
-              text="Gencives" 
-              size={40}
-            />
-            <DistortedText 
-              text="développeur" 
-              size={40}
-            />
-             <DistortedText 
-              text="créatif" 
-              size={60}
-            />
-          </>
-        ) : (
-          // Desktop layout
-          <>
-            <DistortedText className="title-gap"
-              text="Gencives" 
-              size={60}
-            />
-            <DistortedText 
-              text="développeur créatif" 
-              size={60}
-            />
-           
-          </>
-        )}
-      </div>
+    <MetallicScrollbar style={{
+      '--scrollbar-bg': '#ffffffff',
+      '--scrollbar-metal': 'silver',
+      '--convexity': 2
+    }}>
+      <div className="container">
+        <div>
+          {isMobile ? (
+            // Mobile layout
+            <>
+              <DistortedText className="title-wrapper"
+                text="Gencives" 
+                size={40}
+              />
+              <DistortedText 
+                text="développeur" 
+                size={40}
+              />
+              <DistortedText 
+                text="créatif" 
+                size={60}
+              />
+            </>
+          ) : (
+            // Desktop layout
+            <>
+              <DistortedText className="title-gap"
+                text="Gencives" 
+                size={60}
+              />
+              <DistortedText 
+                text="développeur créatif" 
+                size={60}
+              />
+            </>
+          )}
+        </div>
 
-       <div className="Figure-Demo">
-        <span className="text-fit">
-          <span><span>design - image de marque - développement - typographie</span></span>
-          <span aria-hidden="true">design - image de marque - développement - typographie</span>
-        </span>
-      </div>
+        <div className="Figure-Demo">
+          <span className="text-fit">
+            <span><span>design - image de marque - développement - typographie</span></span>
+            <span aria-hidden="true">design - image de marque - développement - typographie</span>
+          </span>
+        </div>
 
-      <div className="Figure-Demo">
-        <span className="text-fit">
-          <span><span>DEMANDEZ VOTRE SITE WEB MAINTENANT</span></span>
-          <span aria-hidden="true">DEMANDEZ VOTRE SITE WEB MAINTENANT</span>
-        </span>
-      </div>
-      
-      <div className="Figure-Demo">
-        <span className="text-fit">
-          <span><span>Laissez moi vos coordonnées et je vous contacterai</span></span>
-          <span aria-hidden="true">Laissez moi vos coordonnées et je vous contacterai</span>
-        </span>
-      </div>
-      
-    <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
-        <MetallicButton 
-          onClick={handleMetallicClick}
-          style={{
-            width: isMobile ? '180px' : '240px',
-            height: isMobile ? '60px' : '80px',
-            fontSize: isMobile ? '1rem' : '1.2rem'
-          }}
-        >
-          beep boop
-        </MetallicButton>
-      </div>
+        <div className="Figure-Demo">
+          <span className="text-fit">
+            <span><span>DEMANDEZ VOTRE SITE WEB MAINTENANT</span></span>
+            <span aria-hidden="true">DEMANDEZ VOTRE SITE WEB MAINTENANT</span>
+          </span>
+        </div>
+        
+        <div className="Figure-Demo">
+          <span className="text-fit">
+            <span><span>Laissez moi vos coordonnées et je vous contacterai</span></span>
+            <span aria-hidden="true">Laissez moi vos coordonnées et je vous contacterai</span>
+          </span>
+        </div>
+        
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
+          <MetallicButton 
+            onClick={handleMetallicClick}
+            style={{
+              width: isMobile ? '180px' : '240px',
+              height: isMobile ? '60px' : '80px',
+              fontSize: isMobile ? '1rem' : '1.2rem'
+            }}
+          >
+            beep boop
+          </MetallicButton>
+        </div>
 
-      <ContactForm />
-      <br></br>
-    </div>
+        <ContactForm />
+        <br></br>
+      </div>
+    </MetallicScrollbar>
   );
 };
 
