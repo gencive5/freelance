@@ -20,8 +20,8 @@ const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
       className={`metallicss ${className}`}
       onClick={onClick}
       style={{
-        '--convexity': 2,
-        '--metal': 'neutral',
+        '--convexity': 3,
+        '--metal': 'silver',
         borderRadius: '120px',
         width: '240px',
         height: '80px',
@@ -30,6 +30,8 @@ const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
         cursor: 'pointer',
         fontSize: '1.2rem',
         fontWeight: 'bold',
+        color: 'white !important',
+        textShadow: '0 -1px 0 rgba(0,0,0,0.5)',
         ...style
       }}
     >
