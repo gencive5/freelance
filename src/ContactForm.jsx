@@ -70,7 +70,7 @@ const ContactForm = () => {
         <label className="contact-form__label">Email:</label>
         <input 
           type="email" 
-          name="user_email" 
+          name="email" 
           required 
           className="contact-form__input"
         />
