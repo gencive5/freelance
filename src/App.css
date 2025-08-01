@@ -366,7 +366,7 @@ canvas {
 
 /* Force white text in metallic buttons */
 .metallicss {
-  color: white !important;
+  color: rgb(58, 58, 58) !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5); ;
 }
 
