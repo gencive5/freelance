@@ -370,3 +370,11 @@ canvas {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5); ;
 }
 
+.footer {
+  position:relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  color:white; 
+  font-family: 'Microsoft', sans-serif;
+}
