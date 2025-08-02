@@ -315,8 +315,6 @@ canvas {
 }
 
 
-
-
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .contact-form__submit {
@@ -372,9 +370,9 @@ canvas {
 
 .footer {
   position:relative;
-  top: 0;
-  left: 0;
-  right: 0;
+  float: right;
   color:white; 
   font-family: 'Microsoft', sans-serif;
+  font-size: 3rem;
+  padding: 20px;
 }
