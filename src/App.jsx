@@ -4,6 +4,7 @@ import DistortedText from './DistortedText';
 import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 import Contact from './Contact';
+import MetallicCursor from './MetallicCursor';
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -27,6 +28,7 @@ const App = () => {
       '--scrollbar-metal': 'silver',
       '--convexity': 2
     }}>
+      <MetallicCursor />
       <div className="container">
         <div>
           {isMobile ? (
