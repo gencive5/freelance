@@ -9,39 +9,66 @@ const SHAPES = {
   scrollbar: 'scroll-shape'
 };
 
+const isTouchDevice = () => {
+  return ('ontouchstart' in window) || 
+         (navigator.maxTouchPoints > 0) || 
+         (navigator.msMaxTouchPoints > 0);
+};
+
 const MetallicCursor = () => {
   useEffect(() => {
-    if ('ontouchstart' in window) return; // Skip on touch devices
+    // Skip entirely on touch devices
+    if (isTouchDevice()) return;
 
-    // Create cursor element
     const cursor = document.createElement('div');
     cursor.className = 'metallicss metallic-cursor';
     
-    // Set initial metallic properties
-    cursor.style.setProperty('--convexity', '1.8');
-    cursor.style.setProperty('--metal', 'silver');
+    // Enhanced metallic properties
+    cursor.style.setProperty('--convexity', '2');
+    cursor.style.setProperty('--metal', 'linear-gradient(145deg, #c0c0c0, #e0e0e0)');
     cursor.style.setProperty('--light-x', '0.4');
     cursor.style.setProperty('--light-y', '0.4');
+    cursor.style.setProperty('--reflectivity', '0.8');
     
     document.body.appendChild(cursor);
+    document.body.classList.add('metallic-cursor-active');
 
-    // Track mouse movement
-    const moveCursor = (e) => {
-      cursor.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%)`;
+    // Smooth movement with requestAnimationFrame
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let requestId = null;
+
+    const lerp = (a, b, n) => (1 - n) * a + n * b;
+
+    const animate = () => {
+      cursorX = lerp(cursorX, mouseX, 0.2);
+      cursorY = lerp(cursorY, mouseY, 0.2);
+      cursor.style.transform = `translate(calc(${cursorX}px - 50%), calc(${cursorY}px - 50%)`;
+      requestId = requestAnimationFrame(animate);
     };
 
-    // Detect hover elements
+    const handleMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!requestId) {
+        animate();
+      }
+    };
+
+    // Shape detection
     const updateCursorShape = (e) => {
       const target = e.target;
       cursor.classList.remove(...Object.values(SHAPES));
       
-      if (target.matches('button, [role="button"], a, input[type="submit"]')) {
+      if (target.matches('button, [role="button"], a, input[type="submit"], .metallic-button')) {
         cursor.classList.add(SHAPES.button);
       } 
-      else if (target.matches('input, textarea, [contenteditable], a')) {
+      else if (target.matches('input, textarea, [contenteditable], a, p, span, h1, h2, h3, h4, h5, h6')) {
         cursor.classList.add(SHAPES.text);
       }
-      else if (target.matches('.scrollbar-thumb, .scrollbar-track')) {
+      else if (target.matches('.scrollbar-thumb, .scrollbar-track, [data-scrollbar]')) {
         cursor.classList.add(SHAPES.scrollbar);
       }
       else {
@@ -49,15 +76,16 @@ const MetallicCursor = () => {
       }
     };
 
-    // Hide default cursor and setup event listeners
-    document.body.style.cursor = 'none';
-    window.addEventListener('mousemove', moveCursor);
+    // Event listeners
+    window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseover', updateCursorShape);
 
+    // Cleanup
     return () => {
-      document.body.style.cursor = '';
-      window.removeEventListener('mousemove', moveCursor);
+      cancelAnimationFrame(requestId);
+      window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseover', updateCursorShape);
+      document.body.classList.remove('metallic-cursor-active');
       if (cursor.parentNode) {
         document.body.removeChild(cursor);
       }
