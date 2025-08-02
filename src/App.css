@@ -377,22 +377,66 @@ canvas {
   padding: 20px;
 }
 
+/* Base cursor style */
 .metallic-cursor {
   position: fixed;
   width: 24px;
   height: 24px;
-  border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
   left: 0;
   top: 0;
   will-change: transform;
-  /* Force metallic appearance */
+  transition: 
+    width 0.2s ease,
+    height 0.2s ease,
+    border-radius 0.2s ease,
+    clip-path 0.2s ease;
+}
+
+/* Default circle shape */
+.metallic-cursor.circle {
+  border-radius: 50%;
   background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
   box-shadow: 
     2px 2px 4px rgba(0,0,0,0.3),
     inset 1px 1px 3px rgba(255,255,255,0.8),
     inset -1px -1px 3px rgba(0,0,0,0.2) !important;
-  border: 1px solid rgba(255,255,255,0.3) !important;
+}
+
+/* Text input shape (I-beam) */
+.metallic-cursor.text-shape {
+  width: 8px;
+  height: 24px;
+  border-radius: 1px;
+  clip-path: polygon(
+    0% 15%, 35% 15%, 35% 0%, 65% 0%, 65% 15%, 
+    100% 15%, 100% 85%, 65% 85%, 65% 100%, 
+    35% 100%, 35% 85%, 0% 85%
+  );
+}
+
+/* Button hover shape (pointer) */
+.metallic-cursor.pointer-shape {
+  width: 20px;
+  height: 20px;
+  clip-path: polygon(
+    0% 0%, 80% 0%, 0% 80%
+  );
+  transform: translate(calc(-50% + 5px), calc(-50% + 5px)) rotate(-45deg);
+}
+
+/* Scrollbar hover shape (double arrow) */
+.metallic-cursor.scroll-shape {
+  width: 24px;
+  height: 24px;
+  clip-path: polygon(
+    20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%,
+    30% 40%, 70% 40%, 80% 50%, 70% 60%, 30% 60%, 20% 50%
+  );
+}
+
+/* Hide default cursors globally */
+* {
+  cursor: none !important;
 }
