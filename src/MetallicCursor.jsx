@@ -4,9 +4,7 @@ import './App.css';
 
 const SHAPES = {
   default: 'circle',
-  text: 'text-shape',
-  button: 'pointer-shape',
-  scrollbar: 'scroll-shape'
+  text: 'text-shape'
 };
 
 const isTouchDevice = () => {
@@ -57,19 +55,13 @@ const MetallicCursor = () => {
       }
     };
 
-    // Shape detection
+    // Simplified shape detection
     const updateCursorShape = (e) => {
       const target = e.target;
       cursor.classList.remove(...Object.values(SHAPES));
       
-      if (target.matches('button, [role="button"], a, input[type="submit"], .metallic-button')) {
-        cursor.classList.add(SHAPES.button);
-      } 
-      else if (target.matches('input, textarea, [contenteditable], a, p, span, h1, h2, h3, h4, h5, h6')) {
+      if (target.matches('input, textarea, [contenteditable]')) {
         cursor.classList.add(SHAPES.text);
-      }
-      else if (target.matches('.scrollbar-thumb, .scrollbar-track, [data-scrollbar]')) {
-        cursor.classList.add(SHAPES.scrollbar);
       }
       else {
         cursor.classList.add(SHAPES.default);

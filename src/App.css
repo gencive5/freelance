@@ -426,21 +426,5 @@ canvas {
     );
   }
 
-  /* Button hover shape (angled pointer) */
-  .metallic-cursor.pointer-shape {
-    width: 18px;
-    height: 18px;
-    clip-path: polygon(
-      20% 20%, 20% 0%, 0% 0%, 0% 20%, 100% 100%
-    );
-  }
-
-  /* Scrollbar hover shape (vertical double arrow) */
-  .metallic-cursor.scroll-shape {
-    width: 16px;
-    height: 24px;
-    clip-path: polygon(
-      50% 0%, 100% 25%, 70% 25%, 70% 75%, 100% 75%, 50% 100%, 0% 75%, 30% 75%, 30% 25%, 0% 25%
-    );
-  }
+  
 }
