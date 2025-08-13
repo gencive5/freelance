@@ -51,12 +51,6 @@ const App = () => {
               <DistortedText className="title-wrapper"
                 text="Gencives" 
               />
-              <DistortedText 
-                text="développeur" 
-              />
-              <DistortedText 
-                text="créatif"
-              />
             </>
           ) : (
             // Desktop layout

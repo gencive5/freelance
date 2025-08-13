@@ -203,7 +203,22 @@ canvas {
 
 @media (max-width: 768px) {
   .distorted-text-container {
-    padding: 0;
+    height:  100vh !important;
+    min-height: 100vh !important;
+  }
+  
+  .distorted-text-container canvas {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: fill !important;
+  }
+  
+  /* Adjust content wrapper spacing */
+  .content-wrapper {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
 }
 
