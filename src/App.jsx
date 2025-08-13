@@ -39,7 +39,7 @@ const App = () => {
                 size={40}
               />
               <DistortedText 
-                text="développeur" 
+                text="développeur créatif" 
                 size={40}
               />
               <DistortedText 
