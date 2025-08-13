@@ -73,12 +73,34 @@ const App = () => {
           )}
         </div>
 
+{isMobile ? (
         <div className="Figure-Demo">
+          <span className="text-fit">
+            <span><span>design - image de marque</span></span>
+            <span aria-hidden="true">design - image de marque</span>
+          </span>
+          <span className="text-fit">
+            <span><span>développement</span></span>
+            <span aria-hidden="true">développement</span>
+          </span>
+          <span className="text-fit">
+            <span><span>typographie</span></span>
+            <span aria-hidden="true">typographie</span>
+          </span>
+        </div>
+
+        ) : (
+
+          <div className="Figure-Demo">
           <span className="text-fit">
             <span><span>design - image de marque - développement - typographie</span></span>
             <span aria-hidden="true">design - image de marque - développement - typographie</span>
           </span>
         </div>
+        
+      
+
+        )}
 
         <div className="Figure-Demo">
           <span className="text-fit">
