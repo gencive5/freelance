@@ -36,16 +36,13 @@ const App = () => {
             <>
               <DistortedText className="title-wrapper"
                 text="Gencives" 
-                size={40}
+                size={50}
               />
               <DistortedText 
                 text="développeur créatif" 
-                size={40}
+                size={20}
               />
-              <DistortedText 
-                text="créatif" 
-                size={60}
-              />
+              
             </>
           ) : (
             // Desktop layout
