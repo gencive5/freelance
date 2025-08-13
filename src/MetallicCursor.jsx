@@ -4,7 +4,8 @@ import './App.css';
 
 const SHAPES = {
   default: 'circle',
-  text: 'text-shape'
+  text: 'text-shape',
+  pointer: 'pointer-oval' // New shape for clickable elements
 };
 
 const isTouchDevice = () => {
@@ -55,13 +56,16 @@ const MetallicCursor = () => {
       }
     };
 
-    // Simplified shape detection
+    // Shape detection with three states
     const updateCursorShape = (e) => {
       const target = e.target;
       cursor.classList.remove(...Object.values(SHAPES));
       
       if (target.matches('input, textarea, [contenteditable]')) {
         cursor.classList.add(SHAPES.text);
+      }
+      else if (target.matches('button, a, [role="button"], [onclick], .clickable, .metallic-button')) {
+        cursor.classList.add(SHAPES.pointer);
       }
       else {
         cursor.classList.add(SHAPES.default);
