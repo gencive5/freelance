@@ -29,8 +29,22 @@ const App = () => {
       '--convexity': 2
     }}>
       <MetallicCursor />
+
       <div className="container">
-        <div>
+        <div className="Figure-Demo overlay-text">
+  <div className="text-column">
+    <span className="text-fit">
+      <span><span>GENCIVES</span></span>
+      <span aria-hidden="true">GENCIVES</span>
+    </span>
+    <span className="text-fit">
+      <span><span>développeur créatif</span></span>
+      <span aria-hidden="true">développeur créatif</span>
+    </span>
+  </div>
+</div>
+
+         <div className="content-wrapper">
           {isMobile ? (
             // Mobile layout
             <>

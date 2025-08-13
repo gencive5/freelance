@@ -51,6 +51,29 @@
   position: relative;
 }
 
+.overlay-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  pointer-events: none;
+  
+}
+
+.text-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Adjust spacing between lines */
+  padding-left: 1rem;
+  padding-right: 2rem;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1; /* Lower than overlay-text */
+}
+
 /* Remove any conflicting overflow properties */
 html, body, #root {
   margin: 0;
