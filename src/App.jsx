@@ -70,16 +70,16 @@ const App = () => {
 {isMobile ? (
         <div className="Figure-Demo">
           <span className="text-fit">
-            <span><span>design - image de marque</span></span>
-            <span aria-hidden="true">design - image de marque</span>
+            <span><span>identité visuelle</span></span>
+            <span aria-hidden="true">identité visuelle</span>
           </span>
           <span className="text-fit">
-            <span><span>développement</span></span>
-            <span aria-hidden="true">développement</span>
+            <span><span>développement web</span></span>
+            <span aria-hidden="true">développement web</span>
           </span>
           <span className="text-fit">
-            <span><span>typographie</span></span>
-            <span aria-hidden="true">typographie</span>
+            <span><span>design typographique</span></span>
+            <span aria-hidden="true">design typographique</span>
           </span>
         </div>
 
