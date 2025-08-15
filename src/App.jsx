@@ -30,19 +30,19 @@ const App = () => {
     }}>
       <MetallicCursor />
 
-      <div className="container">
-        <div className="Figure-Demo overlay-text">
-  <div className="text-column">
-    <span className="text-fit">
-      <span><span>GENCIVES</span></span>
-      <span aria-hidden="true">GENCIVES</span>
-    </span>
-    <span className="text-fit">
-      <span><span>développeur créatif</span></span>
-      <span aria-hidden="true">développeur créatif</span>
-    </span>
+ <div className={`container ${isMobile ? 'mobile-layout' : ''}`}>
+  <div className={`Figure-Demo ${isMobile ? 'overlay-text-mobile' : 'overlay-text'}`}>
+    <div className="text-column">
+      <span className="text-fit">
+        <span><span>GENCIVES</span></span>
+        <span aria-hidden="true">GENCIVES</span>
+      </span>
+      <span className="text-fit">
+        <span><span>développeur créatif</span></span>
+        <span aria-hidden="true">développeur créatif</span>
+      </span>
+    </div>
   </div>
-</div>
 
          <div className="content-wrapper">
           {isMobile ? (

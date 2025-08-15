@@ -58,7 +58,6 @@
   width: 100%;
   z-index: 10;
   pointer-events: none;
-  
 }
 
 .text-column {
@@ -67,6 +66,23 @@
   gap: 0.5rem; /* Adjust spacing between lines */
   padding-left: 1rem;
   padding-right: 2rem;
+}
+
+/* Add this to your existing CSS */
+@media (max-width: 768px) {
+  .overlay-text {
+    top: auto; /* Remove the top: 0 positioning */
+    bottom: 2rem; /* Position from bottom of viewport */
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    pointer-events: none;
+  }
+  
+  .text-column {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 .content-wrapper {
@@ -359,7 +375,6 @@ canvas {
     font-size: 2rem;
     padding: 10px;
   }
-  
 }
   
   .text-fit {
