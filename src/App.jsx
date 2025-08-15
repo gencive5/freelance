@@ -57,11 +57,9 @@ const App = () => {
             <>
               <DistortedText className="title-gap"
                 text="Gencives" 
-                size={60}
               />
               <DistortedText 
                 text="développeur créatif" 
-                size={60}
               />
             </>
           )}
