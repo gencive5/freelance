@@ -71,17 +71,16 @@
 /* Add this to your existing CSS */
 @media (max-width: 768px) {
   .overlay-text {
-    top: auto; /* Remove the top: 0 positioning */
-    bottom: 2rem; /* Position from bottom of viewport */
-    left: 0;
+    top: 40rem; /* Remove the top: 0 positioning */
+   
     width: 100%;
     z-index: 10;
     pointer-events: none;
   }
   
   .text-column {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 1.5rem;
   }
 }
 
