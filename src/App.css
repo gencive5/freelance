@@ -454,14 +454,15 @@ canvas {
 
   /* Text input shape (slim I-beam) */
   .metallic-cursor.text-shape {
-    width: 7px;
-    height: 24px;
-    border-radius: 1px;
-    clip-path: polygon(
-      0% 20%, 40% 20%, 40% 0%, 60% 0%, 60% 20%, 
-      100% 20%, 100% 80%, 60% 80%, 60% 100%, 
-      40% 100%, 40% 80%, 0% 80%
-    );
+   width: 14px;  /* Wider than text cursor */
+  height: 28px; /* Taller than text cursor */
+  background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
+  box-shadow: 
+    2px 2px 4px rgba(0,0,0,0.3),
+    inset 1px 1px 3px rgba(255,255,255,0.8),
+    inset -1px -1px 3px rgba(0,0,0,0.2) !important;
+  border-radius: 50%; /* Creates the oval shape */
+  animation: oval-pulse 1.5s infinite alternate;
   }
 
 .metallic-cursor.pointer-oval {
