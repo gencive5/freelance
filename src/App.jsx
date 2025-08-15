@@ -98,17 +98,12 @@ const App = () => {
 
         <div className="Figure-Demo">
           <span className="text-fit">
-            <span><span>DEMANDEZ VOTRE SITE WEB MAINTENANT</span></span>
-            <span aria-hidden="true">DEMANDEZ VOTRE SITE WEB MAINTENANT</span>
+            <span><span>Parlez moi de votre projet</span></span>
+            <span aria-hidden="true">Parlez moi de votre projet</span>
           </span>
         </div>
         
-        <div className="Figure-Demo">
-          <span className="text-fit">
-            <span><span>Laissez moi vos coordonnées et je vous contacterai</span></span>
-            <span aria-hidden="true">Laissez moi vos coordonnées et je vous contacterai</span>
-          </span>
-        </div>
+      
         
 
         <ContactForm />
