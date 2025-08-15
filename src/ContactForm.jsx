@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import './App.css';
 import MetallicButton from './MetallicButton';
+import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const textareaRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,7 +57,6 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={sendEmail} className="contact-form">
-      {/* Keep your existing form fields */}
       <div className="contact-form__group">
         <label className="contact-form__label">Nom:</label>
         <input 
@@ -76,36 +77,43 @@ const ContactForm = () => {
         />
       </div>
       
-      <div className="contact-form__group">
+      <div className="contact-form__group textarea-container">
         <label className="contact-form__label">Message:</label>
         <textarea 
+          ref={textareaRef}
           name="message" 
           required 
           className="contact-form__textarea"
         />
+        <MetallicTextareaScrollbar 
+          textareaRef={textareaRef}
+          style={{
+            '--metal': 'silver',
+            '--convexity': '1.5'
+          }}
+        />
       </div>
       
-      {/* Full-width metallic button */}
       <div className="contact-form__submit-container">
         <MetallicButton 
-        type="submit" 
-        disabled={isSubmitting}
-        style={{
-          width: '100%',
-          height: isMobile ? '60px' : '80px',
-          fontSize: isMobile ? '1.5rem' : '2rem',
-          borderRadius: '44px',
-          '--metal': messageType === 'success' ? 'hsl(120, 30%, 50%)' :
-                    messageType === 'error' ? 'hsl(0, 30%, 50%)' : 'neutral',
-          borderLeft: 'none',
-          borderRight: 'none',
-          fontFamily: '"Microsoft", sans-serif',
-          color: 'white',
-          textShadow: '0 -1px 0 rgba(0,0,0,0.5)'
-        }}
-      >
-        {stateMessage || "ENVOYER"}
-      </MetallicButton>
+          type="submit" 
+          disabled={isSubmitting}
+          style={{
+            width: '100%',
+            height: isMobile ? '60px' : '80px',
+            fontSize: isMobile ? '1.5rem' : '2rem',
+            borderRadius: '44px',
+            '--metal': messageType === 'success' ? 'hsl(120, 30%, 50%)' :
+                      messageType === 'error' ? 'hsl(0, 30%, 50%)' : 'neutral',
+            borderLeft: 'none',
+            borderRight: 'none',
+            fontFamily: '"Microsoft", sans-serif',
+            color: 'white',
+            textShadow: '0 -1px 0 rgba(0,0,0,0.5)'
+          }}
+        >
+          {stateMessage || "ENVOYER"}
+        </MetallicButton>
       </div>
     </form>
   );

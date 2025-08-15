@@ -341,6 +341,39 @@ canvas {
   }
 }
   
+.textarea-container {
+  position: relative;
+}
+
+.contact-form__textarea {
+  width: 100%;
+  padding-right: 10px; /* Make space for scrollbar */
+  min-height: 60px;
+  resize: none;
+  border: none;
+  border-bottom: 1px solid white;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 3rem;
+  color: white;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.contact-form__textarea::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .contact-form__textarea {
+    font-size: 2rem;
+  }
+}
+
+
   .text-fit {
     display: flex;
     container-type: inline-size;
