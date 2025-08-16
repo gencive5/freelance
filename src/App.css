@@ -502,3 +502,20 @@ canvas {
   display: inline-block;
   transition: opacity 0.2s ease;
 }
+
+.metallic-button {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer; /* Fallback */
+}
+
+.metallic-button:hover {
+  --metal: hsl(0, 0%, 75%) !important; /* Hover effect */
+}
+
+.button-text {
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+
