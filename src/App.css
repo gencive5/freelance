@@ -490,3 +490,15 @@ canvas {
 }
 
 }
+
+
+.metallic-button {
+  will-change: contents;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.button-text {
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}

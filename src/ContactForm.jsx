@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import emailjs from '@emailjs/browser';
 import './App.css';
 import MetallicButton from './MetallicButton';
@@ -9,9 +9,11 @@ const ContactForm = () => {
   const [stateMessage, setStateMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const buttonTextRef = useRef("ENVOYER"); // Using ref instead of state for text
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
+  const buttonRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -19,65 +21,77 @@ const ContactForm = () => {
     };
     window.addEventListener('resize', handleResize);
     
-    // Extra anti-autocorrect measures
-    if (nameInputRef.current) {
-      nameInputRef.current.setAttribute('autocorrect', 'off');
-      nameInputRef.current.setAttribute('spellcheck', 'false');
-      nameInputRef.current.setAttribute('autocapitalize', 'off');
-    }
-    
-    if (emailInputRef.current) {
-      emailInputRef.current.setAttribute('autocorrect', 'off');
-      emailInputRef.current.setAttribute('spellcheck', 'false');
-    }
-    
-    if (textareaRef.current) {
-      textareaRef.current.setAttribute('autocorrect', 'off');
-      textareaRef.current.setAttribute('spellcheck', 'false');
-      textareaRef.current.setAttribute('autocapitalize', 'off');
-    }
+    // Anti-autocorrect measures
+    [nameInputRef, emailInputRef, textareaRef].forEach(ref => {
+      if (ref.current) {
+        ref.current.setAttribute('autocorrect', 'off');
+        ref.current.setAttribute('spellcheck', 'false');
+        ref.current.setAttribute('autocapitalize', 'off');
+      }
+    });
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const sendEmail = (e) => {
-    e.persist();
+  const updateButton = useCallback((text, type) => {
+    if (buttonRef.current) {
+      // Directly update the button's text content
+      const textNode = buttonRef.current.querySelector('.button-text');
+      if (textNode) {
+        textNode.textContent = text;
+      }
+      
+      // Update metal color if needed
+      if (type) {
+        buttonRef.current.style.setProperty(
+          '--metal', 
+          type === 'success' ? 'hsl(120, 30%, 50%)' :
+          type === 'error' ? 'hsl(0, 30%, 50%)' : 'neutral'
+        );
+      }
+    }
+    buttonTextRef.current = text;
+  }, []);
+
+  const sendEmail = useCallback(async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    emailjs
-      .sendForm(
+    try {
+      await emailjs.sendForm(
         import.meta.env.VITE_SERVICE_ID,
         import.meta.env.VITE_TEMPLATE_ID,
         e.target,
         import.meta.env.VITE_PUBLIC_KEY
-      )
-      .then(
-        (result) => {
-          setStateMessage("ENVOYÉ!");
-          setMessageType('success');
-          setIsSubmitting(false);
-          setTimeout(() => {
-            setStateMessage(null);
-            setMessageType(null);
-          }, 7000);
-        },
-        (error) => {
-          setStateMessage("Erreur, veuillez rééssayer");
-          setMessageType('error');
-          setIsSubmitting(false);
-          setTimeout(() => {
-            setStateMessage(null);
-            setMessageType(null);
-          }, 5000);
-        }
       );
-    
-    e.target.reset();
-  };
+      
+      setStateMessage("Message envoyé!");
+      setMessageType('success');
+      updateButton("ENVOYÉ!", 'success');
+      
+      setTimeout(() => {
+        setStateMessage(null);
+        setMessageType(null);
+        updateButton("ENVOYER", null);
+      }, 5000);
+    } catch (error) {
+      setStateMessage("Erreur, veuillez rééssayer");
+      setMessageType('error');
+      updateButton("ENVOYER", 'error');
+      
+      setTimeout(() => {
+        setStateMessage(null);
+        setMessageType(null);
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+      e.target.reset();
+    }
+  }, [updateButton]);
 
   return (
     <form onSubmit={sendEmail} className="contact-form">
+      {/* Input fields remain the same as before */}
       <div className="contact-form__group">
         <label className="contact-form__label">Nom:</label>
         <input 
@@ -130,6 +144,7 @@ const ContactForm = () => {
       
       <div className="contact-form__submit-container">
         <MetallicButton 
+          ref={buttonRef}
           type="submit" 
           disabled={isSubmitting}
           style={{
@@ -137,17 +152,22 @@ const ContactForm = () => {
             height: isMobile ? '60px' : '80px',
             fontSize: isMobile ? '1.5rem' : '2rem',
             borderRadius: '44px',
-            '--metal': messageType === 'success' ? 'hsl(120, 30%, 50%)' :
-                      messageType === 'error' ? 'hsl(0, 30%, 50%)' : 'neutral',
+            '--metal': 'neutral',
             borderLeft: 'none',
             borderRight: 'none',
             fontFamily: '"Microsoft", sans-serif',
             color: 'white',
-            textShadow: '0 -1px 0 rgba(0,0,0,0.5)'
+            textShadow: '0 -1px 0 rgba(0,0,0,0.5)',
+            transition: '--metal 0.3s ease' // Smooth color transition
           }}
         >
-          {stateMessage || "ENVOYER"}
+          <span className="button-text">{buttonTextRef.current}</span>
         </MetallicButton>
+        {stateMessage && messageType !== 'success' && (
+          <p className={`contact-form__message contact-form__message--${messageType}`}>
+            {stateMessage}
+          </p>
+        )}
       </div>
     </form>
   );
