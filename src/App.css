@@ -68,19 +68,25 @@
   padding-right: 2rem;
 }
 
-/* Add this to your existing CSS */
 @media (max-width: 768px) {
   .overlay-text {
-    top: 40rem; /* Remove the top: 0 positioning */
-   
+    position: absolute;
+     /* Position at bottom of viewport */
+    top: auto; /* Override the top:0 from desktop */
     width: 100%;
     z-index: 10;
     pointer-events: none;
+    padding-bottom: 2rem; /* Add some space from the very bottom */
   }
-  
+
+  .flexcontainer {
+    display: flex;
+    align-items: flex-end;
+    height: 100vh; /* Make it full viewport height */
+  }
+
   .text-column {
-    padding-left: 0.5rem;
-    padding-right: 1.5rem;
+    width: 100%;
   }
 }
 
@@ -102,17 +108,12 @@ html, body, #root {
   padding: 1rem;
 }
 
-.Test {
-  padding: 1rem;
-   font-family: 'Sniglet';
-}
 
 .textfit-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  
 }
 
 canvas {
