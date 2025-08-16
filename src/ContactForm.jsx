@@ -54,13 +54,13 @@ const ContactForm = () => {
       )
       .then(
         (result) => {
-          setStateMessage("Message envoyé!");
+          setStateMessage("ENVOYÉ!");
           setMessageType('success');
           setIsSubmitting(false);
           setTimeout(() => {
             setStateMessage(null);
             setMessageType(null);
-          }, 5000);
+          }, 7000);
         },
         (error) => {
           setStateMessage("Erreur, veuillez rééssayer");

@@ -71,8 +71,7 @@
 @media (max-width: 768px) {
   .overlay-text {
     position: absolute;
-     /* Position at bottom of viewport */
-    top: auto; /* Override the top:0 from desktop */
+    top: auto;
     width: 100%;
     z-index: 10;
     pointer-events: none;
@@ -82,7 +81,7 @@
   .flexcontainer {
     display: flex;
     align-items: flex-end;
-    height: 100vh; /* Make it full viewport height */
+    height: 100vh; 
   }
 
   .text-column {
