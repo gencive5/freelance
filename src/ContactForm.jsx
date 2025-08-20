@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+ import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import './App.css';
 import MetallicButton from './MetallicButton';
@@ -129,25 +129,19 @@ const ContactForm = () => {
       </div>
       
       <div className="contact-form__submit-container">
-        <MetallicButton 
-          type="submit" 
-          disabled={isSubmitting}
-          style={{
-            width: '100%',
-            height: isMobile ? '60px' : '80px',
-            fontSize: isMobile ? '1.5rem' : '2rem',
-            borderRadius: '44px',
-            '--metal': messageType === 'success' ? 'hsl(120, 30%, 50%)' :
-                      messageType === 'error' ? 'hsl(0, 30%, 50%)' : 'neutral',
-            borderLeft: 'none',
-            borderRight: 'none',
-            fontFamily: '"Microsoft", sans-serif',
-            color: 'white',
-            textShadow: '0 -1px 0 rgba(0,0,0,0.5)'
-          }}
-        >
-          {messageType === 'success' ? "ENVOYé!" : "ENVOYER"}
-        </MetallicButton>
+      
+<MetallicButton 
+  type="submit" 
+  disabled={isSubmitting}
+  style={{
+    width: '100%',
+    height: isMobile ? '60px' : '80px',
+    fontSize: isMobile ? '1.5rem' : '2rem'
+  }}
+>
+  {messageType === 'success' ? "ENVOYé!" : "ENVOYER"}
+</MetallicButton>
+
         {stateMessage && messageType !== 'success' && (
           <p className={`contact-form__message contact-form__message--${messageType}`}>
             {stateMessage}
@@ -158,4 +152,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default ContactForm; 

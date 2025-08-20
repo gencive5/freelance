@@ -1,22 +1,39 @@
-// src/components/MetallicButton.jsx
-import { useEffect } from 'react';
+ import { memo, useEffect, useRef } from 'react';
 import 'metallicss';
 
-const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
+const MetallicButton = memo(({ 
+  children, 
+  onClick, 
+  className = '', 
+  style = {},
+  text = null
+}) => {
+  const buttonRef = useRef(null);
+  const textRef = useRef(null);
+  
   useEffect(() => {
-    // Dynamically load the MetalliCSS script
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js';
-    script.type = 'module';
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    // Load MetalliCSS script only once
+    if (!window.metallicssLoaded) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js';
+      script.type = 'module';
+      document.body.appendChild(script);
+      window.metallicssLoaded = true;
+    }
   }, []);
+
+  useEffect(() => {
+    // Update text content without re-rendering
+    if (textRef.current && text !== null) {
+      textRef.current.textContent = text;
+    } else if (textRef.current && children) {
+      textRef.current.textContent = children;
+    }
+  }, [text, children]);
 
   return (
     <button
+      ref={buttonRef}
       className={`metallicss ${className}`}
       onClick={onClick}
       style={{
@@ -35,9 +52,11 @@ const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
         ...style
       }}
     >
-      {children}
+      <span ref={textRef} className="metallic-button-text">
+        {children}
+      </span>
     </button>
   );
-};
+});
 
 export default MetallicButton;
