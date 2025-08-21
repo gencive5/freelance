@@ -1,39 +1,41 @@
- import { memo, useEffect, useRef } from 'react';
+// src/components/MetallicButton.jsx
+import { useEffect } from 'react';
 import 'metallicss';
 
-const MetallicButton = memo(({ 
-  children, 
-  onClick, 
-  className = '', 
-  style = {},
-  text = null
-}) => {
-  const buttonRef = useRef(null);
-  const textRef = useRef(null);
-  
-  useEffect(() => {
-    // Load MetalliCSS script only once
-    if (!window.metallicssLoaded) {
-      const script = document.createElement('script');
-      script.src = 'https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js';
-      script.type = 'module';
-      document.body.appendChild(script);
-      window.metallicssLoaded = true;
-    }
-  }, []);
+const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
+
+
+
+
+
+
+
+
 
   useEffect(() => {
-    // Update text content without re-rendering
-    if (textRef.current && text !== null) {
-      textRef.current.textContent = text;
-    } else if (textRef.current && children) {
-      textRef.current.textContent = children;
-    }
-  }, [text, children]);
+    // Dynamically load the MetalliCSS script
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js';
+    script.type = 'module';
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+
+
+
+
+
+
+
+
 
   return (
     <button
-      ref={buttonRef}
+
       className={`metallicss ${className}`}
       onClick={onClick}
       style={{
@@ -44,6 +46,7 @@ const MetallicButton = memo(({
         height: '80px',
         background: '#ffffff',
         border: 'none',
+        cursor: 'pointer',
         fontSize: '1.2rem',
         fontWeight: 'bold',
         color: 'white !important',
@@ -51,11 +54,11 @@ const MetallicButton = memo(({
         ...style
       }}
     >
-      <span ref={textRef} className="metallic-button-text">
-        {children}
-      </span>
+      {children}
+
+
     </button>
   );
-});
+};
 
 export default MetallicButton;
