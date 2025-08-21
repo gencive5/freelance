@@ -44,7 +44,6 @@ const MetallicButton = memo(({
         height: '80px',
         background: '#ffffff',
         border: 'none',
-        cursor: 'pointer',
         fontSize: '1.2rem',
         fontWeight: 'bold',
         color: 'white !important',
