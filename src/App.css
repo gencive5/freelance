@@ -16,21 +16,14 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Seaweed';
-  src: url('/fonts/SeaweedSans-Regular.woff2') format('woff2'),
-       url('/fonts/SeaweedSans-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Sniglet';
-  src: url('/fonts/sniglet_regular-webfont.woff2') format('woff2'),
-       url('/fonts/sniglet_regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+ @font-face {
+            font-family: 'adineue';
+            src: url('./fonts/adineue.woff2') format('woff2'),
+                 url('./fonts/adineue.woff') format('woff');
+            font-display: swap;
+            font-weight: normal;
+            font-style: normal;
+        }
 
 
 @font-face {
@@ -133,8 +126,15 @@ canvas {
   }
 }
 
+.font-test {
+  font-family: 'adineue', sans-serif;
+  font-size: 24px;
+  position: absolute;
+  opacity: 0.5;
+}
+
 .text-fit {
-  font-family: 'Microsoft', sans-serif;
+  font-family: 'adineue', sans-serif;
   display: flex;
   container-type: inline-size;
 
@@ -278,7 +278,7 @@ canvas {
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
-  font-family: 'Microsoft', sans-serif;
+  font-family: 'adineue', sans-serif;
   font-size: 3rem;
 }
 
@@ -423,7 +423,7 @@ canvas {
   position:relative;
   float: right;
   color:white; 
-  font-family: 'Microsoft', sans-serif;
+  font-family: 'adineue', sans-serif;
   font-size: 3rem;
   padding: 20px;
 }

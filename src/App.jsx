@@ -35,8 +35,8 @@ const App = () => {
     <div className="flexcontainer">
       <div className="text-column Figure-Demo">
         <span className="text-fit">
-          <span><span>GENCIVES</span></span>
-          <span aria-hidden="true">GENCIVES</span>
+          <span><span>gencives</span></span>
+          <span aria-hidden="true">gencives</span>
         </span>
         <span className="text-fit">
           <span><span>développeur créatif</span></span>
@@ -45,6 +45,7 @@ const App = () => {
       </div>
     </div>
   </div>
+
 
          <div className="content-wrapper">
           {isMobile ? (
