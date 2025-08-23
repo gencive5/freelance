@@ -117,8 +117,7 @@ canvas {
 @media (max-width: 768px) {
   .textfit-container {
     align-items: center; /* Center the text on mobile */
-    gap: 1rem; /* Reduce gap between lines on mobile */
-    
+    gap: 1rem; /* Reduce gap between lines on mobile */ 
   }
   
   canvas {
@@ -126,12 +125,6 @@ canvas {
   }
 }
 
-.font-test {
-  font-family: 'adineue', sans-serif;
-  font-size: 24px;
-  position: absolute;
-  opacity: 0.5;
-}
 
 .text-fit {
   font-family: 'adineue', sans-serif;
@@ -202,19 +195,15 @@ canvas {
 
 /* Distorted Text Styles */
 .distorted-text-container {
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+height: 100% !important;
+    width: 100% !important;
+    object-fit: fill !important;
 }
 
 .distorted-text-container canvas {
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100%;
-  display: block;
+ height: 100% !important;
+    width: 100% !important;
+    object-fit: fill !important;
 }
 
 @media (max-width: 768px) {
@@ -266,10 +255,6 @@ canvas {
   .Figure-Demo:first-of-type {
     margin-top: 2rem;
   }
-}
-
-.title-gap {
-  margin-bottom: -10rem; 
 }
 
 
@@ -373,7 +358,6 @@ canvas {
     font-size: 2rem;
   }
 }
-
 
   .text-fit {
     display: flex;
@@ -491,7 +475,6 @@ canvas {
 }
 
 }
-
 
 .metallic-button {
   will-change: contents;
