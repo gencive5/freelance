@@ -519,4 +519,33 @@ canvas {
   transition: opacity 0.2s ease;
 }
 
+/* Desktop Layout Styles */
+.desktop-first-row {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
+.desktop-second-row {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 2rem;
+}
+
+.desktop-third-row {
+  margin-top: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Adjust content wrapper for desktop */
+@media (min-width: 769px) {
+  .content-wrapper {
+    margin: 2rem 0;
+  }
+  
+  .Figure-Demo {
+    margin: 1rem 0;
+  }
+}

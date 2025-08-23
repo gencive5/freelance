@@ -31,89 +31,111 @@ const App = () => {
       <MetallicCursor />
 
       <div className="container">
-  <div className="overlay-text">
-    <div className="flexcontainer">
-      <div className="text-column Figure-Demo">
-        <span className="text-fit">
-          <span><span>gencives</span></span>
-          <span aria-hidden="true">gencives</span>
-        </span>
-        <span className="text-fit">
-          <span><span>développeur créatif</span></span>
-          <span aria-hidden="true">développeur créatif</span>
-        </span>
-      </div>
-    </div>
-  </div>
+        {/* First Row - Only on Desktop */}
+        {!isMobile && (
+          <div className="desktop-first-row">
+            <div className="overlay-text">
+              <div className="flexcontainer">
+                <div className="text-column Figure-Demo">
+                  <span className="text-fit">
+                    <span><span>gencives</span></span>
+                    <span aria-hidden="true">gencives</span>
+                  </span>
+                  <span className="text-fit">
+                    <span><span>développeur créatif</span></span>
+                    <span aria-hidden="true">développeur créatif</span>
+                  </span>
+                </div>
+              </div>
+            </div>
 
+            <div className="content-wrapper">
+              <DistortedText className="title-gap" text="Gencives" />
+              <DistortedText text="développeur créatif" />
+            </div>
 
-         <div className="content-wrapper">
-          {isMobile ? (
-            // Mobile layout
-            <>
-              <DistortedText className="title-wrapper"
-                text="Gencives" 
-              />
-            </>
-          ) : (
-            // Desktop layout
-            <>
-              <DistortedText className="title-gap"
-                text="Gencives" 
-              />
-              <DistortedText 
-                text="développeur créatif" 
-              />
-            </>
-          )}
-        </div>
-
-{isMobile ? (
-        <div className="Figure-Demo">
-          <span className="text-fit">
-            <span><span>identité visuelle</span></span>
-            <span aria-hidden="true">identité visuelle</span>
-          </span>
-          <span className="text-fit">
-            <span><span>développement web</span></span>
-            <span aria-hidden="true">développement web</span>
-          </span>
-          <span className="text-fit">
-            <span><span>design typographique</span></span>
-            <span aria-hidden="true">design typographique</span>
-          </span>
-        </div>
-
-        ) : (
-
-          <div className="Figure-Demo">
-          <span className="text-fit">
-            <span><span>design - image de marque - développement - typographie</span></span>
-            <span aria-hidden="true">design - image de marque - développement - typographie</span>
-          </span>
-        </div>
-        
-      
-
+            <div className="Figure-Demo">
+              <span className="text-fit">
+                <span><span>design - image de marque - développement - typographie</span></span>
+                <span aria-hidden="true">design - image de marque - développement - typographie</span>
+              </span>
+            </div>
+          </div>
         )}
 
-        <div className="Figure-Demo">
-          <span className="text-fit">
-            <span><span>Parlez moi de votre projet</span></span>
-            <span aria-hidden="true">Parlez moi de votre projet</span>
-          </span>
-        </div>
-        
-      
-        
+        {/* Mobile layout remains the same */}
+        {isMobile && (
+          <>
+            <div className="overlay-text">
+              <div className="flexcontainer">
+                <div className="text-column Figure-Demo">
+                  <span className="text-fit">
+                    <span><span>gencives</span></span>
+                    <span aria-hidden="true">gencives</span>
+                  </span>
+                  <span className="text-fit">
+                    <span><span>développeur créatif</span></span>
+                    <span aria-hidden="true">développeur créatif</span>
+                  </span>
+                </div>
+              </div>
+            </div>
 
-        <ContactForm />
-        <br></br>
-        <Contact></Contact>
+            <div className="content-wrapper">
+              <DistortedText className="title-wrapper" text="Gencives" />
+            </div>
+
+            <div className="Figure-Demo">
+              <span className="text-fit">
+                <span><span>identité visuelle</span></span>
+                <span aria-hidden="true">identité visuelle</span>
+              </span>
+              <span className="text-fit">
+                <span><span>développement web</span></span>
+                <span aria-hidden="true">développement web</span>
+              </span>
+              <span className="text-fit">
+                <span><span>design typographique</span></span>
+                <span aria-hidden="true">design typographique</span>
+              </span>
+            </div>
+
+            <div className="Figure-Demo">
+              <span className="text-fit">
+                <span><span>Parlez moi de votre projet</span></span>
+                <span aria-hidden="true">Parlez moi de votre projet</span>
+              </span>
+            </div>
+
+            <ContactForm />
+            <br />
+            <Contact />
+          </>
+        )}
+
+        {/* Second Row - Only on Desktop */}
+        {!isMobile && (
+          <div className="desktop-second-row">
+            <div className="Figure-Demo">
+              <span className="text-fit">
+                <span><span>Parlez moi de votre projet</span></span>
+                <span aria-hidden="true">Parlez moi de votre projet</span>
+              </span>
+            </div>
+            
+            <ContactForm />
+          </div>
+        )}
+
+        {/* Third Row - Only on Desktop */}
+        {!isMobile && (
+          <div className="desktop-third-row">
+            <Contact />
+          </div>
+        )}
       </div>
     </MetallicScrollbar>
-    
   );
 };
 
-export default App; 
+export default App;
