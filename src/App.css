@@ -59,6 +59,13 @@
   gap: 0.5rem; /* Adjust spacing between lines */
   padding-left: 1rem;
   padding-right: 2rem;
+  width: 100%;
+}
+
+.flexcontainer {
+  display: flex;
+  align-items: flex-end;
+  height: 100vh; 
 }
 
 @media (max-width: 768px) {
@@ -87,7 +94,7 @@
   z-index: 1; /* Lower than overlay-text */
 }
 
-/* Remove any conflicting overflow properties */
+
 html, body, #root {
   margin: 0;
   padding: 0;
