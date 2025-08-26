@@ -1,0 +1,101 @@
+
+/* Updated Contact Form Styles */
+.contact-form {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'adineue', sans-serif;
+  font-size: 3rem;
+}
+
+.contact-form__group {
+  width: 100%;
+  margin-bottom: 30px; /* Increased margin for better spacing */
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+}
+
+.contact-form__label {
+  font-weight: 500;
+  margin-bottom: 5px; /* Space between label and line */
+}
+
+.contact-form__input,
+.contact-form__textarea {
+  width: 100%;
+  padding: 8px 0; /* Only vertical padding */
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid white; /* White line instead of box */
+  background: transparent;
+  font-family: inherit;
+  font-size: 3rem;
+  color: white; /* Assuming you want white text */
+  outline: none;
+}
+
+.contact-form__textarea {
+  min-height: 60px; /* Reduced height for textarea */
+  resize: none; /* Disable resizing */
+  border-bottom: 1px solid white;
+}
+
+.contact-form__submit-container {
+  width: 100%;
+  margin-top: 40px; /* More space above button */
+}
+
+/* Add these to your existing styles */
+
+.contact-form__submit {
+  /* YOUR EXISTING STRUCTURE */
+  width: 100%;
+  padding: 15px;
+  font-family: 'Microsoft', sans-serif;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  border-radius: 4px;
+ 
+}
+
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .contact-form__submit {
+    font-size: 2rem;
+    padding: 10px;
+  }
+}
+  
+.textarea-container {
+  position: relative;
+}
+
+.contact-form__textarea {
+  width: 100%;
+  padding-right: 10px; /* Make space for scrollbar */
+  min-height: 60px;
+  resize: none;
+  border: none;
+  border-bottom: 1px solid white;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 3rem;
+  color: white;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.contact-form__textarea::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .contact-form__textarea {
+    font-size: 2rem;
+  }
+}
