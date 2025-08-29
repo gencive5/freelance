@@ -82,7 +82,11 @@
 
 .content-wrapper {
   position: relative;
-  z-index: 1; /* Lower than overlay-text */
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+ 
 }
 
 
@@ -120,6 +124,15 @@ canvas {
   
   canvas {
     width: 100% !important;
+  }
+
+  .overlay-text .text-fit > :not([aria-hidden]) > span {
+    color: white !important;
+    opacity: 1 !important;
+  }
+  
+  .overlay-text .text-fit [aria-hidden] {
+    opacity: 0; /* Keep the hidden text completely transparent */
   }
 }
 
@@ -308,7 +321,6 @@ height: 100% !important;
   padding: 2rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 
 /* Force white text in metallic buttons */
 .metallicss {
