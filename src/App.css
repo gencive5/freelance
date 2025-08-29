@@ -132,7 +132,7 @@ canvas {
   }
   
   .overlay-text .text-fit [aria-hidden] {
-    opacity: 0; /* Keep the hidden text completely transparent */
+    opacity: 0; 
   }
 }
 
