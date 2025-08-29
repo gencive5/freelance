@@ -135,8 +135,8 @@ const ContactForm = () => {
   type="submit" 
   disabled={isSubmitting}
   style={{
-    width: '100%',
-    height: isMobile ? '60px' : '80px',
+    width: isMobile ? '10rem' : '12rem',
+    height: isMobile ? '10rem' : '12rem',
     fontSize: isMobile ? '1.5rem' : '2rem'
   }}
 >

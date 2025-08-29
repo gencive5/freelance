@@ -59,7 +59,6 @@
   border-radius: 50%; /* Creates the oval shape */
   animation: oval-pulse 1.5s infinite alternate;
 }
-
 }
 
 .metallic-button {
