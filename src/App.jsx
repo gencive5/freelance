@@ -52,8 +52,6 @@ const App = () => {
                 <span aria-hidden="true">design - image de marque - développement - typographie</span>
               </span>
                 </div>
-                 
-              
             
               </div>
               
