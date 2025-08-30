@@ -44,6 +44,15 @@
   pointer-events: none;
 }
 
+.overlay-text .text-fit > :not([aria-hidden]) > span {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.overlay-text .text-fit [aria-hidden] {
+  opacity: 0; 
+}
+
 .text-column {
   display: flex;
   flex-direction: column;
@@ -316,17 +325,16 @@ height: 100% !important;
 }
 
 .desktop-first-row .text-fit {
-  margin-bottom: -0.1rem; /* Negative margin to reduce space between lines */
-  line-height: 1.1; /* Reduce line height */
+  margin-bottom: -0.1rem; 
+  line-height: 1.1;
 }
 
 /* Optional: Adjust the overall container if needed */
 .desktop-first-row .flexcontainer {
-  align-items: flex-start; /* Align to top instead of bottom */
+  align-items: flex-end; 
   height: auto;
   min-height: 100vh;
 }
-
 
 
 .desktop-first-row .title-gap {
