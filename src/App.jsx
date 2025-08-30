@@ -90,7 +90,7 @@ const App = () => {
 
             <div className="Figure-Demo">
               <span className="text-fit">
-                <span><span>design -développement web</span></span>
+                <span><span>design - développement web</span></span>
                 <span aria-hidden="true">design - développement web</span>
               </span>
               <span className="text-fit">

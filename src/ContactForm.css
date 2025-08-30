@@ -6,6 +6,8 @@
   box-sizing: border-box;
   font-family: 'adineue', sans-serif;
   font-size: 3rem;
+  color: #02bea5 !important;
+  opacity: 1 !important;
 }
 
 .contact-form__group {
@@ -30,7 +32,8 @@
   background: transparent;
   font-family: inherit;
   font-size: 3rem;
-  color: white; /* Assuming you want white text */
+  color: #02bea5 !important;
+  opacity: 1 !important;/* Assuming you want white text */
   outline: none;
 }
 
@@ -38,6 +41,8 @@
   min-height: 60px; /* Reduced height for textarea */
   resize: none; /* Disable resizing */
   border-bottom: 1px solid white;
+  color: #02bea5 !important;
+  opacity: 1 !important;
 }
 
 .contact-form__submit-container {
@@ -49,18 +54,16 @@
   flex-direction: column; /* Stack button and message vertically */
 }
 
-/* Add these to your existing styles */
 
 .contact-form__submit {
-  /* YOUR EXISTING STRUCTURE */
   width: 100%;
   padding: 15px;
   font-family: 'Microsoft', sans-serif;
-  color: white;
+  color: #02bea5 !important;
+  opacity: 1 !important;
   font-size: 3rem;
   cursor: pointer;
   border-radius: 4px;
- 
 }
 
 
@@ -87,10 +90,11 @@
   outline: none;
   font-family: inherit;
   font-size: 3rem;
-  color: white;
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
+  color: white !important;
+  opacity: 1 !important;
 }
 
 .contact-form__textarea::-webkit-scrollbar {
@@ -101,5 +105,19 @@
 @media (max-width: 768px) {
   .contact-form__textarea {
     font-size: 2rem;
+    color: white !important;
+  opacity: 1 !important;
   }
+
+
+.contact-form {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'adineue', sans-serif;
+  font-size: 3rem;
+   color: white !important;
+  opacity: 1 !important;
+}
+
 }

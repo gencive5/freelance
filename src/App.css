@@ -53,6 +53,16 @@
   opacity: 0; 
 }
 
+.Figure-Demo .text-fit > :not([aria-hidden]) > span {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.Figure-Demo .text-fit [aria-hidden] {
+  opacity: 0; 
+}
+
+
 .text-column {
   display: flex;
   flex-direction: column;
