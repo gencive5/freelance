@@ -364,6 +364,16 @@ height: 100% !important;
   padding: 2rem 0;
 }
 
+
+
+
+.mobile-first-row .flexcontainer {
+  align-items: flex-end; 
+  height: auto;
+  min-height: 100vh;
+}
+
+
 /* Force white text in metallic buttons */
 .metallicss {
   color: rgb(58, 58, 58) !important;

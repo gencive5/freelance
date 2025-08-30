@@ -69,6 +69,7 @@ const App = () => {
         {/* Mobile layout remains the same */}
         {isMobile && (
           <>
+           <div className="mobile-first-row">
             <div className="overlay-text">
               <div className="flexcontainer">
                 <div className="text-column Figure-Demo">
@@ -80,15 +81,7 @@ const App = () => {
                     <span><span>développeur créatif</span></span>
                     <span aria-hidden="true">développeur créatif</span>
                   </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="content-wrapper">
-              <DistortedText className="title-wrapper" text="Gencives" />
-            </div>
-
-            <div className="Figure-Demo">
+               
               <span className="text-fit">
                 <span><span>design - développement web</span></span>
                 <span aria-hidden="true">design - développement web</span>
@@ -97,6 +90,16 @@ const App = () => {
                 <span><span>identité visuelle - typographie</span></span>
                 <span aria-hidden="true">identité visuelle - typographie</span>
               </span>
+         
+                </div>
+                
+              </div>
+            </div>
+
+            <div className="content-wrapper">
+              <DistortedText className="title-wrapper" text="Gencives" />
+            </div>
+
             </div>
 
             <div className="Figure-Demo">
