@@ -13,7 +13,6 @@
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
-  padding-right: 14px; /* Compensate for scrollbar width */
   box-sizing: border-box;
 }
 
