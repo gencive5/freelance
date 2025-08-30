@@ -90,16 +90,12 @@ const App = () => {
 
             <div className="Figure-Demo">
               <span className="text-fit">
-                <span><span>identité visuelle</span></span>
-                <span aria-hidden="true">identité visuelle</span>
+                <span><span>design -développement web</span></span>
+                <span aria-hidden="true">design - développement web</span>
               </span>
               <span className="text-fit">
-                <span><span>développement web</span></span>
-                <span aria-hidden="true">développement web</span>
-              </span>
-              <span className="text-fit">
-                <span><span>design typographique</span></span>
-                <span aria-hidden="true">design typographique</span>
+                <span><span>identité visuelle - typographie</span></span>
+                <span aria-hidden="true">identité visuelle - typographie</span>
               </span>
             </div>
 
