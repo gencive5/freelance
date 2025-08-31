@@ -102,6 +102,8 @@ const App = () => {
 
             </div>
 
+        <div className="mobile-second-row">
+
             <div className="Figure-Demo">
               <span className="text-fit">
                 <span><span>Parlez moi de votre projet</span></span>
@@ -112,7 +114,9 @@ const App = () => {
             <ContactForm />
             <br />
             <Contact />
+            </div>
           </>
+          
         )}
 
         {/* Second Row - Only on Desktop */}
