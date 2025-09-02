@@ -130,16 +130,11 @@ const App = () => {
             </div>
             
             <ContactForm />
+              <Contact />
           </div>
         )}
 
-        {/* Third Row - Only on Desktop */}
-        {!isMobile && (
-          <div className="desktop-third-row">
-            <Contact />
-          </div>
-        )}
-      </div>
+        </div>
     </MetallicScrollbar>
   );
 };
