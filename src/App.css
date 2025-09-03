@@ -259,6 +259,14 @@ height: 100% !important;
   }
 }
 
+.content-wrapper1 {
+  position: relative;
+  z-index: -1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 
 .title-wrapper {
   display: flex;
@@ -432,4 +440,46 @@ height: 100% !important;
 .mobile-first-row .text-column.Figure-Demo > :nth-child(4) {
   margin-bottom: 0;
   align-self: flex-end;
+}
+
+/* Desktop second row styling */
+.desktop-second-row {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+  color: #02bea5;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+ 
+}
+
+/* Background distorted text */
+.background-distorted-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Lowest z-index */
+  pointer-events: none;
+  opacity: 0.7; /* Adjust opacity as needed */
+}
+
+/* Ensure form elements have proper z-index */
+.ContactForm {
+  position: relative;
+  z-index: 2;
+}
+
+.Contact {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure metallic button has proper z-index */
+.metallic-button {
+  position: relative;
+  z-index: 3;
 }
