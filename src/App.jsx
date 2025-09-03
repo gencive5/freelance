@@ -36,34 +36,37 @@ const App = () => {
         {/* First Row - Only on Desktop */}
         {!isMobile && (
           <div className="desktop-first-row">
-            <div className="overlay-text">
-              <div className="flexcontainer">
-                <div className="text-column Figure-Demo">
-                  <span className="text-fit">
-                    <span><span>gencives</span></span>
-                    <span aria-hidden="true">gencives</span>
-                  </span>
-                  <span className="text-fit">
-                    <span><span>développeur créatif</span></span>
-                    <span aria-hidden="true">développeur créatif</span>
-                  </span>
-                  <span className="text-fit">
-                <span><span>design - image de marque - développement - typographie</span></span>
-                <span aria-hidden="true">design - image de marque - développement - typographie</span>
-              </span>
-                </div>
-            
-              </div>
-              
-            </div>
+  <div className="overlay-text">
+    <div className="flexcontainer">
+      <div className="text-column Figure-Demo">
+        {/* gencives - will stay at top */}
+        <div className="text-fit1"> 
+          <span className="text-fit">
+            <span><span>gencives</span></span>
+            <span aria-hidden="true">gencives</span>
+          </span>
+        </div>
+        
+        {/* développeur créatif - will go to bottom */}
+        <span className="text-fit">
+          <span><span>développeur créatif</span></span>
+          <span aria-hidden="true">développeur créatif</span>
+        </span>
+        
+        {/* design line - will go to bottom */}
+        <span className="text-fit">
+          <span><span>design - image de marque - développement - typographie</span></span>
+          <span aria-hidden="true">design - image de marque - développement - typographie</span>
+        </span>
+      </div>
+    </div>
+  </div>
 
-            <div className="content-wrapper">
-              <DistortedText className="title-gap" text="Gencives" />
-              <DistortedText text="développeur créatif" />
-            </div>
-
-           
-          </div>
+  <div className="content-wrapper">
+    <DistortedText className="title-gap" text="Gencives" />
+    <DistortedText text="développeur créatif" />
+  </div>
+</div>
         )}
 
         {/* Mobile layout remains the same */}

@@ -15,7 +15,7 @@ const Contact = () => (
       href="https://instagram.com/gencive5"
       target="_blank"
       rel="noopener noreferrer"
-      style={{ color: '#fd4d4dff' }}
+      style={{ color: '#00ff1a' }}
     >
       Instagram
     </a>
