@@ -115,7 +115,9 @@ const App = () => {
           <div className="desktop-second-row">
             {/* Background distorted text */}
             <div className="background-distorted-text">
-              <DistortedText text="Envoyer" />
+              <DistortedText text="Envoyer"
+                      color="#02bea5" 
+                       />
             </div>
             
           
