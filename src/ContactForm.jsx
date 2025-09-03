@@ -140,7 +140,7 @@ const ContactForm = () => {
     fontSize: isMobile ? '1.5rem' : '2rem'
   }}
 >
-  {messageType === 'success' ? "ENVOYé!" : "ENVOYER"}
+  
 </MetallicButton>
 
         {stateMessage && messageType !== 'success' && (
