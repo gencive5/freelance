@@ -40,6 +40,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: 100vh;
   z-index: 10;
   pointer-events: none;
 }
@@ -341,7 +342,7 @@ height: 100% !important;
 
 .desktop-first-row .text-column.Figure-Demo {
   justify-content: flex-start;
-  padding-top: 2rem; /* Adjust this value as needed */
+  padding-top: 2rem;
 }
 
 .desktop-first-row .text-fit {
@@ -407,16 +408,13 @@ height: 100% !important;
   padding-bottom: 2rem;
 }
 
-/* Ensure the first item (gencives) stays at the top */
 .desktop-first-row .text-column.Figure-Demo > :first-child {
   margin-top: 0;
   align-self: flex-start;
 }
 
-/* Ensure the last items stay at the bottom */
-.desktop-first-row .text-column.Figure-Demo > :nth-child(2),
 .desktop-first-row .text-column.Figure-Demo > :nth-child(3) {
-  margin-bottom: 0;
+  margin-bottom: 2rem;
   align-self: flex-end;
 }
 
@@ -425,7 +423,7 @@ height: 100% !important;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: space-between;
+  
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
