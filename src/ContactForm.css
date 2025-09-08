@@ -41,7 +41,6 @@
 .contact-form__textarea {
   min-height: 60px;
   resize: none;
- 
   color: #02bea5 !important;
   opacity: 1 !important;
 }
@@ -78,7 +77,6 @@
   min-height: 60px;
   resize: none;
   border: none;
-
   background: transparent;
   outline: none;
   font-family: inherit;
@@ -114,7 +112,7 @@
   
   .contact-form__submit {
     font-size: 2rem;
-    padding: 10px;
+    
   }
   
   .contact-form {

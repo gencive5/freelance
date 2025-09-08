@@ -139,6 +139,7 @@ const ContactForm = () => {
     height: isMobile ? '10rem' : '12rem',
     fontSize: isMobile ? '1.5rem' : '2rem'
   }}
+  aria-label="Submit contact form"
 >
   
 </MetallicButton>
