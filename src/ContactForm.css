@@ -25,7 +25,7 @@
 
 .contact-form__input,
 .contact-form__textarea {
-  flex: 1; /* Allow input to take remaining space */
+  
   padding: 8px 0;
   box-sizing: border-box;
   border: none;
@@ -33,7 +33,7 @@
   background: transparent;
   font-family: inherit;
   font-size: 3rem;
-  color: #02bea5 !important;
+  color: #00ff1a  !important;
   opacity: 1 !important;
   outline: none;
 }
