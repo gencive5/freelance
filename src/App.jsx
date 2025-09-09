@@ -101,7 +101,12 @@ const App = () => {
             </div>
 
             <div className="mobile-second-row">
-              
+
+               <div className="background-distorted-text">
+              <DistortedText text="Envoyer"
+                      color="#02bea5" 
+                       />
+            </div>           
 
               <ContactForm />
               <br />
