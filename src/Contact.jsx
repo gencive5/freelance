@@ -5,7 +5,7 @@ const Contact = () => (
 
      <a
       href="mailto:vic.segen@gmail.com"
-      className="mx-2 underline hover:opacity-80 transition-opacity"
+      className="link"
       style={{ color: '#1A73E8' }}
     >
       Email
@@ -15,6 +15,7 @@ const Contact = () => (
       href="https://instagram.com/gencive5"
       target="_blank"
       rel="noopener noreferrer"
+      className="link"
       style={{ color: '#00ff1a' }}
     >
       Instagram

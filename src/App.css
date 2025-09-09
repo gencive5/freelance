@@ -291,6 +291,9 @@ height: 100% !important;
   }
 }
 
+.link{
+  font-size: 2rem;
+}
 
   .text-fit {
     display: flex;
@@ -484,3 +487,4 @@ height: 100% !important;
   position: relative;
   z-index: 3;
 }
+
