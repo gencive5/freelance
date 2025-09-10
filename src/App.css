@@ -282,12 +282,12 @@ height: 100% !important;
 
 @media (max-width: 768px) {
   .title-wrapper {
-    gap: 2.5rem; /* More gap between title & subtitle on mobile */
-    margin-bottom: 3rem; /* Extra gap before 'Ask for your website' */
+    gap: 1.5rem;
+   
   }
 
   .Figure-Demo:first-of-type {
-    margin-top: 2rem;
+    margin-top: 0rem;
   }
 
   .footer {
@@ -296,7 +296,7 @@ height: 100% !important;
   font-family: 'adineue', sans-serif;
   font-size: 2rem;
   width: 100%;
-  height: auto;
+  height: 100%;
   bottom: 0;
 }
 
