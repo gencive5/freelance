@@ -91,7 +91,7 @@
   }
 
   .Figure-Demo .text-fit > :not([aria-hidden]) > span {
-  color: #02bea5 !important;
+  color: #02bebe !important;
   opacity: 1 !important;
 }
 
@@ -386,7 +386,7 @@ height: 100% !important;
   flex-direction: column;
   height: 100%;
   background-color: white;
-  color: #02bea5 ;
+  color: #02bebe ;
 }
 
 .desktop-third-row {
@@ -454,7 +454,7 @@ height: 100% !important;
   flex-direction: column;
   height: 100%;
   background-color: white;
-  color: #02bea5 ;
+  color: #02bebe ;
   position: relative;
   z-index: 1;
   height: 100vh;
@@ -466,7 +466,7 @@ height: 100% !important;
   flex-direction: column;
   height: 100%;
   background-color: white;
-  color: #02bea5;
+  color: #02bebe;
   position: relative;
   z-index: 1;
   min-height: 100vh;
