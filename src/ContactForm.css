@@ -52,7 +52,7 @@
 .contact-form__textarea {
   width: 100%;
   padding-right: 10px;
-  min-height: 60px;
+ 
   resize: none;
   color: #02bea5 !important;
   opacity: 1 !important;
