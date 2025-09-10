@@ -16,7 +16,7 @@ const Contact = () => (
       target="_blank"
       rel="noopener noreferrer"
       className="link"
-      style={{ color: '#00ff1a' }}
+      style={{ color: '#61DE2A' }}
     >
       Instagram
     </a>

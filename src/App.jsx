@@ -125,8 +125,6 @@ const App = () => {
                        />
             </div>
             
-          
-            
             <ContactForm />
             <Contact />
           </div>
