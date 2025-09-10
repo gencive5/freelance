@@ -434,9 +434,7 @@ height: 100% !important;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+ 
 }
 
 .mobile-first-row .text-column.Figure-Demo > :first-child {
