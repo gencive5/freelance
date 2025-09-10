@@ -104,7 +104,7 @@ const App = () => {
 
                <div className="background-distorted-text">
               <DistortedText text="Envoyer"
-                      color="#02bea5" 
+                      color="#02bebe" 
                        />
             </div>           
 
@@ -121,7 +121,7 @@ const App = () => {
             {/* Background distorted text */}
             <div className="background-distorted-text">
               <DistortedText text="Envoyer"
-                      color="#02bea5" 
+                      color="#02bebe" 
                        />
             </div>
             
