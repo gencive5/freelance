@@ -52,9 +52,8 @@
 .contact-form__textarea {
   width: 100%;
   padding-right: 10px;
- 
   resize: none;
-  color: #02bea5 !important;
+   color: #00ff1a !important;
   opacity: 1 !important;
   overflow-y: scroll;
   scrollbar-width: none;
