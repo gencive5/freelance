@@ -1,4 +1,4 @@
- import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import './App.css';
 import './ContactForm.css';
@@ -109,41 +109,40 @@ const ContactForm = () => {
         />
       </div>
       
-      <div className="contact-form__group textarea-container">
+      <div className="contact-form__group">
         <label className="contact-form__label">Message:</label>
-        <textarea 
-          ref={textareaRef}
-          name="message" 
-          required 
-          className="contact-form__textarea"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-        />
-        <MetallicTextareaScrollbar 
-          textareaRef={textareaRef}
-          style={{
-            '--metal': 'silver',
-            '--convexity': '1.5'
-          }}
-        />
+        <div className="contact-form__textarea-wrapper">
+          <textarea 
+            ref={textareaRef}
+            name="message" 
+            required 
+            className="contact-form__textarea"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+          />
+          <MetallicTextareaScrollbar 
+            textareaRef={textareaRef}
+            style={{
+              '--metal': 'silver',
+              '--convexity': '1.5'
+            }}
+          />
+        </div>
       </div>
       
       <div className="contact-form__submit-container">
-      
-<MetallicButton 
-  type="submit" 
-  disabled={isSubmitting}
-  style={{
-    width: isMobile ? '10rem' : '12rem',
-    height: isMobile ? '10rem' : '12rem',
-    fontSize: isMobile ? '1.5rem' : '2rem'
-  }}
-  aria-label="Submit contact form"
->
-  
-</MetallicButton>
-
+        <MetallicButton 
+          type="submit" 
+          disabled={isSubmitting}
+          style={{
+            width: isMobile ? '10rem' : '12rem',
+            height: isMobile ? '10rem' : '12rem',
+            fontSize: isMobile ? '1.5rem' : '2rem'
+          }}
+          aria-label="Submit contact form"
+        />
+        
         {stateMessage && messageType !== 'success' && (
           <p className={`contact-form__message contact-form__message--${messageType}`}>
             {stateMessage}
@@ -154,4 +153,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm; 
+export default ContactForm;
