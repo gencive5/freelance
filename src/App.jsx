@@ -96,7 +96,7 @@ const App = () => {
               </div>
 
               <div className="content-wrapper">
-                <DistortedText className="title-wrapper" text="Contactez moi" />
+                <DistortedText className="title-wrapper" text="Contacter" />
               </div>
             </div>
 
