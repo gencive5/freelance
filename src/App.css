@@ -451,7 +451,7 @@ height: 100% !important;
 .mobile-second-row {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: white;
   color: #02bebe ;
   position: relative;
