@@ -1,17 +1,9 @@
 // src/components/MetallicButton.jsx
 import { useEffect } from 'react';
 import 'metallicss';
+import './metallicbutton.css'; // Make sure to import your CSS
 
-const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
-
-
-
-
-
-
-
-
-
+const MetallicButton = ({ children, onClick, className = '', style = {}, ...props }) => {
   useEffect(() => {
     // Dynamically load the MetalliCSS script
     const script = document.createElement('script');
@@ -24,19 +16,9 @@ const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
     };
   }, []);
 
-
-
-
-
-
-
-
-
-
   return (
     <button
-
-      className={`metallicss ${className}`}
+      className={`metallic-button metallicss ${className}`} // Added metallic-button class
       onClick={onClick}
       style={{
         '--convexity': 3,
@@ -53,10 +35,9 @@ const MetallicButton = ({ children, onClick, className = '', style = {} }) => {
         textShadow: '0 -1px 0 rgba(0,0,0,0.5)',
         ...style
       }}
+      {...props}
     >
       {children}
-
-
     </button>
   );
 };

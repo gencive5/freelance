@@ -62,23 +62,36 @@
 }
 
 .metallic-button {
-  will-change: contents;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-.metallic-button {
   position: relative;
   overflow: hidden;
-  cursor: pointer; /* Fallback */
+  cursor: pointer;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, box-shadow, border-radius;
+  transition:
+    transform 180ms cubic-bezier(.25,.8,.25,1),
+    box-shadow 180ms ease,
+    border-radius 180ms ease;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .metallic-button:not([disabled]):hover {
+    transform: scaleX(1.35) scaleY(0.70) !important; /* squish into oval */
+    border-radius: 50% !important; /* keep oval */
+    box-shadow:
+      2px 6px 10px rgba(0,0,0,0.30),
+      inset 1px 1px 3px rgba(255,255,255,0.9) !important;
+    --metal: hsl(0, 0%, 75%) !important; /* subtle hover tint */
+  }
+
+  .metallic-button:not([disabled]):active {
+    transform: scaleX(1.15) scaleY(0.85) !important; /* squish less when clicked */
+  }
+}
+
+/* Add this to test if the hover effect is working */
 .metallic-button:hover {
-  --metal: hsl(0, 0%, 75%) !important; /* Hover effect */
+  background: red !important; /* Test color */
 }
 
-/* Force white text in metallic buttons */
-.metallicss {
-  color: rgb(58, 58, 58) !important;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5); ;
-}
