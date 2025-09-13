@@ -96,14 +96,14 @@ const App = () => {
               </div>
 
               <div className="content-wrapper">
-                <DistortedText className="title-wrapper" text="Contacter" />
+                <DistortedText className="title-wrapper" text="Contactez" />
               </div>
             </div>
 
             <div className="mobile-second-row">
 
                <div className="background-distorted-text">
-              <DistortedText text="Envoyer"
+              <DistortedText text="Envoyez"
                       color="#02bebe" 
                        />
             </div>           
@@ -120,7 +120,7 @@ const App = () => {
           <div className="desktop-second-row">
             {/* Background distorted text */}
             <div className="background-distorted-text">
-              <DistortedText text="Envoyer"
+              <DistortedText text="Envoyez"
                       color="#02bebe" 
                        />
             </div>
