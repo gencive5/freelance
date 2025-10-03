@@ -1,7 +1,7 @@
 // src/components/MetallicButton.jsx
 import { useEffect } from 'react';
 import 'metallicss';
-import './metallicbutton.css'; // Make sure to import your CSS
+import './MetallicButton.css'; // Make sure to import your CSS
 
 const MetallicButton = ({ children, onClick, className = '', style = {}, ...props }) => {
   useEffect(() => {
