@@ -1,11 +1,13 @@
 import './App.css';
 import './MetallicButton.css';
 import ContactForm from './ContactForm';
-import DistortedText from './DistortedText';
 import MetallicScrollbar from './MetallicScrollbar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react'; // Add lazy and Suspense
 import Contact from './Contact';
 import MetallicCursor from './MetallicCursor';
+
+// Lazy load DistortedText
+const DistortedText = lazy(() => import('./DistortedText'));
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -62,8 +64,10 @@ const App = () => {
             </div>
 
             <div className="content-wrapper">
-              <DistortedText className="title-gap" text="Gencives" />
-              <DistortedText text="développeur créatif" />
+              <Suspense fallback={null}>
+                <DistortedText className="title-gap" text="Gencives" />
+                <DistortedText text="développeur créatif" />
+              </Suspense>
             </div>
           </div>
         )}
@@ -96,17 +100,18 @@ const App = () => {
               </div>
 
               <div className="content-wrapper">
-                <DistortedText className="title-wrapper" text="Contactez" />
+                <Suspense fallback={null}>
+                  <DistortedText className="title-wrapper" text="Contactez" />
+                </Suspense>
               </div>
             </div>
 
             <div className="mobile-second-row">
-
-               <div className="background-distorted-text">
-              <DistortedText text="Envoyez"
-                      color="#02bebe" 
-                       />
-            </div>           
+              <div className="background-distorted-text">
+                <Suspense fallback={null}>
+                  <DistortedText text="Envoyez" color="#02bebe" />
+                </Suspense>
+              </div>           
 
               <ContactForm />
               <br />
@@ -120,9 +125,9 @@ const App = () => {
           <div className="desktop-second-row">
             {/* Background distorted text */}
             <div className="background-distorted-text">
-              <DistortedText text="Envoyez"
-                      color="#02bebe" 
-                       />
+              <Suspense fallback={null}>
+                <DistortedText text="Envoyez" color="#02bebe" />
+              </Suspense>
             </div>
             
             <ContactForm />

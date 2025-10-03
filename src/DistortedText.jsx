@@ -20,17 +20,10 @@ const DistortedText = ({
   const resizeTimeout = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const timeRef = useRef(0);
-
-  // NEW: Hover multiplier
   const hoverMultiplierRef = useRef(1);
+  const isInitialized = useRef(false);
 
-  // Responsive size calculation
-  const getResponsiveSize = useCallback(() => {
-    const isDesktop = windowWidth > 1024;
-    return isDesktop ? baseSize * desktopSizeMultiplier : baseSize;
-  }, [windowWidth, baseSize, desktopSizeMultiplier]);
-
-  // Animation with hover multiplier
+  // Simplified animation without visibility checks
   const render = useCallback(() => {
     if (!materialRef.current) return;
 
@@ -43,10 +36,14 @@ const DistortedText = ({
     animationFrameId.current = requestAnimationFrame(render);
   }, [speed, volatility]);
 
-  const initializeBlotter = useCallback(() => {
-    if (!window.Blotter || !containerRef.current) return;
+  const getResponsiveSize = useCallback(() => {
+    const isDesktop = windowWidth > 1024;
+    return isDesktop ? baseSize * desktopSizeMultiplier : baseSize;
+  }, [windowWidth, baseSize, desktopSizeMultiplier]);
 
-    const prevCanvas = containerRef.current.querySelector("canvas");
+  const initializeBlotter = useCallback(() => {
+    if (!window.Blotter || !containerRef.current || isInitialized.current) return;
+
     const responsiveSize = getResponsiveSize();
 
     const textObj = new window.Blotter.Text(text, {
@@ -65,7 +62,6 @@ const DistortedText = ({
     material.uniforms.uSeed.value = seed;
     materialRef.current = material;
 
-    // Hover control
     hoverMultiplierRef.current = 1;
 
     blotterInstance.current = new window.Blotter(material, {
@@ -76,55 +72,39 @@ const DistortedText = ({
     });
 
     scopeRef.current = blotterInstance.current.forText(textObj);
+    scopeRef.current.appendTo(containerRef.current);
 
-    const tempDiv = document.createElement("div");
-    scopeRef.current.appendTo(tempDiv);
-    const newCanvas = tempDiv.querySelector("canvas");
-
-    if (newCanvas) {
-      newCanvas.style.imageRendering = "optimizeQuality";
-      newCanvas.style.willChange = "transform";
-
+    const canvas = containerRef.current.querySelector("canvas");
+    if (canvas) {
+      canvas.style.imageRendering = "optimizeQuality";
+      canvas.style.transform = "translateZ(0)";
     }
 
-    if (prevCanvas && newCanvas) {
-      newCanvas.style.opacity = "0";
-      newCanvas.style.transition = "opacity 0.15s ease-out";
-      containerRef.current.appendChild(newCanvas);
-
-      requestAnimationFrame(() => {
-        newCanvas.style.opacity = "1";
-        prevCanvas.style.opacity = "0";
-
-        setTimeout(() => {
-          if (prevCanvas.parentNode === containerRef.current) {
-            containerRef.current.removeChild(prevCanvas);
-          }
-        }, 150);
-      });
-    } else {
-      scopeRef.current.appendTo(containerRef.current);
-    }
-
-    // NEW: Add hover/touch interactions
+    // Optimized event listeners
     const el = containerRef.current;
     const handleHoverStart = () => {
-      material.uniforms.uSpeed.value = 1.5;
-      hoverMultiplierRef.current = 6;
+      if (materialRef.current) {
+        materialRef.current.uniforms.uSpeed.value = 1.5;
+        hoverMultiplierRef.current = 6;
+      }
     };
     const handleHoverEnd = () => {
-      material.uniforms.uSpeed.value = speed;
-      hoverMultiplierRef.current = 1;
+      if (materialRef.current) {
+        materialRef.current.uniforms.uSpeed.value = speed;
+        hoverMultiplierRef.current = 1;
+      }
     };
 
-    el.addEventListener("mouseenter", handleHoverStart);
-    el.addEventListener("mouseleave", handleHoverEnd);
-    el.addEventListener("touchstart", handleHoverStart);
-    el.addEventListener("touchend", handleHoverEnd);
+    el.addEventListener("mouseenter", handleHoverStart, { passive: true });
+    el.addEventListener("mouseleave", handleHoverEnd, { passive: true });
+    el.addEventListener("touchstart", handleHoverStart, { passive: true });
+    el.addEventListener("touchend", handleHoverEnd, { passive: true });
 
     if (!animationFrameId.current) {
       animationFrameId.current = requestAnimationFrame(render);
     }
+
+    isInitialized.current = true;
 
     return () => {
       el.removeEventListener("mouseenter", handleHoverStart);
@@ -134,16 +114,42 @@ const DistortedText = ({
     };
   }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize]);
 
+  // Debounced resize handler - only reinitialize on significant resize
   const handleResize = useCallback(() => {
-    setWindowWidth(window.innerWidth);
-    clearTimeout(resizeTimeout.current);
-    resizeTimeout.current = setTimeout(() => {
-      initializeBlotter();
-    }, 100);
-  }, [initializeBlotter]);
+    const newWidth = window.innerWidth;
+    
+    // Only reinitialize if crossing breakpoint thresholds
+    const oldBreakpoint = windowWidth > 1024 ? 'desktop' : windowWidth > 768 ? 'tablet' : 'mobile';
+    const newBreakpoint = newWidth > 1024 ? 'desktop' : newWidth > 768 ? 'tablet' : 'mobile';
+    
+    if (oldBreakpoint !== newBreakpoint) {
+      setWindowWidth(newWidth);
+      clearTimeout(resizeTimeout.current);
+      resizeTimeout.current = setTimeout(() => {
+        // Clean up and reinitialize
+        if (blotterInstance.current && scopeRef.current) {
+          blotterInstance.current.removeText(scopeRef.current);
+        }
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+        isInitialized.current = false;
+        
+        // Clear container
+        if (containerRef.current) {
+          containerRef.current.innerHTML = '';
+        }
+        
+        initializeBlotter();
+      }, 250);
+    } else {
+      setWindowWidth(newWidth);
+    }
+  }, [windowWidth, initializeBlotter]);
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
+    
+    // Initialize with a small delay to avoid blocking main thread
     const initTimeout = setTimeout(initializeBlotter, 50);
 
     return () => {
@@ -152,11 +158,9 @@ const DistortedText = ({
       clearTimeout(resizeTimeout.current);
       cancelAnimationFrame(animationFrameId.current);
 
-      if (containerRef.current) {
-        const canvas = containerRef.current.querySelector("canvas");
-        if (canvas) {
-          containerRef.current.removeChild(canvas);
-        }
+      // Proper cleanup
+      if (blotterInstance.current && scopeRef.current) {
+        blotterInstance.current.removeText(scopeRef.current);
       }
     };
   }, [initializeBlotter, handleResize]);
@@ -172,6 +176,7 @@ const DistortedText = ({
         transform: "translateZ(0)",
         backfaceVisibility: "hidden",
       }}
+      aria-label={text}
     />
   );
 };
