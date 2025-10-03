@@ -2,12 +2,12 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const DistortedText = ({ 
   text = "observation",
-  fontFamily = "'sm00ch', serif",
+  fontFamily = "sm00ch",
   baseSize = 60,
   color = "#ffffffff",
   padding = 40,
-  speed = 0.5,
-  volatility = 0.8,
+  speed = 0.4,
+  volatility = 0.7,
   seed = 0.8,
   className = "",
   desktopSizeMultiplier = 2
@@ -109,8 +109,8 @@ const DistortedText = ({
     // NEW: Add hover/touch interactions
     const el = containerRef.current;
     const handleHoverStart = () => {
-      material.uniforms.uSpeed.value = 1.5;
-      hoverMultiplierRef.current = 6;
+      material.uniforms.uSpeed.value = 1.3;
+      hoverMultiplierRef.current = 3;
     };
     const handleHoverEnd = () => {
       material.uniforms.uSpeed.value = speed;
