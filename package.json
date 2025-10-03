@@ -18,7 +18,9 @@
     "nodemailer": "^7.0.3",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "three": "^0.180.0",
+    "underscore": "^1.13.7"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.27.1",
