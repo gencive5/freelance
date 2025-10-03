@@ -27,6 +27,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'sm00ch';
+  src: local('sm00ch'), url('.fonts/sm00ch.woff') format('woff'), url('.fonts/sm00ch.woff2') format('woff2');
+
+  font-weight: 330; 
+  font-style: normal; 
+}
 
 .container {
   width: 100%;
