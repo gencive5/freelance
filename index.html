@@ -3,30 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
- 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
     <meta name="author" content="Victor Segen">
     <meta name="description" content="Freelance web designer & developer">
     <title>gencives</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./fonts/adineue.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com">
+    
     <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  #root {
-    height: 100%;
-  }
-</style>
-<link rel="preload" href="./fonts/adineue.woff2" as="font" type="font/woff2" crossorigin>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #root {
+        height: 100%;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
   
     <script type="module" src="/src/main.jsx"></script>
-     <script src="/blotter.min.js"></script>
-  <script src="/liquidDistortMaterial.js"></script>
-
+    
+    <!-- Defer non-critical scripts -->
+    <script src="/blotter.min.js" defer></script>
+    <script src="/liquidDistortMaterial.js" defer></script>
   </body>
 </html>
