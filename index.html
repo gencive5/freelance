@@ -10,49 +10,25 @@
     
     <!-- Preload critical resources -->
     <link rel="preload" href="./fonts/adineue.woff2" as="font" type="font/woff2" crossorigin>
-    
-    <!-- Preconnect to CDNs -->
     <link rel="preconnect" href="https://unpkg.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
-    <!-- Critical CSS for fallback content -->
     <style>
-      @font-face {
-        font-family: 'adineue';
-        src: url('./fonts/adineue.woff2') format('woff2');
-        font-display: swap;
-      }
-      
       html, body {
         margin: 0;
         padding: 0;
         height: 100%;
-        font-family: 'adineue', sans-serif;
       }
       #root {
         height: 100%;
-      }
-      
-      /* Fallback styles for distorted text */
-      .text-fallback {
-        font-family: 'adineue', sans-serif;
-        font-weight: bold;
-        display: inline-block;
       }
     </style>
   </head>
   <body>
     <div id="root"></div>
-
-    <!-- Load dependencies FIRST -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <!-- Then your main app -->
+  
     <script type="module" src="/src/main.jsx"></script>
     
-    <!-- Finally, Blotter (it will wait for dependencies) -->
+    <!-- SEULEMENT Blotter - il contient déjà Three.js et Underscore.js -->
     <script src="/blotter.min.js" defer></script>
     <script src="/liquidDistortMaterial.js" defer></script>
   </body>
