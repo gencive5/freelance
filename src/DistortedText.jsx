@@ -19,10 +19,57 @@ const DistortedText = ({
   const animationFrameId = useRef(null);
   const resizeTimeout = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [fontLoaded, setFontLoaded] = useState(false);
   const timeRef = useRef(0);
 
   // NEW: Hover multiplier
   const hoverMultiplierRef = useRef(1);
+
+  // Font loading check
+  useEffect(() => {
+    const loadFont = async () => {
+      try {
+        // Check if font is already loaded
+        if (document.fonts.check(`1em "${fontFamily}"`)) {
+          setFontLoaded(true);
+          return;
+        }
+
+        // Wait for font to load
+        await document.fonts.load(`1em "${fontFamily}"`);
+        setFontLoaded(true);
+        
+        // Double check font status
+        console.log(`Font ${fontFamily} loaded:`, document.fonts.check(`1em "${fontFamily}"`));
+      } catch (error) {
+        console.warn(`Font ${fontFamily} loading failed:`, error);
+        // Continue anyway after a timeout
+        setTimeout(() => setFontLoaded(true), 500);
+      }
+    };
+
+    loadFont();
+
+    // Fallback: set font as loaded after 2 seconds even if loading fails
+    const fallbackTimeout = setTimeout(() => {
+      setFontLoaded(true);
+    }, 2000);
+
+    return () => clearTimeout(fallbackTimeout);
+  }, [fontFamily]);
+
+  // Also listen for font loading completion
+  useEffect(() => {
+    const handleFontsLoaded = () => {
+      setFontLoaded(true);
+    };
+
+    document.fonts.ready.then(handleFontsLoaded);
+
+    return () => {
+      // Cleanup if needed
+    };
+  }, []);
 
   // Responsive size calculation
   const getResponsiveSize = useCallback(() => {
@@ -44,11 +91,21 @@ const DistortedText = ({
   }, [speed, volatility]);
 
   const initializeBlotter = useCallback(() => {
-    if (!window.Blotter || !containerRef.current) return;
+    if (!window.Blotter || !containerRef.current || !fontLoaded) {
+      console.log('Blotter initialization skipped:', {
+        hasBlotter: !!window.Blotter,
+        hasContainer: !!containerRef.current,
+        fontLoaded
+      });
+      return;
+    }
+
+    console.log(`Initializing Blotter with font: ${fontFamily}, loaded: ${fontLoaded}`);
 
     const prevCanvas = containerRef.current.querySelector("canvas");
     const responsiveSize = getResponsiveSize();
 
+    // Create text object with the specified font
     const textObj = new window.Blotter.Text(text, {
       family: fontFamily,
       size: responsiveSize,
@@ -84,7 +141,6 @@ const DistortedText = ({
     if (newCanvas) {
       newCanvas.style.imageRendering = "optimizeQuality";
       newCanvas.style.willChange = "transform";
-
     }
 
     if (prevCanvas && newCanvas) {
@@ -109,11 +165,15 @@ const DistortedText = ({
     // NEW: Add hover/touch interactions
     const el = containerRef.current;
     const handleHoverStart = () => {
-      material.uniforms.uSpeed.value = 1.3;
+      if (materialRef.current) {
+        materialRef.current.uniforms.uSpeed.value = 1.3;
+      }
       hoverMultiplierRef.current = 3;
     };
     const handleHoverEnd = () => {
-      material.uniforms.uSpeed.value = speed;
+      if (materialRef.current) {
+        materialRef.current.uniforms.uSpeed.value = speed;
+      }
       hoverMultiplierRef.current = 1;
     };
 
@@ -132,7 +192,7 @@ const DistortedText = ({
       el.removeEventListener("touchstart", handleHoverStart);
       el.removeEventListener("touchend", handleHoverEnd);
     };
-  }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize]);
+  }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize, fontLoaded]);
 
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -142,9 +202,20 @@ const DistortedText = ({
     }, 100);
   }, [initializeBlotter]);
 
+  // Re-initialize when font loads
+  useEffect(() => {
+    if (fontLoaded) {
+      initializeBlotter();
+    }
+  }, [fontLoaded, initializeBlotter]);
+
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-    const initTimeout = setTimeout(initializeBlotter, 50);
+    
+    // Delay initialization to ensure fonts are ready
+    const initTimeout = setTimeout(() => {
+      initializeBlotter();
+    }, 100);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -172,6 +243,7 @@ const DistortedText = ({
         transform: "translateZ(0)",
         backfaceVisibility: "hidden",
       }}
+      data-font-loaded={fontLoaded}
     />
   );
 };
