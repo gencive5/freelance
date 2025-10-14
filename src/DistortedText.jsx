@@ -20,56 +20,71 @@ const DistortedText = ({
   const resizeTimeout = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [fontLoaded, setFontLoaded] = useState(false);
+  const [blotterReady, setBlotterReady] = useState(false);
   const timeRef = useRef(0);
 
   // NEW: Hover multiplier
   const hoverMultiplierRef = useRef(1);
 
-  // Font loading check
+  // Font loading check with more robust detection
   useEffect(() => {
+    let mounted = true;
+    let fallbackTimeout;
+
     const loadFont = async () => {
       try {
-        // Check if font is already loaded
-        if (document.fonts.check(`1em "${fontFamily}"`)) {
-          setFontLoaded(true);
-          return;
+        console.log(`Attempting to load font: ${fontFamily}`);
+        
+        // Method 1: Try to load the font directly
+        const font = new FontFace(fontFamily, `local("${fontFamily}"), url("./fonts/${fontFamily}.woff2") format("woff2"), url("./fonts/${fontFamily}.woff") format("woff")`);
+        
+        try {
+          await font.load();
+          document.fonts.add(font);
+          console.log(`Font ${fontFamily} loaded via FontFace API`);
+        } catch (fontFaceError) {
+          console.log(`FontFace API failed, using document.fonts.load:`, fontFaceError);
         }
 
-        // Wait for font to load
+        // Method 2: Use document.fonts.load as fallback
         await document.fonts.load(`1em "${fontFamily}"`);
-        setFontLoaded(true);
         
-        // Double check font status
-        console.log(`Font ${fontFamily} loaded:`, document.fonts.check(`1em "${fontFamily}"`));
+        // Method 3: Wait for fonts to be ready
+        await document.fonts.ready;
+        
+        // Final verification
+        const isLoaded = document.fonts.check(`1em "${fontFamily}"`);
+        console.log(`Font ${fontFamily} verification:`, isLoaded);
+        
+        if (mounted && isLoaded) {
+          setFontLoaded(true);
+        } else if (mounted) {
+          console.warn(`Font ${fontFamily} verification failed`);
+          // Even if verification fails, we'll proceed after timeout
+        }
       } catch (error) {
         console.warn(`Font ${fontFamily} loading failed:`, error);
-        // Continue anyway after a timeout
-        setTimeout(() => setFontLoaded(true), 500);
+        if (mounted) {
+          // We'll still try to proceed but log the error
+        }
       }
     };
 
     loadFont();
 
-    // Fallback: set font as loaded after 2 seconds even if loading fails
-    const fallbackTimeout = setTimeout(() => {
-      setFontLoaded(true);
-    }, 2000);
-
-    return () => clearTimeout(fallbackTimeout);
-  }, [fontFamily]);
-
-  // Also listen for font loading completion
-  useEffect(() => {
-    const handleFontsLoaded = () => {
-      setFontLoaded(true);
-    };
-
-    document.fonts.ready.then(handleFontsLoaded);
+    // More aggressive fallback: proceed after shorter timeout
+    fallbackTimeout = setTimeout(() => {
+      if (mounted) {
+        console.log(`Proceeding with font ${fontFamily} after timeout`);
+        setFontLoaded(true);
+      }
+    }, 1000); // Reduced from 2000ms to 1000ms
 
     return () => {
-      // Cleanup if needed
+      mounted = false;
+      clearTimeout(fallbackTimeout);
     };
-  }, []);
+  }, [fontFamily]);
 
   // Responsive size calculation
   const getResponsiveSize = useCallback(() => {
@@ -91,131 +106,151 @@ const DistortedText = ({
   }, [speed, volatility]);
 
   const initializeBlotter = useCallback(() => {
-    if (!window.Blotter || !containerRef.current || !fontLoaded) {
-      console.log('Blotter initialization skipped:', {
-        hasBlotter: !!window.Blotter,
-        hasContainer: !!containerRef.current,
-        fontLoaded
+    if (!window.Blotter || !containerRef.current) {
+      console.log('Blotter not available or container missing');
+      return false;
+    }
+
+    try {
+      const prevCanvas = containerRef.current.querySelector("canvas");
+      const responsiveSize = getResponsiveSize();
+
+      console.log(`Creating Blotter text with font: ${fontFamily}`);
+
+      // Create text object with the specified font
+      const textObj = new window.Blotter.Text(text, {
+        family: fontFamily,
+        size: responsiveSize,
+        fill: color,
+        paddingLeft: padding,
+        paddingRight: padding,
+        paddingTop: padding,
+        paddingBottom: padding,
       });
-      return;
-    }
 
-    console.log(`Initializing Blotter with font: ${fontFamily}, loaded: ${fontLoaded}`);
+      const material = new window.Blotter.LiquidDistortMaterial();
+      material.uniforms.uSpeed.value = speed;
+      material.uniforms.uVolatility.value = volatility;
+      material.uniforms.uSeed.value = seed;
+      materialRef.current = material;
 
-    const prevCanvas = containerRef.current.querySelector("canvas");
-    const responsiveSize = getResponsiveSize();
-
-    // Create text object with the specified font
-    const textObj = new window.Blotter.Text(text, {
-      family: fontFamily,
-      size: responsiveSize,
-      fill: color,
-      paddingLeft: padding,
-      paddingRight: padding,
-      paddingTop: padding,
-      paddingBottom: padding,
-    });
-
-    const material = new window.Blotter.LiquidDistortMaterial();
-    material.uniforms.uSpeed.value = speed;
-    material.uniforms.uVolatility.value = volatility;
-    material.uniforms.uSeed.value = seed;
-    materialRef.current = material;
-
-    // Hover control
-    hoverMultiplierRef.current = 1;
-
-    blotterInstance.current = new window.Blotter(material, {
-      texts: textObj,
-      antialiasing: true,
-      webgl2: true,
-      resolutionScale: windowWidth > 1024 ? 1.3 : 1,
-    });
-
-    scopeRef.current = blotterInstance.current.forText(textObj);
-
-    const tempDiv = document.createElement("div");
-    scopeRef.current.appendTo(tempDiv);
-    const newCanvas = tempDiv.querySelector("canvas");
-
-    if (newCanvas) {
-      newCanvas.style.imageRendering = "optimizeQuality";
-      newCanvas.style.willChange = "transform";
-    }
-
-    if (prevCanvas && newCanvas) {
-      newCanvas.style.opacity = "0";
-      newCanvas.style.transition = "opacity 0.15s ease-out";
-      containerRef.current.appendChild(newCanvas);
-
-      requestAnimationFrame(() => {
-        newCanvas.style.opacity = "1";
-        prevCanvas.style.opacity = "0";
-
-        setTimeout(() => {
-          if (prevCanvas.parentNode === containerRef.current) {
-            containerRef.current.removeChild(prevCanvas);
-          }
-        }, 150);
-      });
-    } else {
-      scopeRef.current.appendTo(containerRef.current);
-    }
-
-    // NEW: Add hover/touch interactions
-    const el = containerRef.current;
-    const handleHoverStart = () => {
-      if (materialRef.current) {
-        materialRef.current.uniforms.uSpeed.value = 1.3;
-      }
-      hoverMultiplierRef.current = 3;
-    };
-    const handleHoverEnd = () => {
-      if (materialRef.current) {
-        materialRef.current.uniforms.uSpeed.value = speed;
-      }
+      // Hover control
       hoverMultiplierRef.current = 1;
-    };
 
-    el.addEventListener("mouseenter", handleHoverStart);
-    el.addEventListener("mouseleave", handleHoverEnd);
-    el.addEventListener("touchstart", handleHoverStart);
-    el.addEventListener("touchend", handleHoverEnd);
+      blotterInstance.current = new window.Blotter(material, {
+        texts: textObj,
+        antialiasing: true,
+        webgl2: true,
+        resolutionScale: windowWidth > 1024 ? 1.3 : 1,
+      });
 
-    if (!animationFrameId.current) {
-      animationFrameId.current = requestAnimationFrame(render);
+      scopeRef.current = blotterInstance.current.forText(textObj);
+
+      const tempDiv = document.createElement("div");
+      scopeRef.current.appendTo(tempDiv);
+      const newCanvas = tempDiv.querySelector("canvas");
+
+      if (newCanvas) {
+        newCanvas.style.imageRendering = "optimizeQuality";
+        newCanvas.style.willChange = "transform";
+        
+        // Initially hidden
+        newCanvas.style.opacity = "0";
+        newCanvas.style.transition = "opacity 0.3s ease-out";
+      }
+
+      if (prevCanvas && newCanvas) {
+        containerRef.current.appendChild(newCanvas);
+
+        // Fade in the new canvas
+        requestAnimationFrame(() => {
+          newCanvas.style.opacity = "1";
+          prevCanvas.style.opacity = "0";
+
+          setTimeout(() => {
+            if (prevCanvas.parentNode === containerRef.current) {
+              containerRef.current.removeChild(prevCanvas);
+            }
+          }, 300);
+        });
+      } else {
+        scopeRef.current.appendTo(containerRef.current);
+        
+        // Fade in the initial canvas
+        const initialCanvas = containerRef.current.querySelector("canvas");
+        if (initialCanvas) {
+          initialCanvas.style.opacity = "0";
+          initialCanvas.style.transition = "opacity 0.3s ease-out";
+          requestAnimationFrame(() => {
+            initialCanvas.style.opacity = "1";
+          });
+        }
+      }
+
+      // NEW: Add hover/touch interactions
+      const el = containerRef.current;
+      const handleHoverStart = () => {
+        if (materialRef.current) {
+          materialRef.current.uniforms.uSpeed.value = 1.3;
+        }
+        hoverMultiplierRef.current = 3;
+      };
+      const handleHoverEnd = () => {
+        if (materialRef.current) {
+          materialRef.current.uniforms.uSpeed.value = speed;
+        }
+        hoverMultiplierRef.current = 1;
+      };
+
+      el.addEventListener("mouseenter", handleHoverStart);
+      el.addEventListener("mouseleave", handleHoverEnd);
+      el.addEventListener("touchstart", handleHoverStart);
+      el.addEventListener("touchend", handleHoverEnd);
+
+      if (!animationFrameId.current) {
+        animationFrameId.current = requestAnimationFrame(render);
+      }
+
+      setBlotterReady(true);
+      
+      return () => {
+        el.removeEventListener("mouseenter", handleHoverStart);
+        el.removeEventListener("mouseleave", handleHoverEnd);
+        el.removeEventListener("touchstart", handleHoverStart);
+        el.removeEventListener("touchend", handleHoverEnd);
+      };
+    } catch (error) {
+      console.error('Blotter initialization failed:', error);
+      return false;
     }
-
-    return () => {
-      el.removeEventListener("mouseenter", handleHoverStart);
-      el.removeEventListener("mouseleave", handleHoverEnd);
-      el.removeEventListener("touchstart", handleHoverStart);
-      el.removeEventListener("touchend", handleHoverEnd);
-    };
-  }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize, fontLoaded]);
+  }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize]);
 
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
     clearTimeout(resizeTimeout.current);
     resizeTimeout.current = setTimeout(() => {
       initializeBlotter();
-    }, 100);
+    }, 150);
   }, [initializeBlotter]);
 
-  // Re-initialize when font loads
+  // Initialize Blotter when font is loaded
   useEffect(() => {
     if (fontLoaded) {
-      initializeBlotter();
+      console.log('Font loaded, initializing Blotter');
+      const cleanup = initializeBlotter();
+      return cleanup;
     }
   }, [fontLoaded, initializeBlotter]);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     
-    // Delay initialization to ensure fonts are ready
+    // Initial initialization with delay to ensure DOM is ready
     const initTimeout = setTimeout(() => {
-      initializeBlotter();
-    }, 100);
+      if (fontLoaded) {
+        initializeBlotter();
+      }
+    }, 200);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -230,7 +265,10 @@ const DistortedText = ({
         }
       }
     };
-  }, [initializeBlotter, handleResize]);
+  }, [initializeBlotter, handleResize, fontLoaded]);
+
+  // Calculate if we should show anything
+  const shouldShowContent = blotterReady;
 
   return (
     <div
@@ -242,8 +280,12 @@ const DistortedText = ({
         lineHeight: 0,
         transform: "translateZ(0)",
         backfaceVisibility: "hidden",
+        minHeight: shouldShowContent ? 'auto' : '1px', // Prevent layout shift
+        opacity: shouldShowContent ? 1 : 0,
+        transition: 'opacity 0.3s ease-out',
       }}
       data-font-loaded={fontLoaded}
+      data-blotter-ready={blotterReady}
     />
   );
 };
