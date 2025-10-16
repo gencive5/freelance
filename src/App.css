@@ -303,14 +303,14 @@ height: 100% !important;
   position: fixed;
   padding: 1rem; 
   font-family: 'adineue', sans-serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
   width: 100%;
   height: auto;
   bottom: 0;
 }
 
 .link{
-  font-size: 1rem;
+  font-size: 1.2rem;
   bottom: 0;
 }
 }
