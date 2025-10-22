@@ -14,31 +14,41 @@
   display: flex;
   align-items: center;
   flex-direction: row;
+  margin-bottom: 1.5rem; /* Added spacing between form groups */
 }
 
 .contact-form__label {
   font-weight: 500;
   margin-right: 15px;
   white-space: nowrap;
-  min-width: 100px; /* Added for consistent alignment */
+  min-width: 100px;
 }
 
-/* ===== INPUT & TEXTAREA STYLES == pROBLEM With Message alignment (padding=== */ 
+/* ===== INPUT & TEXTAREA STYLES ===== */
 .contact-form__input,
 .contact-form__textarea {
   flex: 1;
-  padding: 12px 0;
+  padding: 15px 20px; /* Increased padding for better visibility */
   box-sizing: border-box;
-  border: none;
-  background: transparent;
+  border: 2px solid #02bebe; /* Added border */
+  background: rgba(2, 190, 190, 0.1); /* Subtle background */
   font-family: inherit;
   font-size: 2rem;
   outline: none;
+  border-radius: 50px; /* Pill shape - very rounded corners */
+  transition: all 0.3s ease;
 }
 
 .contact-form__input {
   color: #61DE2A !important;
   opacity: 1 !important;
+}
+
+.contact-form__input:focus,
+.contact-form__textarea:focus {
+  border-color: #61DE2A; /* Change border color on focus */
+  background: rgba(97, 222, 42, 0.1); /* Change background on focus */
+  box-shadow: 0 0 10px rgba(97, 222, 42, 0.3); /* Glow effect on focus */
 }
 
 /* ===== TEXTAREA SPECIFIC STYLES ===== */
@@ -50,13 +60,15 @@
 
 .contact-form__textarea {
   width: 100%;
-  padding-right: 10px;
+  padding: 20px; /* Consistent padding */
   resize: none;
   color: #61DE2A !important;
   opacity: 1 !important;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  border-radius: 25px; /* Slightly less rounded for textarea */
+  min-height: 150px; /* Ensure textarea has good height */
 }
 
 .contact-form__textarea::-webkit-scrollbar {
@@ -66,11 +78,11 @@
 /* ===== SUBMIT BUTTON AREA ===== */
 .contact-form__submit-container {
   width: 100%;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 2rem; /* Added spacing above button */
 }
 
 .contact-form__submit {
@@ -82,6 +94,21 @@
   font-size: 4rem;
   cursor: pointer;
   border-radius: 4px;
+}
+
+/* Message styles */
+.contact-form__message {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.contact-form__message--success {
+  color: #61DE2A !important;
+}
+
+.contact-form__message--error {
+  color: #ff4444 !important;
 }
 
 /* ===== MOBILE RESPONSIVENESS ===== */
@@ -104,6 +131,8 @@
   .contact-form__textarea {
     width: 100%;
     font-size: 1.2rem;
+    padding: 12px 15px; /* Adjusted padding for mobile */
+    border-radius: 25px; /* Slightly less rounded on mobile */
   }
   
   .contact-form__submit {
@@ -112,6 +141,25 @@
   
   .contact-form__textarea {
     font-size: 1.2rem;
+    border-radius: 20px; /* Adjusted for mobile */
+    min-height: 120px;
   }
-}  
+  
+  .contact-form__message {
+    font-size: 1.2rem;
+  }
+}
 
+/* Optional: Add placeholder styling */
+.contact-form__input::placeholder,
+.contact-form__textarea::placeholder {
+  color: rgba(2, 190, 190, 0.6);
+  opacity: 1;
+}
+
+/* Hover effects for better interactivity */
+.contact-form__input:hover,
+.contact-form__textarea:hover {
+  border-color: #61DE2A;
+  background: rgba(97, 222, 42, 0.05);
+}
