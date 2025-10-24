@@ -29,7 +29,7 @@
   flex: 1;
   padding: 15px 20px;
   box-sizing: border-box;
-  border: 2px solid #02bebe;
+  border: 0px solid #02bebe;
   background: rgba(2, 190, 190, 0.1);
   font-family: inherit;
   font-size: 2rem;
@@ -55,14 +55,14 @@
 
 .contact-form__textarea {
   width: 90%;
-  padding: 20px;
+  padding: 15px 20px;
   resize: none;
   color: #61DE2A !important;
   opacity: 1 !important;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  border: 2px solid #02bebe;
+  border: 0px solid #02bebe;
   background: rgba(2, 190, 190, 0.1);
   font-family: inherit;
   font-size: 2rem;
@@ -163,15 +163,4 @@
 .contact-form__textarea::placeholder {
   color: rgba(2, 190, 190, 0.6);
   opacity: 1;
-}
-
-/* Hover effects */
-.contact-form__input:hover {
-  border-color: #61DE2A;
-  background: rgba(97, 222, 42, 0.05);
-}
-
-.contact-form__textarea:hover {
-  border-color: #61DE2A;
-  background: rgba(97, 222, 42, 0.05);
 }
