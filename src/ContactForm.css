@@ -142,7 +142,7 @@
   }
   
   .contact-form__textarea {
-    width: 100%;
+    width: 90%;
     font-size: 1.2rem;
     padding: 15px;
     border-radius: 0px; /* Square corners on mobile */
