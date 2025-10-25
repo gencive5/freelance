@@ -349,13 +349,14 @@ height: 100% !important;
   }
 
 .footer {
-  position: relative;
-  float: right;
+  position: absolute;
+  left: 0;
+  bottom: 2rem;
   padding: 1rem; 
   font-family: 'adineue', sans-serif;
   font-size: 2rem;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
 }
 
 
@@ -462,12 +463,11 @@ height: 100% !important;
 .desktop-second-row {
   display: flex;
   flex-direction: column;
-  height: 100%;
   background-color: "#f7f0f0ff";
   color: #02bebe;
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  height: 100vh;
  
 }
 

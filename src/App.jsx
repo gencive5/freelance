@@ -109,7 +109,7 @@ const App = () => {
             </div>           
 
               <ContactForm />
-              <br />
+              
               <Contact />
             </div>
           </>
