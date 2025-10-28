@@ -42,7 +42,7 @@ a {
             font-family: 'adineue';
             src: url('./fonts/adineue.woff2') format('woff2'),
                  url('./fonts/adineue.woff') format('woff');
-            font-display: swap;
+             font-display: block; 
             font-weight: normal;
             font-style: normal;
         }
@@ -55,7 +55,7 @@ a {
        url('./fonts/sm00ch.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block; 
 }
 
 .container {
