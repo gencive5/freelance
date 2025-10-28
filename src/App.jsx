@@ -31,6 +31,8 @@ const App = () => {
     }}>
       <MetallicCursor />
 
+       <main role="main">
+
       <div className="container">
         {/* First Row - Only on Desktop */}
         {!isMobile && (
@@ -130,6 +132,9 @@ const App = () => {
           </div>
         )}
       </div>
+
+      </main>
+      
     </MetallicScrollbar>
   );
 };
