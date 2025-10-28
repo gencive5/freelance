@@ -83,10 +83,13 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={sendEmail} className="contact-form">
+    <form onSubmit={sendEmail} className="contact-form" noValidate>
       <div className="contact-form__group">
-        <label className="contact-form__label">Nom:</label>
+        <label htmlFor="user_name" className="contact-form__label">
+          Nom:
+        </label>
         <input
+          id="user_name"
           ref={nameInputRef}
           type="text"
           name="user_name"
@@ -96,12 +99,18 @@ const ContactForm = () => {
           autoCapitalize="off"
           spellCheck="false"
           autoComplete="name"
+          aria-required="true"
+          aria-describedby="name_description"
         />
+        <span id="name_description" className="sr-only">Veuillez entrer votre nom complet</span>
       </div>
 
       <div className="contact-form__group">
-        <label className="contact-form__label">Email:</label>
+        <label htmlFor="user_email" className="contact-form__label">
+          Email:
+        </label>
         <input
+          id="user_email"
           ref={emailInputRef}
           type="email"
           name="email"
@@ -111,13 +120,18 @@ const ContactForm = () => {
           autoCapitalize="off"
           spellCheck="false"
           autoComplete="email"
+          aria-required="true"
+          aria-describedby="email_description"
         />
+        <span id="email_description" className="sr-only">Veuillez entrer une adresse email valide</span>
       </div>
 
-
       <div className="contact-form__group textarea-container">
-        <label className="contact-form__label">Message:</label>
+        <label htmlFor="user_message" className="contact-form__label">
+          Message:
+        </label>
         <textarea
+          id="user_message"
           ref={textareaRef}
           name="message"
           required
@@ -125,7 +139,10 @@ const ContactForm = () => {
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
+          aria-required="true"
+          aria-describedby="message_description"
         />
+        <span id="message_description" className="sr-only">Veuillez entrer votre message</span>
         <MetallicTextareaScrollbar
           textareaRef={textareaRef}
           style={{
@@ -145,11 +162,15 @@ const ContactForm = () => {
             height: isMobile ? '10rem' : '12rem',
             fontSize: isMobile ? '1.5rem' : '2rem',
           }}
-          aria-label="Submit contact form"
+          aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
         />
 
-        {stateMessage && messageType !== 'success' && (
-          <p className={`contact-form__message contact-form__message--${messageType}`}>
+        {stateMessage && (
+          <p 
+            className={`contact-form__message contact-form__message--${messageType}`}
+            role="alert"
+            aria-live="polite"
+          >
             {stateMessage}
           </p>
         )}
