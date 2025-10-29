@@ -158,9 +158,9 @@ const ContactForm = () => {
           disabled={isSubmitting}
           className={isSquished ? 'squished' : ''} // 👈 pass squished class
           style={{
-            width: isMobile ? '10rem' : '12rem',
-            height: isMobile ? '10rem' : '12rem',
-            fontSize: isMobile ? '1.5rem' : '2rem',
+            width: isMobile ? '8rem' : '12rem',
+            height: isMobile ? '8rem' : '12rem',
+           
           }}
           aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
         />
