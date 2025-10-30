@@ -3,12 +3,12 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const DistortedText = ({ 
   text = "observation",
   fontFamily = "sm00ch",
-  baseSize = 60,
+  baseSize = 120,
   color = "#f7f0f0ff",
   padding = 40,
-  speed = 0.4,
-  volatility = 0.7,
-  seed = 0.8,
+  speed= 0.3,     
+  volatility= 0.3,     
+  seed= 0.3, 
   className = "",
   desktopSizeMultiplier = 2
 }) => {
@@ -23,66 +23,40 @@ const DistortedText = ({
   const [blotterReady, setBlotterReady] = useState(false);
   const timeRef = useRef(0);
 
-  // NEW: Hover multiplier
+  // Hover multiplier
   const hoverMultiplierRef = useRef(1);
 
-  // Font loading check with more robust detection
+  // Simplified font loading for sm00ch only
   useEffect(() => {
     let mounted = true;
-    let fallbackTimeout;
 
     const loadFont = async () => {
       try {
-        console.log(`Attempting to load font: ${fontFamily}`);
+        console.log(`Loading font: ${fontFamily}`);
         
-        // Method 1: Try to load the font directly
-        const font = new FontFace(fontFamily, `local("${fontFamily}"), url("./fonts/${fontFamily}.woff2") format("woff2"), url("./fonts/${fontFamily}.woff") format("woff")`);
-        
-        try {
-          await font.load();
-          document.fonts.add(font);
-          console.log(`Font ${fontFamily} loaded via FontFace API`);
-        } catch (fontFaceError) {
-          console.log(`FontFace API failed, using document.fonts.load:`, fontFaceError);
-        }
-
-        // Method 2: Use document.fonts.load as fallback
-        await document.fonts.load(`1em "${fontFamily}"`);
-        
-        // Method 3: Wait for fonts to be ready
+        // Simple font loading - just wait for fonts to be ready
         await document.fonts.ready;
         
-        // Final verification
+        // Verify the font is loaded
         const isLoaded = document.fonts.check(`1em "${fontFamily}"`);
-        console.log(`Font ${fontFamily} verification:`, isLoaded);
+        console.log(`Font ${fontFamily} loaded:`, isLoaded);
         
-        if (mounted && isLoaded) {
+        if (mounted) {
           setFontLoaded(true);
-        } else if (mounted) {
-          console.warn(`Font ${fontFamily} verification failed`);
-          // Even if verification fails, we'll proceed after timeout
         }
       } catch (error) {
-        console.warn(`Font ${fontFamily} loading failed:`, error);
+        console.warn(`Font loading failed:`, error);
+        // Still proceed even if there's an error
         if (mounted) {
-          // We'll still try to proceed but log the error
+          setFontLoaded(true);
         }
       }
     };
 
     loadFont();
 
-    // More aggressive fallback: proceed after shorter timeout
-    fallbackTimeout = setTimeout(() => {
-      if (mounted) {
-        console.log(`Proceeding with font ${fontFamily} after timeout`);
-        setFontLoaded(true);
-      }
-    }, 1000); // Reduced from 2000ms to 1000ms
-
     return () => {
       mounted = false;
-      clearTimeout(fallbackTimeout);
     };
   }, [fontFamily]);
 
@@ -187,7 +161,7 @@ const DistortedText = ({
         }
       }
 
-      // NEW: Add hover/touch interactions
+      // Add hover/touch interactions
       const el = containerRef.current;
       const handleHoverStart = () => {
         if (materialRef.current) {
@@ -280,7 +254,7 @@ const DistortedText = ({
         lineHeight: 0,
         transform: "translateZ(0)",
         backfaceVisibility: "hidden",
-        minHeight: shouldShowContent ? 'auto' : '1px', // Prevent layout shift
+        minHeight: shouldShowContent ? 'auto' : '1px',
         opacity: shouldShowContent ? 1 : 0,
         transition: 'opacity 0.3s ease-out',
       }}

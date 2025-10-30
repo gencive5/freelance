@@ -108,10 +108,10 @@ const App = () => {
                 <DistortedText 
                   text="Envoyez"
                   color="#02bebe"
-                  speed={0.5}          // Faster
-                  volatility={0.1}     // More distortion
-                  seed={0.3}           // Different pattern
-                  baseSize={50}        // Slightly larger
+                  speed={0.3}          
+                  volatility={0.1}     
+                  seed={0.3}          
+                  baseSize={50}       
                 />
               </div>     
 
@@ -129,10 +129,10 @@ const App = () => {
               <DistortedText 
                 text="Envoyez"
                 color="#02bebe"
-                speed={0.6}          // Faster
-                volatility={0.2}     // More distortion  
-                seed={0.5}           // Different pattern
-                baseSize={70}        // Slightly larger
+                speed={0.3}          
+                volatility={0.1}     
+                seed={0.3}          
+                baseSize={100}     
               />
             </div>
             

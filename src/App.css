@@ -308,7 +308,7 @@ height: 100% !important;
 }
 
 .title-gap {
-  margin-bottom: -10rem; 
+  margin-bottom: -20rem; 
 }
 
 /* Footer Layout */
@@ -425,9 +425,7 @@ height: 100% !important;
 }
 
 
-.desktop-first-row .title-gap {
-  margin-bottom: -5rem; /* Adjust this value to control spacing between title and subtitle */
-}
+
 
 .desktop-second-row {
   display: flex;

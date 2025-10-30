@@ -56,13 +56,13 @@ const ContactForm = () => {
       )
       .then(
         (result) => {
-          setStateMessage("ENVOYé!");
+          
           setMessageType('success');
           setIsSubmitting(false);
           setIsSquished(true); // 👈 squish after success
 
           setTimeout(() => {
-            setStateMessage(null);
+            
             setMessageType(null);
             setIsSquished(false); // 👈 remove if you want permanent squish
           }, 5000);
