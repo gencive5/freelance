@@ -179,30 +179,45 @@
   border: 0;
 }
 
-/* Prevent mobile viewport issues */
+/* Mobile viewport stability fixes */
 @media (max-width: 768px) {
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  body {
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    width: 100%;
+  }
+  
+  .container {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent layout shifts */
+  .mobile-second-row {
+    min-height: 100vh;
+    height: auto;
+  }
+  
+  /* Form specific fixes */
   .contact-form {
-    /* Ensure form doesn't cause viewport jumps */
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+    position: relative;
+    z-index: 2;
   }
   
   .contact-form__input,
   .contact-form__textarea {
-    /* Prevent iOS zoom on focus */
+    /* Prevent zoom on iOS */
     font-size: 16px !important;
+    /* Prevent layout shifts */
     transform: translateZ(0);
-    -webkit-transform: translateZ(0);
   }
 }
 
-/* Global fix for mobile viewport */
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-#root, .container {
-  height: 100%;
-  position: relative;
-}
