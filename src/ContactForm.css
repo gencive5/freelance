@@ -201,19 +201,6 @@
   }
 
   }
-  
-/* Alternative: Less aggressive approach */
-@media (max-width: 768px) {
-  .mobile-second-row {
-    /* Ensure the container maintains its position */
-    position: relative;
-    min-height: 100vh;
-  }
-  
-  .contact-form {
-    /* Create a stable layout context */
-    display: flex;
-    flex-direction: column;
-  }
-}
+
+
 
