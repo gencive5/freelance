@@ -6,8 +6,13 @@ import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 import Contact from './Contact';
 import MetallicCursor from './MetallicCursor';
+import UseMobile from './UseMobile';
 
-const App = () => {
+function App() {
+  UseMobile();
+
+
+
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -24,6 +29,7 @@ const App = () => {
   };
 
   return (
+
     <MetallicScrollbar style={{
       '--scrollbar-bg': '#ffffffff',
       '--scrollbar-metal': 'silver',
