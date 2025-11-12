@@ -561,6 +561,14 @@ height: 100% !important;
     -webkit-tap-highlight-color: transparent; /* Remove tap highlight on iOS */
     -webkit-touch-callout: none; /* Disable the callout on iOS */
   }
+
+   .distorted-text-container,
+  .distorted-text-container * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
   
 }
 
