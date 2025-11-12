@@ -199,25 +199,21 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
+
+  }
   
-  /* Prevent layout shifts */
+/* Alternative: Less aggressive approach */
+@media (max-width: 768px) {
   .mobile-second-row {
-    min-height: 100vh;
-    height: auto;
-  }
-  
-  /* Form specific fixes */
-  .contact-form {
+    /* Ensure the container maintains its position */
     position: relative;
-    z-index: 2;
+    min-height: 100vh;
   }
   
-  .contact-form__input,
-  .contact-form__textarea {
-    /* Prevent zoom on iOS */
-    font-size: 16px !important;
-    /* Prevent layout shifts */
-    transform: translateZ(0);
+  .contact-form {
+    /* Create a stable layout context */
+    display: flex;
+    flex-direction: column;
   }
 }
 
