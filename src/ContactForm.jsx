@@ -82,6 +82,46 @@ const ContactForm = () => {
     e.target.reset();
   };
 
+  useEffect(() => {
+  if (window.innerWidth > 768) return; // Only run on mobile
+
+  let lastScrollY = 0;
+
+  const contactPanel = document.querySelector('.mobile-second-row');
+  if (!contactPanel) return;
+
+  const inputs = contactPanel.querySelectorAll('input, textarea');
+
+  const handleFocus = () => {
+    // Save scroll position and lock scroll
+    lastScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lastScrollY}px`;
+    document.body.style.width = '100%';
+  };
+
+  const handleBlur = () => {
+    // Unlock scroll and restore position
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, lastScrollY);
+  };
+
+  inputs.forEach((input) => {
+    input.addEventListener('focus', handleFocus);
+    input.addEventListener('blur', handleBlur);
+  });
+
+  return () => {
+    inputs.forEach((input) => {
+      input.removeEventListener('focus', handleFocus);
+      input.removeEventListener('blur', handleBlur);
+    });
+  };
+}, []);
+
+
   return (
     <form onSubmit={sendEmail} className="contact-form" noValidate>
       <div className="contact-form__group">
