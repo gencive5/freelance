@@ -65,7 +65,7 @@ const App = () => {
 
             <div className="content-wrapper">
               <DistortedText className="title-gap" text="Gencives" />
-              <DistortedText text="développeur créatif" />
+              {/* <DistortedText text="développeur créatif" /> */}
             </div>
           </div>
         )}
