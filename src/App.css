@@ -545,3 +545,22 @@ height: 100% !important;
   z-index: 3;
 }
 
+
+/* Disable text selection on mobile for specific elements */
+@media (max-width: 768px) {
+  .overlay-text,
+  .overlay-text *,
+  .text-column,
+  .text-column *,
+  .text-fit,
+  .text-fit * {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on iOS */
+    -webkit-touch-callout: none; /* Disable the callout on iOS */
+  }
+  
+}
+
