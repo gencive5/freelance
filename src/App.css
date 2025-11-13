@@ -31,8 +31,8 @@ a {
 
 @font-face {
   font-family: 'Microsoft';
-  src: url('./fonts/MicrosoftSansSerif.woff') format('woff2'),
-       url('./fonts/MicrosoftSansSerif.woff2') format('woff');
+  src: url('./fonts/MicrosoftSansSerif.woff2') format('woff2'),
+       url('./fonts/MicrosoftSansSerif.woff') format('woff');
   font-display: swap;
   font-weight: normal;
   font-style: normal;
@@ -76,7 +76,7 @@ a {
 }
 
 .overlay-text .text-fit > :not([aria-hidden]) > span {
-  color: "#f7f0f0ff" !important;
+  color: #f7f0f0ff !important;
   opacity: 1 !important;
 }
 
@@ -186,12 +186,12 @@ canvas {
   }
 }
 
-
 .text-fit {
   font-family: 'adineue', sans-serif;
   display: flex;
   container-type: inline-size;
-
+  width: 100%; /* ← from second block */
+  
   --captured-length: initial;
   --support-sentinel: var(--captured-length, 9999px);
 
@@ -216,11 +216,16 @@ canvas {
       --font-size: clamp(
         1em,
         1em * var(--ratio),
-        var(--max-font-size, infinity * 1px)
-        -
-        var(--support-sentinel)
+        var(--max-font-size, infinity * 1px) - var(--support-sentinel) /* ← fixed from second block */
       );
       inline-size: var(--available-space);
+      display: block; /* ← from second block */
+      font-size: var(--font-size);
+      white-space: nowrap; /* ← from second block */
+
+      @container (inline-size > 0) {
+        white-space: nowrap; /* ← this might be redundant now */
+      }
 
       &:not(.text-fit) {
         display: block;
@@ -252,6 +257,7 @@ canvas {
   initial-value: 0px;
   inherits: true;
 }
+
 
 .text-fit1 {
   width: 30%;
@@ -368,49 +374,8 @@ height: 100% !important;
 
 
 
-  .text-fit {
-    display: flex;
-    container-type: inline-size;
-    width: 100%;
-    --captured-length: initial;
-    --support-sentinel: var(--captured-length, 9999px);
-  }
-  
-  .text-fit > [aria-hidden] {
-    visibility: hidden;
-  }
-  
-  .text-fit > :not([aria-hidden]) {
-    flex-grow: 1;
-    container-type: inline-size;
-    --captured-length: 100cqi;
-    --available-space: var(--captured-length);
-  }
-  
-  .text-fit > :not([aria-hidden]) > * {
-    --support-sentinel: inherit;
-    --captured-length: 100cqi;
-    --ratio: tan(atan2(
-      var(--available-space),
-      var(--available-space) - var(--captured-length)
-    ));
-    --font-size: clamp(
-      1em,
-      1em * var(--ratio),
-      var(--max-font-size, infinity * 1px) - var(--support-sentinel)
-    );
-    inline-size: var(--available-space);
-    display: block;
-    font-size: var(--font-size);
-    white-space: nowrap;
-  }
 
 
-
-.desktop-first-row .text-column.Figure-Demo {
-  justify-content: flex-start;
-  padding-top: 2rem;
-}
 
 .desktop-first-row .text-fit {
   margin-bottom: -0.1rem; 
@@ -507,7 +472,7 @@ height: 100% !important;
 .desktop-second-row {
   display: flex;
   flex-direction: column;
-  background-color: "#f7f0f0ff";
+  background-color: #f7f0f0ff;
   color: #02bebe;
   position: relative;
   z-index: 1;
