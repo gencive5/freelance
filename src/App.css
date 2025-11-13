@@ -443,8 +443,8 @@ height: 100% !important;
 
 .mobile-first-row .flexcontainer {
   align-items: flex-end; 
-  height: var(--app-vh);
-
+  height: auto;
+  min-height: 100vh;
 }
 
 
@@ -497,8 +497,7 @@ height: 100% !important;
 .mobile-second-row {
   display: flex;
   flex-direction: column;
-  height: var(--app-vh);
-
+  height: 100vh;
   background-color: #f7f0f0ff;
   color: #02bebe ;
   position: relative;
