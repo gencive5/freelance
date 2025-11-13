@@ -21,9 +21,6 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleMetallicClick = () => {
-    console.log('Metallic button clicked!');
-  };
 
   return (
 
