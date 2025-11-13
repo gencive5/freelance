@@ -5,7 +5,7 @@
   font-family: 'adineue', sans-serif;
   font-size: 2rem;
   color: #02bebe !important;
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 /* ===== FORM GROUP LAYOUT ===== */
@@ -37,7 +37,7 @@
   border-radius: 50px; /* Pill shape for inputs */
   transition: all 0.3s ease;
   color: #61DE2A !important;
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .contact-form__input:focus {
@@ -67,7 +67,7 @@
   font-family: inherit;
   font-size: 2rem;
   outline: none;
-  border-radius: 0px; /* Square corners with slight rounding */
+  border-radius: 0px; 
   transition: all 0.3s ease;
   min-height: 150px;
 }
