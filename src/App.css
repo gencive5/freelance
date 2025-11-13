@@ -443,8 +443,7 @@ height: 100% !important;
 
 .mobile-first-row .flexcontainer {
   align-items: flex-end; 
-  height: auto;
-  min-height: 100vh;
+  height: 100dvh;
 }
 
 
