@@ -6,14 +6,11 @@ import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 import Contact from './Contact';
 import MetallicCursor from './MetallicCursor';
-import UseMobile from './UseMobile';
-
-function App() {
-  UseMobile();
 
 
-
+const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
 
   useEffect(() => {
     const handleResize = () => {
