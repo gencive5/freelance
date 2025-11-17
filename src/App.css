@@ -352,7 +352,7 @@ height: 100% !important;
 }
 
 .footer-left {
-  margin-left: 1rem;
+  margin-left: 0;
 }
 
 .footer-right {
@@ -379,7 +379,7 @@ height: 100% !important;
   }
 
   .footer-left {
-    margin-left: 1rem;
+    margin-left: 0rem;
   }
 
   .footer-right {
