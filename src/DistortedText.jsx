@@ -6,11 +6,13 @@ const DistortedText = ({
   baseSize = 120,
   color = "#f7f0f0ff",
   padding = 40,
-  speed= 0.3,     
-  volatility= 0.3,     
-  seed= 0.3, 
+  speed = 0.1,     
+  volatility = 0.3,     
+  seed = 0.3, 
   className = "",
-  desktopSizeMultiplier = 2
+  desktopSizeMultiplier = 2,
+  mouseMovementMultiplier = 1.5,
+  mouseDecayRate = 0.92
 }) => {
   const containerRef = useRef(null);
   const blotterInstance = useRef(null);
@@ -23,7 +25,15 @@ const DistortedText = ({
   const [blotterReady, setBlotterReady] = useState(false);
   const timeRef = useRef(0);
 
-  // Hover multiplier
+  // Device detection
+  const isDesktopRef = useRef(windowWidth > 1024);
+  
+  // Mouse movement tracking (desktop only)
+  const mouseMovementRef = useRef(0);
+  const lastMousePositionRef = useRef({ x: 0, y: 0 });
+  const mouseActiveRef = useRef(false);
+
+  // Hover multiplier (mobile only)
   const hoverMultiplierRef = useRef(1);
 
   // Simplified font loading for sm00ch only
@@ -34,10 +44,8 @@ const DistortedText = ({
       try {
         console.log(`Loading font: ${fontFamily}`);
         
-        // Simple font loading - just wait for fonts to be ready
         await document.fonts.ready;
         
-        // Verify the font is loaded
         const isLoaded = document.fonts.check(`1em "${fontFamily}"`);
         console.log(`Font ${fontFamily} loaded:`, isLoaded);
         
@@ -46,7 +54,6 @@ const DistortedText = ({
         }
       } catch (error) {
         console.warn(`Font loading failed:`, error);
-        // Still proceed even if there's an error
         if (mounted) {
           setFontLoaded(true);
         }
@@ -62,22 +69,79 @@ const DistortedText = ({
 
   // Responsive size calculation
   const getResponsiveSize = useCallback(() => {
-    const isDesktop = windowWidth > 1024;
-    return isDesktop ? baseSize * desktopSizeMultiplier : baseSize;
-  }, [windowWidth, baseSize, desktopSizeMultiplier]);
+    return isDesktopRef.current ? baseSize * desktopSizeMultiplier : baseSize;
+  }, [baseSize, desktopSizeMultiplier]);
 
-  // Animation with hover multiplier
+  // Mouse movement handler (desktop only)
+  const handleMouseMove = useCallback((e) => {
+    if (!isDesktopRef.current) return;
+
+    if (!lastMousePositionRef.current.x && !lastMousePositionRef.current.y) {
+      lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
+      return;
+    }
+
+    const deltaX = Math.abs(e.clientX - lastMousePositionRef.current.x);
+    const deltaY = Math.abs(e.clientY - lastMousePositionRef.current.y);
+    const movement = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    mouseMovementRef.current = Math.min(mouseMovementRef.current + movement * 0.1, 10);
+    mouseActiveRef.current = true;
+
+    lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  // Animation with device-specific behavior
   const render = useCallback(() => {
     if (!materialRef.current) return;
 
     timeRef.current += 0.01;
 
-    const baseMovement = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
-    materialRef.current.uniforms.uVolatility.value = baseMovement * hoverMultiplierRef.current;
-    materialRef.current.uniforms.uSpeed.value = speed;
+    if (isDesktopRef.current) {
+      // DESKTOP: Mouse movement controlled animation
+      if (mouseActiveRef.current) {
+        mouseMovementRef.current *= mouseDecayRate;
+        
+        // Pause animation when movement is minimal
+        if (mouseMovementRef.current < 0.05) {
+          mouseActiveRef.current = false;
+          mouseMovementRef.current = 0;
+          // Don't update timeRef when paused to freeze animation
+          timeRef.current -= 0.01;
+        }
+      }
+
+      const baseVolatility = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
+      const mouseEffect = mouseMovementRef.current * mouseMovementMultiplier;
+      
+      materialRef.current.uniforms.uVolatility.value = baseVolatility + mouseEffect;
+      materialRef.current.uniforms.uSpeed.value = speed + (mouseEffect * 0.1);
+    } else {
+      // MOBILE: Original hover-based animation
+      const baseMovement = Math.sin(timeRef.current * 0.5) * 0.2 + volatility;
+      materialRef.current.uniforms.uVolatility.value = baseMovement * hoverMultiplierRef.current;
+      materialRef.current.uniforms.uSpeed.value = speed;
+    }
 
     animationFrameId.current = requestAnimationFrame(render);
-  }, [speed, volatility]);
+  }, [speed, volatility, mouseMovementMultiplier, mouseDecayRate]);
+
+  // Mobile hover handlers
+  const handleMobileHoverStart = useCallback(() => {
+    if (isDesktopRef.current) return;
+    if (materialRef.current) {
+      materialRef.current.uniforms.uSpeed.value = 1.3;
+    }
+    hoverMultiplierRef.current = 3;
+  }, []);
+
+  const handleMobileHoverEnd = useCallback(() => {
+    if (isDesktopRef.current) return;
+    if (materialRef.current) {
+      materialRef.current.uniforms.uSpeed.value = speed;
+    }
+    hoverMultiplierRef.current = 1;
+  }, [speed]);
 
   const initializeBlotter = useCallback(() => {
     if (!window.Blotter || !containerRef.current) {
@@ -89,9 +153,8 @@ const DistortedText = ({
       const prevCanvas = containerRef.current.querySelector("canvas");
       const responsiveSize = getResponsiveSize();
 
-      console.log(`Creating Blotter text with font: ${fontFamily}`);
+      console.log(`Creating Blotter text with font: ${fontFamily}, isDesktop: ${isDesktopRef.current}`);
 
-      // Create text object with the specified font
       const textObj = new window.Blotter.Text(text, {
         family: fontFamily,
         size: responsiveSize,
@@ -108,14 +171,11 @@ const DistortedText = ({
       material.uniforms.uSeed.value = seed;
       materialRef.current = material;
 
-      // Hover control
-      hoverMultiplierRef.current = 1;
-
       blotterInstance.current = new window.Blotter(material, {
         texts: textObj,
         antialiasing: true,
         webgl2: true,
-        resolutionScale: windowWidth > 1024 ? 1.3 : 1,
+        resolutionScale: isDesktopRef.current ? 1.3 : 1,
       });
 
       scopeRef.current = blotterInstance.current.forText(textObj);
@@ -127,20 +187,15 @@ const DistortedText = ({
       if (newCanvas) {
         newCanvas.style.imageRendering = "optimizeQuality";
         newCanvas.style.willChange = "transform";
-        
-        // Initially hidden
         newCanvas.style.opacity = "0";
         newCanvas.style.transition = "opacity 0.3s ease-out";
       }
 
       if (prevCanvas && newCanvas) {
         containerRef.current.appendChild(newCanvas);
-
-        // Fade in the new canvas
         requestAnimationFrame(() => {
           newCanvas.style.opacity = "1";
           prevCanvas.style.opacity = "0";
-
           setTimeout(() => {
             if (prevCanvas.parentNode === containerRef.current) {
               containerRef.current.removeChild(prevCanvas);
@@ -149,8 +204,6 @@ const DistortedText = ({
         });
       } else {
         scopeRef.current.appendTo(containerRef.current);
-        
-        // Fade in the initial canvas
         const initialCanvas = containerRef.current.querySelector("canvas");
         if (initialCanvas) {
           initialCanvas.style.opacity = "0";
@@ -161,25 +214,19 @@ const DistortedText = ({
         }
       }
 
-      // Add hover/touch interactions
+      // Add event listeners based on device type
       const el = containerRef.current;
-      const handleHoverStart = () => {
-        if (materialRef.current) {
-          materialRef.current.uniforms.uSpeed.value = 1.3;
-        }
-        hoverMultiplierRef.current = 3;
-      };
-      const handleHoverEnd = () => {
-        if (materialRef.current) {
-          materialRef.current.uniforms.uSpeed.value = speed;
-        }
-        hoverMultiplierRef.current = 1;
-      };
-
-      el.addEventListener("mouseenter", handleHoverStart);
-      el.addEventListener("mouseleave", handleHoverEnd);
-      el.addEventListener("touchstart", handleHoverStart);
-      el.addEventListener("touchend", handleHoverEnd);
+      
+      if (isDesktopRef.current) {
+        // DESKTOP: Mouse movement on entire document
+        document.addEventListener("mousemove", handleMouseMove);
+      } else {
+        // MOBILE: Hover/touch on element itself
+        el.addEventListener("mouseenter", handleMobileHoverStart);
+        el.addEventListener("mouseleave", handleMobileHoverEnd);
+        el.addEventListener("touchstart", handleMobileHoverStart);
+        el.addEventListener("touchend", handleMobileHoverEnd);
+      }
 
       if (!animationFrameId.current) {
         animationFrameId.current = requestAnimationFrame(render);
@@ -188,23 +235,34 @@ const DistortedText = ({
       setBlotterReady(true);
       
       return () => {
-        el.removeEventListener("mouseenter", handleHoverStart);
-        el.removeEventListener("mouseleave", handleHoverEnd);
-        el.removeEventListener("touchstart", handleHoverStart);
-        el.removeEventListener("touchend", handleHoverEnd);
+        if (isDesktopRef.current) {
+          document.removeEventListener("mousemove", handleMouseMove);
+        } else {
+          el.removeEventListener("mouseenter", handleMobileHoverStart);
+          el.removeEventListener("mouseleave", handleMobileHoverEnd);
+          el.removeEventListener("touchstart", handleMobileHoverStart);
+          el.removeEventListener("touchend", handleMobileHoverEnd);
+        }
       };
     } catch (error) {
       console.error('Blotter initialization failed:', error);
       return false;
     }
-  }, [text, fontFamily, color, padding, speed, volatility, seed, windowWidth, render, getResponsiveSize]);
+  }, [text, fontFamily, color, padding, speed, volatility, seed, render, getResponsiveSize, handleMouseMove, handleMobileHoverStart, handleMobileHoverEnd]);
 
   const handleResize = useCallback(() => {
-    setWindowWidth(window.innerWidth);
-    clearTimeout(resizeTimeout.current);
-    resizeTimeout.current = setTimeout(() => {
-      initializeBlotter();
-    }, 150);
+    const newWidth = window.innerWidth;
+    const wasDesktop = isDesktopRef.current;
+    isDesktopRef.current = newWidth > 1024;
+    setWindowWidth(newWidth);
+
+    // Reinitialize if device type changed
+    if (wasDesktop !== isDesktopRef.current) {
+      clearTimeout(resizeTimeout.current);
+      resizeTimeout.current = setTimeout(() => {
+        initializeBlotter();
+      }, 150);
+    }
   }, [initializeBlotter]);
 
   // Initialize Blotter when font is loaded
@@ -219,7 +277,6 @@ const DistortedText = ({
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     
-    // Initial initialization with delay to ensure DOM is ready
     const initTimeout = setTimeout(() => {
       if (fontLoaded) {
         initializeBlotter();
@@ -232,16 +289,24 @@ const DistortedText = ({
       clearTimeout(resizeTimeout.current);
       cancelAnimationFrame(animationFrameId.current);
 
+      // Clean up all event listeners
+      document.removeEventListener("mousemove", handleMouseMove);
+      
       if (containerRef.current) {
+        const el = containerRef.current;
+        el.removeEventListener("mouseenter", handleMobileHoverStart);
+        el.removeEventListener("mouseleave", handleMobileHoverEnd);
+        el.removeEventListener("touchstart", handleMobileHoverStart);
+        el.removeEventListener("touchend", handleMobileHoverEnd);
+        
         const canvas = containerRef.current.querySelector("canvas");
         if (canvas) {
           containerRef.current.removeChild(canvas);
         }
       }
     };
-  }, [initializeBlotter, handleResize, fontLoaded]);
+  }, [initializeBlotter, handleResize, fontLoaded, handleMouseMove, handleMobileHoverStart, handleMobileHoverEnd]);
 
-  // Calculate if we should show anything
   const shouldShowContent = blotterReady;
 
   return (
@@ -257,9 +322,11 @@ const DistortedText = ({
         minHeight: shouldShowContent ? 'auto' : '1px',
         opacity: shouldShowContent ? 1 : 0,
         transition: 'opacity 0.3s ease-out',
+        cursor: isDesktopRef.current ? 'default' : 'pointer'
       }}
       data-font-loaded={fontLoaded}
       data-blotter-ready={blotterReady}
+      data-device-type={isDesktopRef.current ? 'desktop' : 'mobile'}
     />
   );
 };
