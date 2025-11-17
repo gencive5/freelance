@@ -151,7 +151,7 @@ canvas {
   .flexcontainer {
     display: flex;
     align-items: flex-end;
-    height: 100vh; 
+    height: 100dvh; 
   }
 
   .text-column {
@@ -422,9 +422,6 @@ height: 100% !important;
 }
 
 
-
-
-/* Add this new class for the text column */
 .desktop-first-row .text-column.Figure-Demo {
   display: flex;
   flex-direction: column;
