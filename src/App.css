@@ -419,6 +419,7 @@ height: 100% !important;
 .mobile-first-row .flexcontainer {
   align-items: flex-end; 
   height: 100dvh;
+  border: 2px solid red !important;
 }
 
 
@@ -448,6 +449,7 @@ height: 100% !important;
   display: flex;
   flex-direction: column;
   height: auto;
+  border: 2px solid orange !important;
 }
 
 .mobile-first-row .text-column.Figure-Demo > :first-child {
