@@ -199,7 +199,7 @@ const DistortedText = ({
       blotterInstance.current = new window.Blotter(material, {
         texts: textObj,
         antialiasing: true,
-        webgl2: true,
+        webgl2: false,
         resolutionScale: isDesktopRef.current ? 1.3 : 1
       });
 
