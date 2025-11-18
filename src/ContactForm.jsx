@@ -10,7 +10,14 @@ const ContactForm = () => {
   const [stateMessage, setStateMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [isSquished, setIsSquished] = useState(false); // 👈 new state
+  const [isSquished, setIsSquished] = useState(false);
+  const [formData, setFormData] = useState({
+    user_name: '',
+    user_email: '',
+    user_message: ''
+  });
+  const [showIncompleteMessage, setShowIncompleteMessage] = useState(false);
+  
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
@@ -42,9 +49,43 @@ const ContactForm = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Hide incomplete message when user starts typing
+    if (showIncompleteMessage) {
+      setShowIncompleteMessage(false);
+    }
+  };
+
+  const isFormValid = () => {
+    return formData.user_name.trim() !== '' && 
+           formData.user_email.trim() !== '' && 
+           formData.user_message.trim() !== '';
+  };
+
   const sendEmail = (e) => {
     e.persist();
     e.preventDefault();
+    
+    // Check if form is complete
+    if (!isFormValid()) {
+      setStateMessage("Veuillez remplir tous les champs avant d'envoyer le formulaire");
+      setMessageType('error');
+      setShowIncompleteMessage(true);
+      
+      setTimeout(() => {
+        setStateMessage(null);
+        setMessageType(null);
+        setShowIncompleteMessage(false);
+      }, 5000);
+      return;
+    }
+    
     setIsSubmitting(true);
 
     emailjs
@@ -56,15 +97,22 @@ const ContactForm = () => {
       )
       .then(
         (result) => {
-          
+          setStateMessage("Message envoyé avec succès!");
           setMessageType('success');
           setIsSubmitting(false);
-          setIsSquished(true); // 👈 squish after success
+          setIsSquished(true);
+          
+          // Reset form data after successful submission
+          setFormData({
+            user_name: '',
+            user_email: '',
+            user_message: ''
+          });
 
           setTimeout(() => {
-            
+            setStateMessage(null);
             setMessageType(null);
-            setIsSquished(false); // 👈 remove if you want permanent squish
+            setIsSquished(false);
           }, 5000);
         },
         (error) => {
@@ -81,7 +129,6 @@ const ContactForm = () => {
 
     e.target.reset();
   };
-  
 
   return (
     <form onSubmit={sendEmail} className="contact-form" noValidate>
@@ -94,6 +141,8 @@ const ContactForm = () => {
           ref={nameInputRef}
           type="text"
           name="user_name"
+          value={formData.user_name}
+          onChange={handleInputChange}
           required
           className="contact-form__input"
           autoCorrect="off"
@@ -114,7 +163,9 @@ const ContactForm = () => {
           id="user_email"
           ref={emailInputRef}
           type="email"
-          name="email"
+          name="user_email"
+          value={formData.user_email}
+          onChange={handleInputChange}
           required
           className="contact-form__input"
           autoCorrect="off"
@@ -134,7 +185,9 @@ const ContactForm = () => {
         <textarea
           id="user_message"
           ref={textareaRef}
-          name="message"
+          name="user_message"
+          value={formData.user_message}
+          onChange={handleInputChange}
           required
           className="contact-form__textarea"
           autoCorrect="off"
@@ -157,11 +210,10 @@ const ContactForm = () => {
         <MetallicButton
           type="submit"
           disabled={isSubmitting}
-          className={isSquished ? 'squished' : ''} // 👈 pass squished class
+          className={isSquished ? 'squished' : ''}
           style={{
             width: isMobile ? '8rem' : '12rem',
             height: isMobile ? '8rem' : '12rem',
-           
           }}
           aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
         />
