@@ -472,6 +472,7 @@ height: 100% !important;
   color: #02bebe ;
   position: relative;
   z-index: 1;
+  border: 2px solid green !important;
 }
 
 
