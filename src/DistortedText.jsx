@@ -22,15 +22,16 @@ const DistortedText = ({
   const animationFrameId = useRef(null);
   const resizeTimeout = useRef(null);
 
-  const blotterInitRef = useRef(false); // <── NEW: prevents double init
+  const blotterInitRef = useRef(false);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // POINT 2: Removed windowWidth state - only keeping necessary states
   const [fontLoaded, setFontLoaded] = useState(false);
   const [blotterReady, setBlotterReady] = useState(false);
 
   const timeRef = useRef(0);
 
-  const isDesktopRef = useRef(windowWidth > 1024);
+  // POINT 2: Calculate once and update ref directly on resize
+  const isDesktopRef = useRef(window.innerWidth > 1024);
 
   const mouseMovementRef = useRef(0);
   const lastMousePositionRef = useRef({ x: 0, y: 0 });
@@ -39,7 +40,7 @@ const DistortedText = ({
   const hoverMultiplierRef = useRef(1);
 
   // ----------------------------------------------------------
-  // FONT LOADING (Adobe Blank fallback + sm00ch)
+  // FONT LOADING (unchanged)
   // ----------------------------------------------------------
   useEffect(() => {
     let mounted = true;
@@ -68,7 +69,7 @@ const DistortedText = ({
   }, []);
 
   // ----------------------------------------------------------
-  // FORCE FONT RENDER PASS (invisible element)
+  // FORCE FONT RENDER PASS (unchanged)
   // ----------------------------------------------------------
   const getResponsiveSize = useCallback(() => {
     return isDesktopRef.current ? baseSize * desktopSizeMultiplier : baseSize;
@@ -95,7 +96,7 @@ const DistortedText = ({
   }, [text, fontLoaded, getResponsiveSize]);
 
   // ----------------------------------------------------------
-  // MOUSE MOVEMENT (desktop)
+  // MOUSE MOVEMENT (unchanged)
   // ----------------------------------------------------------
   const handleMouseMove = useCallback((e) => {
     if (!isDesktopRef.current) return;
@@ -116,7 +117,7 @@ const DistortedText = ({
   }, []);
 
   // ----------------------------------------------------------
-  // ANIMATION LOOP
+  // ANIMATION LOOP (unchanged)
   // ----------------------------------------------------------
   const render = useCallback(() => {
     if (!materialRef.current) return;
@@ -150,7 +151,7 @@ const DistortedText = ({
   }, [speed, volatility, mouseMovementMultiplier, mouseDecayRate]);
 
   // ----------------------------------------------------------
-  // TOUCH/HOVER (mobile)
+  // TOUCH/HOVER (unchanged)
   // ----------------------------------------------------------
   const handleMobileHoverStart = useCallback(() => {
     if (isDesktopRef.current) return;
@@ -167,13 +168,13 @@ const DistortedText = ({
   }, [speed]);
 
   // ----------------------------------------------------------
-  // BLOTTER INITIALIZATION (guarded)
+  // BLOTTER INITIALIZATION (unchanged)
   // ----------------------------------------------------------
   const initializeBlotter = useCallback(() => {
-    if (blotterInitRef.current) return;          // <── PREVENT REINIT
+    if (blotterInitRef.current) return;
     if (!window.Blotter || !containerRef.current || !fontLoaded) return;
 
-    blotterInitRef.current = true;               // <── mark initialized
+    blotterInitRef.current = true;
 
     try {
       const prevCanvas = containerRef.current.querySelector("canvas");
@@ -256,26 +257,26 @@ const DistortedText = ({
   ]);
 
   // ----------------------------------------------------------
-  // INIT WHEN FONT IS READY (ONLY ONE TIME)
+  // INIT WHEN FONT IS READY (unchanged)
   // ----------------------------------------------------------
   useEffect(() => {
     if (fontLoaded) initializeBlotter();
   }, [fontLoaded, initializeBlotter]);
 
   // ----------------------------------------------------------
-  // RESIZE HANDLER (unchanged, as requested)
+  // RESIZE HANDLER (updated for Point 2)
   // ----------------------------------------------------------
   const handleResize = useCallback(() => {
     const newWidth = window.innerWidth;
     const wasDesktop = isDesktopRef.current;
 
+    // POINT 2: Update ref directly without state
     isDesktopRef.current = newWidth > 1024;
-    setWindowWidth(newWidth);
 
     if (wasDesktop !== isDesktopRef.current) {
       clearTimeout(resizeTimeout.current);
       resizeTimeout.current = setTimeout(() => {
-        initializeBlotter(); // can fire, but blotterInitRef prevents double-init
+        initializeBlotter();
       }, 150);
     }
   }, [initializeBlotter]);
@@ -304,7 +305,7 @@ const DistortedText = ({
   ]);
 
   // ----------------------------------------------------------
-  // OUTPUT
+  // OUTPUT (unchanged)
   // ----------------------------------------------------------
   return (
     <div
