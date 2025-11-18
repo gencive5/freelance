@@ -1,5 +1,5 @@
 :root {
-  font-family: adineue, Helvetica, Arial, sans-serif;
+  font-family: adineue, Adobe Blank;
   line-height: 1.5;
   font-weight: 400;
 
@@ -28,15 +28,16 @@ a {
   text-decoration: inherit;
 }
 
-
 @font-face {
-  font-family: 'Microsoft';
-  src: url('./fonts/MicrosoftSansSerif.woff2') format('woff2'),
-       url('./fonts/MicrosoftSansSerif.woff') format('woff');
-  font-display: swap;
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Adobe Blank';
+    src: url('AdobeBlank.woff2') format('woff2'),
+        url('AdobeBlank.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
 }
+
+
 
  @font-face {
             font-family: 'adineue';
@@ -57,6 +58,17 @@ a {
   font-style: normal;
   font-display: block; 
 }
+
+
+@font-face {
+  font-family: 'Microsoft';
+  src: url('./fonts/MicrosoftSansSerif.woff2') format('woff2'),
+       url('./fonts/MicrosoftSansSerif.woff') format('woff');
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 .container {
   width: 100%;
