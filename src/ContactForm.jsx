@@ -205,6 +205,17 @@ const ContactForm = () => {
           }}
         />
       </div>
+      <div className="contact-form__message-container">
+         {stateMessage && (
+          <p 
+            className={`contact-form__message contact-form__message--${messageType}`}
+            role="alert"
+            aria-live="polite"
+          >
+            {stateMessage}
+          </p>
+        )}
+      </div>
 
       <div className="contact-form__submit-container">
         <MetallicButton
@@ -217,16 +228,6 @@ const ContactForm = () => {
           }}
           aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
         />
-
-        {stateMessage && (
-          <p 
-            className={`contact-form__message contact-form__message--${messageType}`}
-            role="alert"
-            aria-live="polite"
-          >
-            {stateMessage}
-          </p>
-        )}
       </div>
     </form>
   );

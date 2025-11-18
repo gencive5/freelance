@@ -178,3 +178,42 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* ===== MESSAGE CONTAINER (same layout style as footer) ===== */
+.contact-form__message-container {
+  position: absolute;
+  bottom: 12rem;
+  font-family: 'adineue', sans-serif;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ===== BASE MESSAGE STYLE ===== */
+.contact-form__message {
+  font-size: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  z-index: 11,
+}
+
+/* SUCCESS MESSAGE — clean green neon */
+.contact-form__message--success {
+  color: #61DE2A !important;
+}
+
+/* ERROR MESSAGE — clean red neon */
+.contact-form__message--error {
+  color: #ff4444 !important;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .contact-form__message {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.4rem;
+  }
+}
