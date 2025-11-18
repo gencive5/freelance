@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: #f7f0f0ff;
-  background-color: #02be4a;
+  background-color: #02bebe;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -419,7 +419,7 @@ height: 100% !important;
 .mobile-first-row .flexcontainer {
   align-items: flex-end; 
   height: 100svh;
-  border: 2px solid red !important;
+  
 }
 
 
@@ -449,7 +449,6 @@ height: 100% !important;
   display: flex;
   flex-direction: column;
   height: auto;
-  border: 2px solid orange !important;
 }
 
 .mobile-first-row .text-column.Figure-Demo > :first-child {
@@ -472,7 +471,6 @@ height: 100% !important;
   color: #02bebe ;
   position: relative;
   z-index: 1;
-  border: 2px solid green !important;
 }
 
 
