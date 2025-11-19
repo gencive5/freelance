@@ -218,3 +218,68 @@
     padding: 0.8rem 1.4rem;
   }
 }
+
+
+/* ===== ANIMATED BACKGROUND INPUT CONTAINER ===== */
+.animated-input-container {
+  position: relative;
+  width: 100%;
+  border-radius: 50px;
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.animated-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  border-radius: 50px;
+  display: block !important;
+ 
+  pointer-events: none;
+}
+
+/* ===== ANIMATED INPUT SPECIFIC STYLES ===== */
+.contact-form__input.animated-input {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+  color: #f7f0f0ff !important;
+  backdrop-filter: blur(1px);
+  
+  pointer-events: auto !important;
+  
+  cursor: text;
+}
+
+.contact-form__input.animated-input:focus {
+
+  backdrop-filter: blur(4px);
+}
+
+.contact-form__input.animated-input::placeholder {
+  color: transparent !important;
+  font-weight: 500;
+}
+
+
+/* ===== MOBILE RESPONSIVENESS ===== */
+@media (max-width: 768px) {
+  .animated-input-container {
+    border-radius: 25px;
+  }
+  
+  .animated-background {
+    border-radius: 25px;
+  }
+  
+  .contact-form__input.animated-input {
+    font-size: 1.2rem;
+    padding: 12px 15px;
+  }
+}
