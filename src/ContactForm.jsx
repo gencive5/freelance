@@ -137,8 +137,8 @@ const ContactForm = () => {
   <div className="animated-input-container">
     <img 
       className="animated-background"
-      src="/avion.webp" 
-      alt=""
+      src="/sky.webp" 
+      alt="plane"
     />
     <input 
       ref={nameInputRef}
@@ -164,8 +164,8 @@ const ContactForm = () => {
          <div className="animated-input-container">
     <img 
       className="animated-background"
-      src="/duck.webp" 
-      alt=""
+      src="/sky.webp" 
+      alt="duck"
     />
         <input
           id="user_email"
@@ -194,8 +194,8 @@ const ContactForm = () => {
         <div className="animated-input-container">
     <img 
       className="animated-background"
-      src="/pigeon.webp" 
-      alt=""
+      src="/road.webp" 
+      alt="road"
     />
         <textarea
           id="user_message"
