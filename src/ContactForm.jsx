@@ -133,7 +133,7 @@ const ContactForm = () => {
   return (
     <form onSubmit={sendEmail} className="contact-form" noValidate>
       <div className="contact-form__group">
-  <label className="contact-form__label">Name</label>
+  <label className="contact-form__label">Nom:</label>
   <div className="animated-input-container">
     <img 
       className="animated-background"

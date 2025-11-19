@@ -8,7 +8,7 @@ const Contact = () => (
         className="link"
         style={{ color: '#1A73E8' }}
       >
-        Email
+        email
       </a>
     </div>
     
@@ -20,7 +20,7 @@ const Contact = () => (
         className="link"
         style={{ color: '#5a2adeff' }}
       >
-        Instagram
+        instagram
       </a>
     </div>
   </footer>
