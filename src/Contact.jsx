@@ -6,7 +6,7 @@ const Contact = () => (
       <a
         href="mailto:vic.segen@gmail.com"
         className="link"
-        style={{ color: '#02bebe' }}
+        style={{ color: '#02bebe'}}
       >
         email
       </a>
@@ -15,7 +15,7 @@ const Contact = () => (
         target="_blank"
         rel="noopener noreferrer"
         className="link"
-        style={{ color: '#02bebe' }}
+        style={{ color: '#02bebe' , marginLeft: '1rem' }}
       >
         instagram
       </a>
