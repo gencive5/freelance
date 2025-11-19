@@ -50,8 +50,8 @@ const App = () => {
                   
                   {/* développeur créatif - will go to bottom */}
                   <span className="text-fit">
-                    <span><span>développement créatif</span></span>
-                    <span aria-hidden="true">développement créatif</span>
+                    <span><span>développeur créatif</span></span>
+                    <span aria-hidden="true">développeur créatif</span>
                   </span>
                   
                   {/* design line - will go to bottom */}
