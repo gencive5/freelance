@@ -104,20 +104,12 @@ const App = () => {
 
             <div className="mobile-second-row">
 
-              {/* <div className="background-distorted-text">
-              <DistortedText 
-                text="Envoyez"
-                color="#02bebe"
-                speed={0.3}          
-                volatility={0.1}     
-                seed={0.3}          
-                baseSize={50}       
-              />
-            </div>      */}
+              <container>
 
               <ContactForm />
               
               <Contact />
+              </container>
             </div>
           </>
         )}
@@ -125,18 +117,7 @@ const App = () => {
         {/* Second Row - Only on Desktop */}
         {!isMobile && (
           <div className="desktop-second-row">
-           {/* <div className="background-distorted-text">
-              <DistortedText 
-                text="Envoyez"
-                color="#02bebe"
-                speed={0.3}          
-                volatility={0.1}     
-                seed={0.3}          
-                baseSize={10}  
-                desktopSizeMultiplier={1}   
-              />
-            </div> */}
-            
+                    
             <ContactForm />
             <Contact />
           </div>
