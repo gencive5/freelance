@@ -103,12 +103,12 @@ const App = () => {
 
             <div className="mobile-second-row">
 
-              <div className="flexcontainer">
+              <container className="dvh-container">
 
               <ContactForm />
               
               <Contact />
-              </div>
+              </container>
             </div>
           </>
         )}
