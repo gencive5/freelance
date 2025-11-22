@@ -74,6 +74,7 @@ const App = () => {
         {isMobile && (
           <>
             <div className="mobile-first-row">
+              <container className="dvh-container">
               <div className="overlay-text">
                 <div className="flexcontainer">
                   <div className="text-column Figure-Demo">
@@ -96,10 +97,10 @@ const App = () => {
                   </div>
                 </div>
               </div>
-
               <div className="content-wrapper">
                 <DistortedText className="title-wrapper" text="Contactez" />
               </div>
+              </container>
             </div>
 
             <div className="mobile-second-row">
