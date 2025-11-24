@@ -155,7 +155,7 @@ canvas {
     position: absolute;
     top: auto;
     width: 100%;
-    height: 100dvh;
+    height: 100svh;
     z-index: 10;
     pointer-events: none;
     padding-bottom: 2rem;
@@ -164,7 +164,7 @@ canvas {
   .flexcontainer {
     display: flex;
     align-items: flex-end;
-    height: 100dvh; 
+    height: 100svh; 
   }
 
   .text-column {
@@ -192,8 +192,8 @@ canvas {
   }
 
   .distorted-text-container {
-    height: 100dvh !important;
-    min-height: 100dvh !important;
+    height: 100svh !important;
+    min-height: 100svh !important;
   }
   
   .distorted-text-container canvas {
@@ -203,7 +203,7 @@ canvas {
   }
   
   .content-wrapper {
-    height: 100dvh;
+    height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -425,7 +425,7 @@ height: 100% !important;
 
 .mobile-first-row .flexcontainer {
   align-items: flex-end; 
-  height: 100dvh;
+  height: 100svh;
 }
 
 
@@ -454,7 +454,7 @@ height: 100% !important;
 .mobile-first-row .text-column.Figure-Demo {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: 100svh;
 }
 
 .mobile-first-row .text-column.Figure-Demo > :first-child {
@@ -472,7 +472,7 @@ height: 100% !important;
 .mobile-second-row {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: 100svh;
   background-color: #f7f0f0ff;
   color: #02bebe ;
   position: relative;
@@ -480,7 +480,7 @@ height: 100% !important;
 }
 
 .dvh-container {
-  height: 100dvh;
+  height: 100svh;
 }
 
 
