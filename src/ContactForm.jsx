@@ -132,41 +132,35 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={sendEmail} className="contact-form" noValidate>
+
       <div className="contact-form__group">
-  <label className="contact-form__label">Nom:</label>
-  <div className="animated-input-container">
-    <img 
-      className="animated-background"
-      src="/sky.webp" 
-      alt="plane"
-    />
-    <input 
-      ref={nameInputRef}
-      type="text" 
-      name="user_name"
-      value={formData.user_name}
-      onChange={handleInputChange}
-      required
-      className="contact-form__input animated-input"
-      placeholder="Enter your name"
-      autoCorrect="off"
-      autoCapitalize="off"
-      spellCheck="false"
-      aria-required="true"
-    />
-  </div>
-</div>
+  <label htmlFor="user_name" className="contact-form__label">
+          Nom:
+        </label>
+        <input
+          id="user_name"
+          ref={nameInputRef}
+          type="text"
+          name="user_name"
+          value={formData.user_name}
+          onChange={handleInputChange}
+          required
+          className="contact-form__input"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+          autoComplete="name"
+          aria-required="true"
+          aria-describedby="name_description"
+        />
+        <span id="name_description" className="sr-only">Veuillez entrer votre nom complet</span>
+      </div>
 
       <div className="contact-form__group">
         <label htmlFor="user_email" className="contact-form__label">
           Email:
         </label>
-         <div className="animated-input-container">
-    <img 
-      className="animated-background"
-      src="/sky.webp" 
-      alt="duck"
-    />
+        
         <input
           id="user_email"
           ref={emailInputRef}
@@ -175,7 +169,7 @@ const ContactForm = () => {
           value={formData.user_email}
           onChange={handleInputChange}
           required
-          className="contact-form__input animated-input"
+          className="contact-form__input"
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
@@ -185,18 +179,12 @@ const ContactForm = () => {
         />
         <span id="email_description" className="sr-only">Veuillez entrer une adresse email valide</span>
       </div>
-      </div>
+      
 
       <div className="contact-form__group textarea-container">
         <label htmlFor="user_message" className="contact-form__label">
           Message:
         </label>
-        <div className="animated-input-container">
-    <img 
-      className="animated-background"
-      src="/road.webp" 
-      alt="road"
-    />
         <textarea
           id="user_message"
           ref={textareaRef}
@@ -204,7 +192,7 @@ const ContactForm = () => {
           value={formData.user_message}
           onChange={handleInputChange}
           required
-          className="contact-form__input animated-input"
+          className="contact-form__input"
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
@@ -220,6 +208,7 @@ const ContactForm = () => {
           }}
         />
       </div>
+      
       <div className="contact-form__message-container">
          {stateMessage && (
           <p 
@@ -230,7 +219,7 @@ const ContactForm = () => {
             {stateMessage}
           </p>
         )}
-      </div>
+      
       </div>
 
       <div className="contact-form__submit-container">
@@ -245,6 +234,8 @@ const ContactForm = () => {
           aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
         />
       </div>
+
+      
     </form>
   );
 };
