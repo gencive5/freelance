@@ -41,9 +41,6 @@
   width: 100%;
 }
 
-
-
-
 /* ===== SUBMIT BUTTON AREA ===== */
 .contact-form__submit-container {
   width: 100%;
@@ -54,22 +51,26 @@
   margin-top: 2rem;
 }
 
-.contact-form__submit {
+/* ===== MESSAGE CONTAINER ===== */
+.contact-form__message-container {
+  position: absolute;
+  bottom: 2rem;
+  font-family: 'adineue', sans-serif;
   width: 100%;
-  padding: 20px;
-  font-family: 'sm00ch', sans-serif;
-  color: #02bebe !important;
-  opacity: 1 !important;
-  font-size: 4rem;
-  cursor: pointer;
-  border-radius: 4px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
-/* Message styles */
+/* ===== MESSAGE STYLES ===== */
 .contact-form__message {
   margin-top: 1rem;
   font-size: 1.5rem;
   text-align: center;
+  transition: all 0.3s ease;
+  z-index: 11; /* Fixed: comma to semicolon */
 }
 
 .contact-form__message--success {
@@ -103,32 +104,18 @@
     border-radius: 25px; /* Keep pill shape on mobile */
   }
   
-  .contact-form__textarea {
-    width: 90%;
-    font-size: 1.2rem;
-    padding: 15px;
-    border-radius: 0px; /* Square corners on mobile */
-    min-height: 120px;
-  }
-  
-  .contact-form__submit {
-    font-size: 1.2rem;
-  }
-  
   .contact-form__message {
     font-size: 1.2rem;
   }
 }
 
-/* Optional: Add placeholder styling */
-.contact-form__input::placeholder,
-.contact-form__textarea::placeholder {
+/* Placeholder styling */
+.contact-form__input::placeholder {
   color: rgba(2, 190, 190, 0.6);
   opacity: 1;
 }
 
-
-
+/* Screen reader only */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -140,44 +127,3 @@
   white-space: nowrap;
   border: 0;
 }
-
-/* ===== MESSAGE CONTAINER (same layout style as footer) ===== */
-.contact-form__message-container {
-  position: absolute;
-  bottom: 2rem;
-  font-family: 'adineue', sans-serif;
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-/* ===== BASE MESSAGE STYLE ===== */
-.contact-form__message {
-  font-size: 1.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  z-index: 11,
-}
-
-/* SUCCESS MESSAGE — clean green neon */
-.contact-form__message--success {
-  color: #61DE2A !important;
-}
-
-/* ERROR MESSAGE — clean red neon */
-.contact-form__message--error {
-  color: #ff4444 !important;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  .contact-form__message {
-    font-size: 1.2rem;
-    padding: 0.8rem 1.4rem;
-  }
-}
-
-
