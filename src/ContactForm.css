@@ -24,7 +24,7 @@
   width: 100%;
 }
 
-/* ===== INPUT STYLES (Pill shaped) ===== */
+/* ===== BASE INPUT STYLES ===== */
 .contact-form__input {
   flex: 1;
   padding: 15px 20px;
@@ -34,11 +34,47 @@
   font-family: inherit;
   font-size: 1.5rem;
   outline: none;
-  border-radius: 50px; /* Pill shape for inputs */
+  border-radius: 50px;
   transition: all 0.3s ease;
   color: #61DE2A !important;
   opacity: 1;
   width: 100%;
+}
+
+/* ===== NEUTRAL STATE (DEFAULT) ===== */
+.contact-form__input--neutral {
+  background: rgba(2, 190, 190, 0.1);
+  border: 2px solid rgba(2, 190, 190, 0.3);
+}
+
+/* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
+.contact-form__input--success {
+  background: rgba(97, 222, 42, 0.2) !important;
+  border: 2px solid #61DE2A !important;
+  color: #61DE2A !important;
+  box-shadow: 0 0 10px rgba(97, 222, 42, 0.5);
+}
+
+.contact-form__input--success::placeholder {
+  color: rgba(97, 222, 42, 0.7) !important;
+}
+
+/* ===== ERROR STATE (BRIGHT RED) ===== */
+.contact-form__input--error {
+  background: rgba(255, 68, 68, 0.2) !important;
+  border: 2px solid #ff4444 !important;
+  color: #ff4444 !important;
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.contact-form__input--error::placeholder {
+  color: rgba(255, 68, 68, 0.7) !important;
+}
+
+/* ===== TEXTAREA SPECIFIC ===== */
+.contact-form__input[type="textarea"] {
+  min-height: 150px;
+  resize: vertical;
 }
 
 /* ===== SUBMIT BUTTON AREA ===== */
@@ -51,35 +87,8 @@
   margin-top: 2rem;
 }
 
-/* ===== MESSAGE CONTAINER ===== */
-.contact-form__message-container {
-  position: absolute;
-  bottom: 2rem;
-  font-family: 'adineue', sans-serif;
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-/* ===== MESSAGE STYLES ===== */
-.contact-form__message {
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  z-index: 11; /* Fixed: comma to semicolon */
-}
-
-.contact-form__message--success {
-  color: #61DE2A !important;
-}
-
-.contact-form__message--error {
-  color: #ff4444 !important;
-}
+/* ===== REMOVED MESSAGE CONTAINER ===== */
+/* No more message container needed */
 
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
@@ -101,11 +110,7 @@
     width: 100%;
     font-size: 1.2rem;
     padding: 12px 15px;
-    border-radius: 25px; /* Keep pill shape on mobile */
-  }
-  
-  .contact-form__message {
-    font-size: 1.2rem;
+    border-radius: 25px;
   }
 }
 
@@ -113,17 +118,5 @@
 .contact-form__input::placeholder {
   color: rgba(2, 190, 190, 0.6);
   opacity: 1;
-}
-
-/* Screen reader only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  transition: color 0.3s ease;
 }

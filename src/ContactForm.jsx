@@ -7,39 +7,37 @@ import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [stateMessage, setStateMessage] = useState(null);
-  const [messageType, setMessageType] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isSquished, setIsSquished] = useState(false);
   const [formData, setFormData] = useState({
     user_name: '',
     user_email: '',
     user_message: ''
   });
-  const [showIncompleteMessage, setShowIncompleteMessage] = useState(false);
+  const [fieldStatus, setFieldStatus] = useState({
+    user_name: 'neutral',
+    user_email: 'neutral',
+    user_message: 'neutral'
+  });
+  const [emailError, setEmailError] = useState(false);
   
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
 
-    // Extra anti-autocorrect measures
+    // Anti-autocorrect measures
     if (nameInputRef.current) {
       nameInputRef.current.setAttribute('autocorrect', 'off');
       nameInputRef.current.setAttribute('spellcheck', 'false');
       nameInputRef.current.setAttribute('autocapitalize', 'off');
     }
-
     if (emailInputRef.current) {
       emailInputRef.current.setAttribute('autocorrect', 'off');
       emailInputRef.current.setAttribute('spellcheck', 'false');
     }
-
     if (textareaRef.current) {
       textareaRef.current.setAttribute('autocorrect', 'off');
       textareaRef.current.setAttribute('spellcheck', 'false');
@@ -49,6 +47,11 @@ const ContactForm = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -56,33 +59,66 @@ const ContactForm = () => {
       [name]: value
     }));
     
-    // Hide incomplete message when user starts typing
-    if (showIncompleteMessage) {
-      setShowIncompleteMessage(false);
+    // Reset field status when user starts typing
+    if (fieldStatus[name] !== 'neutral') {
+      setFieldStatus(prev => ({
+        ...prev,
+        [name]: 'neutral'
+      }));
+    }
+    
+    // Validate email in real-time
+    if (name === 'user_email') {
+      if (value.trim() && !validateEmail(value)) {
+        setEmailError(true);
+      } else {
+        setEmailError(false);
+      }
     }
   };
 
   const isFormValid = () => {
     return formData.user_name.trim() !== '' && 
            formData.user_email.trim() !== '' && 
+           validateEmail(formData.user_email) &&
            formData.user_message.trim() !== '';
   };
 
   const sendEmail = (e) => {
-    e.persist();
     e.preventDefault();
     
-    // Check if form is complete
-    if (!isFormValid()) {
-      setStateMessage("Veuillez remplir tous les champs avant d'envoyer le formulaire");
-      setMessageType('error');
-      setShowIncompleteMessage(true);
-      
-      setTimeout(() => {
-        setStateMessage(null);
-        setMessageType(null);
-        setShowIncompleteMessage(false);
-      }, 5000);
+    // Reset all field statuses
+    setFieldStatus({
+      user_name: 'neutral',
+      user_email: 'neutral',
+      user_message: 'neutral'
+    });
+    
+    const newFieldStatus = {};
+    let formHasErrors = false;
+    
+    // Validate each field
+    if (formData.user_name.trim() === '') {
+      newFieldStatus.user_name = 'error';
+      formHasErrors = true;
+    }
+    
+    if (formData.user_email.trim() === '' || !validateEmail(formData.user_email)) {
+      newFieldStatus.user_email = 'error';
+      formHasErrors = true;
+    }
+    
+    if (formData.user_message.trim() === '') {
+      newFieldStatus.user_message = 'error';
+      formHasErrors = true;
+    }
+    
+    // If there are errors, show them and return
+    if (formHasErrors) {
+      setFieldStatus(prev => ({
+        ...prev,
+        ...newFieldStatus
+      }));
       return;
     }
     
@@ -97,44 +133,62 @@ const ContactForm = () => {
       )
       .then(
         (result) => {
-          setStateMessage("Message envoyé avec succès!");
-          setMessageType('success');
+          // SUCCESS: Turn all inputs bright green
+          setFieldStatus({
+            user_name: 'success',
+            user_email: 'success',
+            user_message: 'success'
+          });
           setIsSubmitting(false);
           setIsSquished(true);
           
-          // Reset form data after successful submission
+          // Reset form data
           setFormData({
             user_name: '',
             user_email: '',
             user_message: ''
           });
 
+          // Reset colors after 5 seconds
           setTimeout(() => {
-            setStateMessage(null);
-            setMessageType(null);
+            setFieldStatus({
+              user_name: 'neutral',
+              user_email: 'neutral',
+              user_message: 'neutral'
+            });
             setIsSquished(false);
           }, 5000);
         },
         (error) => {
-          setStateMessage("Erreur, veuillez rééssayer");
-          setMessageType('error');
+          // ERROR: Turn all inputs red, keep text
+          setFieldStatus({
+            user_name: 'error',
+            user_email: 'error',
+            user_message: 'error'
+          });
           setIsSubmitting(false);
-
+          
+          // Reset colors after 5 seconds
           setTimeout(() => {
-            setStateMessage(null);
-            setMessageType(null);
+            setFieldStatus({
+              user_name: 'neutral',
+              user_email: 'neutral',
+              user_message: 'neutral'
+            });
           }, 5000);
         }
       );
+  };
 
-    e.target.reset();
+  const getInputClassName = (fieldName) => {
+    const status = fieldStatus[fieldName];
+    return `contact-form__input contact-form__input--${status}`;
   };
 
   return (
     <form onSubmit={sendEmail} className="contact-form" noValidate>
-
       <div className="contact-form__group">
-  <label htmlFor="user_name" className="contact-form__label">
+        <label htmlFor="user_name" className="contact-form__label">
           Nom:
         </label>
         <input
@@ -145,22 +199,18 @@ const ContactForm = () => {
           value={formData.user_name}
           onChange={handleInputChange}
           required
-          className="contact-form__input"
+          className={getInputClassName('user_name')}
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
           autoComplete="name"
-          aria-required="true"
-          aria-describedby="name_description"
         />
-        <span id="name_description" className="sr-only">Veuillez entrer votre nom complet</span>
       </div>
 
       <div className="contact-form__group">
         <label htmlFor="user_email" className="contact-form__label">
           Email:
         </label>
-        
         <input
           id="user_email"
           ref={emailInputRef}
@@ -169,17 +219,13 @@ const ContactForm = () => {
           value={formData.user_email}
           onChange={handleInputChange}
           required
-          className="contact-form__input"
+          className={getInputClassName('user_email')}
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
           autoComplete="email"
-          aria-required="true"
-          aria-describedby="email_description"
         />
-        <span id="email_description" className="sr-only">Veuillez entrer une adresse email valide</span>
       </div>
-      
 
       <div className="contact-form__group">
         <label htmlFor="user_message" className="contact-form__label">
@@ -192,14 +238,11 @@ const ContactForm = () => {
           value={formData.user_message}
           onChange={handleInputChange}
           required
-          className="contact-form__input"
+          className={getInputClassName('user_message')}
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
-          aria-required="true"
-          aria-describedby="message_description"
         />
-        <span id="message_description" className="sr-only">Veuillez entrer votre message</span>
         <MetallicTextareaScrollbar
           textareaRef={textareaRef}
           style={{
@@ -208,19 +251,6 @@ const ContactForm = () => {
           }}
         />
       </div>
-      
-      <div className="contact-form__message-container">
-         {stateMessage && (
-          <p 
-            className={`contact-form__message contact-form__message--${messageType}`}
-            role="alert"
-            aria-live="polite"
-          >
-            {stateMessage}
-          </p>
-        )}
-      
-      </div>
 
       <div className="contact-form__submit-container">
         <MetallicButton
@@ -228,14 +258,12 @@ const ContactForm = () => {
           disabled={isSubmitting}
           className={isSquished ? 'squished' : ''}
           style={{
-            width: isMobile ? '8rem' : '12rem',
-            height: isMobile ? '8rem' : '12rem',
+            width: window.innerWidth <= 768 ? '8rem' : '12rem',
+            height: window.innerWidth <= 768 ? '8rem' : '12rem',
           }}
           aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
         />
       </div>
-
-      
     </form>
   );
 };
