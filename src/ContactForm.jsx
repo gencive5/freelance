@@ -181,7 +181,7 @@ const ContactForm = () => {
       </div>
       
 
-      <div className="contact-form__group textarea-container">
+      <div className="contact-form__group">
         <label htmlFor="user_message" className="contact-form__label">
           Message:
         </label>
