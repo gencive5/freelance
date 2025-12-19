@@ -4,11 +4,12 @@ import './App.css';
 import './ContactForm.css';
 import MetallicButton from './MetallicButton';
 import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
-import MetallicSwitch from './MetallicSwitch'; // Make sure to import your MetallicSwitch component
+import MetallicSwitch from './MetallicSwitch';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSquished, setIsSquished] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [formData, setFormData] = useState({
     user_name: '',
     user_email: '',
@@ -25,10 +26,15 @@ const ContactForm = () => {
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
     window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check
 
     // Anti-autocorrect measures
     if (nameInputRef.current) {
@@ -81,54 +87,31 @@ const ContactForm = () => {
 
   const handleSwitchChange = (checked) => {
     setIsSwitchOn(checked);
-    // You could add any logic here based on the switch state
+    
+    // ON MOBILE ONLY: When user slides the switch to ON, automatically submit
+    if (isMobile && checked) {
+      handleSubmit();
+    }
   };
 
   const isFormValid = () => {
     return formData.user_name.trim() !== '' && 
            formData.user_email.trim() !== '' && 
            validateEmail(formData.user_email) &&
-           formData.user_message.trim() !== '' &&
-           isSwitchOn; // Require the switch to be ON to submit
+           formData.user_message.trim() !== '';
   };
 
-  const sendEmail = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    if (e) e.preventDefault();
     
-    // Check if switch is ON
-    if (!isSwitchOn) {
-      // Optionally show a message or highlight the switch
-      return;
-    }
-    
-    // Reset all field statuses
-    setFieldStatus({
-      user_name: 'neutral',
-      user_email: 'neutral',
-      user_message: 'neutral'
-    });
-    
-    const newFieldStatus = {};
-    let formHasErrors = false;
-    
-    // Validate each field
-    if (formData.user_name.trim() === '') {
-      newFieldStatus.user_name = 'error';
-      formHasErrors = true;
-    }
-    
-    if (formData.user_email.trim() === '' || !validateEmail(formData.user_email)) {
-      newFieldStatus.user_email = 'error';
-      formHasErrors = true;
-    }
-    
-    if (formData.user_message.trim() === '') {
-      newFieldStatus.user_message = 'error';
-      formHasErrors = true;
-    }
-    
-    // If there are errors, show them and return
-    if (formHasErrors) {
+    // Check if form is valid
+    if (!isFormValid()) {
+      // Highlight invalid fields
+      const newFieldStatus = {};
+      if (formData.user_name.trim() === '') newFieldStatus.user_name = 'error';
+      if (formData.user_email.trim() === '' || !validateEmail(formData.user_email)) newFieldStatus.user_email = 'error';
+      if (formData.user_message.trim() === '') newFieldStatus.user_message = 'error';
+      
       setFieldStatus(prev => ({
         ...prev,
         ...newFieldStatus
@@ -136,13 +119,22 @@ const ContactForm = () => {
       return;
     }
     
+    // On mobile, the switch is already ON if we're submitting
+    // On desktop, we need to set it to ON for visual feedback
+    if (!isMobile) {
+      setIsSwitchOn(true);
+    }
+    
     setIsSubmitting(true);
 
+    // Create a form element for emailjs
+    const formElement = formRef.current || document.createElement('form');
+    
     emailjs
       .sendForm(
         import.meta.env.VITE_SERVICE_ID,
         import.meta.env.VITE_TEMPLATE_ID,
-        e.target,
+        formElement,
         import.meta.env.VITE_PUBLIC_KEY
       )
       .then(
@@ -184,6 +176,7 @@ const ContactForm = () => {
             user_message: 'error'
           });
           setIsSubmitting(false);
+          setIsSwitchOn(false); // Turn switch OFF on error
           
           // Reset colors after 5 seconds
           setTimeout(() => {
@@ -203,7 +196,7 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={sendEmail} className="contact-form" noValidate>
+    <form ref={formRef} onSubmit={!isMobile ? handleSubmit : (e) => e.preventDefault()} className="contact-form" noValidate>
       <div className="contact-form__group">
         <label htmlFor="user_name" className="contact-form__label">
           Nom:
@@ -269,39 +262,38 @@ const ContactForm = () => {
         />
       </div>
 
-      {/* Add the metallic switch before the submit button */}
-      <div className="contact-form__switch-container">
-        <div className="contact-form__switch-label">
-          <span>Confirmer l'envoi:</span>
-          <MetallicSwitch
-            checked={isSwitchOn}
-            onChange={handleSwitchChange}
-            size="m"
-            className={!isSwitchOn && !isFormValid() ? 'switch-required' : ''}
-          />
-        </div>
-        {!isSwitchOn && (
-          <div className="contact-form__switch-hint">
-            ⚠️ Activez le switch pour pouvoir envoyer
+      {/* RESPONSIVE SUBMIT SECTION */}
+      <div className="contact-form__submit-responsive">
+        {/* MOBILE: Slider switch */}
+        {isMobile && (
+          <div className="contact-form__mobile-submit">
+              <MetallicSwitch
+                checked={isSwitchOn}
+                onChange={handleSwitchChange}
+                size="xlg"
+                disabled={isSubmitting || !isFormValid()}
+                className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
+              />
+            </div>
+        )}
+
+        {/* DESKTOP: Round button */}
+        {!isMobile && (
+          <div className="contact-form__desktop-submit">
+            <MetallicButton
+              type="submit"
+              disabled={isSubmitting || !isFormValid()}
+              className={isSquished ? 'squished' : ''}
+              style={{
+                width: '100%',
+                height: '4rem',
+              }}
+              aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
+            >
+              {isSubmitting ? 'Envoi...' : 'Envoyer'}
+            </MetallicButton>
           </div>
         )}
-      </div>
-
-      <div className="contact-form__submit-container">
-        <MetallicButton
-          type="submit"
-          disabled={isSubmitting || !isSwitchOn}
-          className={isSquished ? 'squished' : ''}
-          style={{
-            width: window.innerWidth <= 768 ? '8rem' : '12rem',
-            height: window.innerWidth <= 768 ? '8rem' : '12rem',
-            opacity: isSwitchOn ? 1 : 0.6,
-            cursor: isSwitchOn ? 'pointer' : 'not-allowed',
-          }}
-          aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
-        >
-          {isSubmitting ? 'Envoi...' : 'Envoyer'}
-        </MetallicButton>
       </div>
     </form>
   );
