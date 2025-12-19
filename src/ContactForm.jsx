@@ -108,14 +108,37 @@ const ContactForm = () => {
     if (!isFormValid()) {
       // Highlight invalid fields
       const newFieldStatus = {};
-      if (formData.user_name.trim() === '') newFieldStatus.user_name = 'error';
-      if (formData.user_email.trim() === '' || !validateEmail(formData.user_email)) newFieldStatus.user_email = 'error';
-      if (formData.user_message.trim() === '') newFieldStatus.user_message = 'error';
+      let hasErrors = false;
       
-      setFieldStatus(prev => ({
-        ...prev,
-        ...newFieldStatus
-      }));
+      if (formData.user_name.trim() === '') {
+        newFieldStatus.user_name = 'error';
+        hasErrors = true;
+      }
+      
+      if (formData.user_email.trim() === '' || !validateEmail(formData.user_email)) {
+        newFieldStatus.user_email = 'error';
+        hasErrors = true;
+      }
+      
+      if (formData.user_message.trim() === '') {
+        newFieldStatus.user_message = 'error';
+        hasErrors = true;
+      }
+      
+      if (hasErrors) {
+        setFieldStatus(prev => ({
+          ...prev,
+          ...newFieldStatus
+        }));
+        
+        // On desktop, show squish briefly even for errors
+        if (!isMobile) {
+          setIsSquished(true);
+          setTimeout(() => {
+            setIsSquished(false);
+          }, 300);
+        }
+      }
       return;
     }
     
@@ -177,6 +200,7 @@ const ContactForm = () => {
           });
           setIsSubmitting(false);
           setIsSwitchOn(false); // Turn switch OFF on error
+          setIsSquished(false); // Reset squish on error
           
           // Reset colors after 3 seconds
           setTimeout(() => {
@@ -283,6 +307,12 @@ const ContactForm = () => {
                 Envoi en cours...
               </div>
             )}
+            {/* Show error message on mobile if form is invalid when trying to submit */}
+            {!isFormValid() && isSwitchOn && (
+              <div className="mobile-error-message">
+                ⚠️ Veuillez remplir tous les champs correctement
+              </div>
+            )}
           </div>
         )}
 
@@ -291,23 +321,30 @@ const ContactForm = () => {
           <div className="contact-form__desktop-submit">
             <MetallicButton
               type="submit"
-              disabled={isSubmitting || !isFormValid()}
+              disabled={isSubmitting}
               className={isSquished ? 'squished' : ''}
               style={{
                 width: '100%',
                 height: '4rem',
                 position: 'relative',
+                cursor: 'pointer',
               }}
               aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
               onClick={() => {
                 // Trigger squish immediately on click
-                if (isFormValid() && !isSubmitting) {
-                  setIsSquished(true);
-                }
+                setIsSquished(true);
+                setTimeout(() => {
+                  setIsSquished(false);
+                }, 180);
               }}
             >
               {/* Empty - no text inside the button */}
             </MetallicButton>
+            {isSubmitting && (
+              <div className="submitting-indicator">
+                Envoi en cours...
+              </div>
+            )}
           </div>
         )}
       </div>
