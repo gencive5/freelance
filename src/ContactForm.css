@@ -36,39 +36,29 @@
   outline: none;
   border-radius: 50px;
   transition: all 0.3s ease;
-  color: #61DE2A !important;
+  color: #02bebe !important;
   opacity: 1;
   width: 100%;
 }
 
-/* ===== NEUTRAL STATE (DEFAULT) ===== */
-.contact-form__input--neutral {
-  background: rgba(2, 190, 190, 0.1);
-  border: 2px solid rgba(2, 190, 190, 0.3);
-}
-
 /* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
 .contact-form__input--success {
-  background: rgba(97, 222, 42, 0.2) !important;
-  border: 2px solid #61DE2A !important;
+  background:rgb(183, 253, 33) !important;
   color: #61DE2A !important;
-  box-shadow: 0 0 10px rgba(97, 222, 42, 0.5);
 }
 
 .contact-form__input--success::placeholder {
-  color: rgba(97, 222, 42, 0.7) !important;
+  color: rgb(183, 253, 33) !important;
 }
 
 /* ===== ERROR STATE (BRIGHT RED) ===== */
 .contact-form__input--error {
-  background: rgba(255, 68, 68, 0.2) !important;
-  border: 2px solid #ff4444 !important;
-  color: #ff4444 !important;
-  box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  background: rgb(248, 96, 66) !important;
+  color: #02bebe !important;
 }
 
 .contact-form__input--error::placeholder {
-  color: rgba(255, 68, 68, 0.7) !important;
+  color: rgb(248, 96, 66) !important;
 }
 
 /* ===== TEXTAREA SPECIFIC ===== */
@@ -87,8 +77,6 @@
   margin-top: 2rem;
 }
 
-/* ===== REMOVED MESSAGE CONTAINER ===== */
-/* No more message container needed */
 
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
