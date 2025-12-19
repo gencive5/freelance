@@ -1,0 +1,81 @@
+
+  .metalli-sm {
+    --convexity: 3;
+    font-size: 0.8em;
+  }
+
+  .metalli-m {
+    --convexity: 3;
+    font-size: 1em;
+  }
+
+  .metalli-lg {
+    --convexity: 3;
+    font-size: 1.25em;
+  }
+
+  .metalli-xlg {
+    --convexity: 3;
+    font-size: 1.5625em;
+  }
+
+
+  .metalli-switch {
+    border: 0;
+    height: 0;
+    position: absolute;
+    visibility: hidden;
+    width: 0;
+  }
+
+  .metalli-switch + label {
+    border-radius: 1.25em;
+    box-shadow: rgba(255, 255, 255, 0.5) 1px 1px 0px;
+    cursor: pointer;
+    display: inline-block;
+    height: 2.5em;
+    margin: 0.5em;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 5em;
+  }
+
+  .metalli-switch + label .on, .metalli-switch + label .off {
+    border-radius: 1.09375em;
+    height: 2.1875em;
+    left: 0.15625em;
+    position: absolute;
+    top: 0.15625em;
+    transition: left 0.25s !important;
+    width: 2.1875em;
+  }
+
+  .metalli-switch + label .bg {
+    --convexity: -3;
+    border-radius: 1.25em;
+    display: inline-block;
+    height: 2.5em;
+    width: 5em;
+  }
+
+  .metalli-switch + label .on {
+    left: calc(75% - 2.34375em);
+    top: 2.5em;
+  }
+
+  .metalli-switch + label:active .off, .metalli-switch:checked + label:active .on {
+    left: calc(75% - 2.34375em);
+    top: 0.15625em;
+  }
+
+  .metalli-switch:checked + label .on {
+    left: calc(100% - 2.34375em);
+    top: 0.15625em;
+  }
+
+  .metalli-switch:checked + label .off {
+    left: calc(75% - 2.34375em);
+    top: 2.5em;
+  }
