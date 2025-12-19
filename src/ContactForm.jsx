@@ -120,9 +120,9 @@ const ContactForm = () => {
     }
     
     // On mobile, the switch is already ON if we're submitting
-    // On desktop, we need to set it to ON for visual feedback
+    // On desktop, trigger squish animation
     if (!isMobile) {
-      setIsSwitchOn(true);
+      setIsSquished(true);
     }
     
     setIsSubmitting(true);
@@ -158,7 +158,7 @@ const ContactForm = () => {
           // Turn switch OFF after successful send
           setIsSwitchOn(false);
 
-          // Reset colors after 5 seconds
+          // Reset colors after 3 seconds
           setTimeout(() => {
             setFieldStatus({
               user_name: 'neutral',
@@ -178,7 +178,7 @@ const ContactForm = () => {
           setIsSubmitting(false);
           setIsSwitchOn(false); // Turn switch OFF on error
           
-          // Reset colors after 5 seconds
+          // Reset colors after 3 seconds
           setTimeout(() => {
             setFieldStatus({
               user_name: 'neutral',
@@ -264,20 +264,29 @@ const ContactForm = () => {
 
       {/* RESPONSIVE SUBMIT SECTION */}
       <div className="contact-form__submit-responsive">
+        <div className="submit-header">
+          <span className="submit-label">Envoyer:</span>
+        </div>
+        
         {/* MOBILE: Slider switch */}
         {isMobile && (
           <div className="contact-form__mobile-submit">
-              <MetallicSwitch
-                checked={isSwitchOn}
-                onChange={handleSwitchChange}
-                size="xlg"
-                disabled={isSubmitting || !isFormValid()}
-                className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
-              />
-            </div>
+            <MetallicSwitch
+              checked={isSwitchOn}
+              onChange={handleSwitchChange}
+              size="xlg"
+              disabled={isSubmitting || !isFormValid()}
+              className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
+            />
+            {isSubmitting && (
+              <div className="submitting-indicator">
+                Envoi en cours...
+              </div>
+            )}
+          </div>
         )}
 
-        {/* DESKTOP: Round button */}
+        {/* DESKTOP: Round button without text */}
         {!isMobile && (
           <div className="contact-form__desktop-submit">
             <MetallicButton
@@ -287,10 +296,17 @@ const ContactForm = () => {
               style={{
                 width: '100%',
                 height: '4rem',
+                position: 'relative',
               }}
-              aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
+              aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
+              onClick={() => {
+                // Trigger squish immediately on click
+                if (isFormValid() && !isSubmitting) {
+                  setIsSquished(true);
+                }
+              }}
             >
-              {isSubmitting ? 'Envoi...' : 'Envoyer'}
+              {/* Empty - no text inside the button */}
             </MetallicButton>
           </div>
         )}
