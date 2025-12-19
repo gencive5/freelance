@@ -166,7 +166,7 @@ const ContactForm = () => {
               user_message: 'neutral'
             });
             setIsSquished(false);
-          }, 5000);
+          }, 3000);
         },
         (error) => {
           // ERROR: Turn all inputs red, keep text
