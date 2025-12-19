@@ -185,7 +185,7 @@ const ContactForm = () => {
               user_email: 'neutral',
               user_message: 'neutral'
             });
-          }, 5000);
+          }, 3000);
         }
       );
   };
