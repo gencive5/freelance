@@ -4,6 +4,7 @@ import './App.css';
 import './ContactForm.css';
 import MetallicButton from './MetallicButton';
 import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
+import MetallicSwitch from './MetallicSwitch'; // Make sure to import your MetallicSwitch component
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,6 +20,7 @@ const ContactForm = () => {
     user_message: 'neutral'
   });
   const [emailError, setEmailError] = useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
   
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
@@ -77,15 +79,27 @@ const ContactForm = () => {
     }
   };
 
+  const handleSwitchChange = (checked) => {
+    setIsSwitchOn(checked);
+    // You could add any logic here based on the switch state
+  };
+
   const isFormValid = () => {
     return formData.user_name.trim() !== '' && 
            formData.user_email.trim() !== '' && 
            validateEmail(formData.user_email) &&
-           formData.user_message.trim() !== '';
+           formData.user_message.trim() !== '' &&
+           isSwitchOn; // Require the switch to be ON to submit
   };
 
   const sendEmail = (e) => {
     e.preventDefault();
+    
+    // Check if switch is ON
+    if (!isSwitchOn) {
+      // Optionally show a message or highlight the switch
+      return;
+    }
     
     // Reset all field statuses
     setFieldStatus({
@@ -148,6 +162,9 @@ const ContactForm = () => {
             user_email: '',
             user_message: ''
           });
+          
+          // Turn switch OFF after successful send
+          setIsSwitchOn(false);
 
           // Reset colors after 5 seconds
           setTimeout(() => {
@@ -252,17 +269,39 @@ const ContactForm = () => {
         />
       </div>
 
+      {/* Add the metallic switch before the submit button */}
+      <div className="contact-form__switch-container">
+        <div className="contact-form__switch-label">
+          <span>Confirmer l'envoi:</span>
+          <MetallicSwitch
+            checked={isSwitchOn}
+            onChange={handleSwitchChange}
+            size="m"
+            className={!isSwitchOn && !isFormValid() ? 'switch-required' : ''}
+          />
+        </div>
+        {!isSwitchOn && (
+          <div className="contact-form__switch-hint">
+            ⚠️ Activez le switch pour pouvoir envoyer
+          </div>
+        )}
+      </div>
+
       <div className="contact-form__submit-container">
         <MetallicButton
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !isSwitchOn}
           className={isSquished ? 'squished' : ''}
           style={{
             width: window.innerWidth <= 768 ? '8rem' : '12rem',
             height: window.innerWidth <= 768 ? '8rem' : '12rem',
+            opacity: isSwitchOn ? 1 : 0.6,
+            cursor: isSwitchOn ? 'pointer' : 'not-allowed',
           }}
           aria-label={isSubmitting ? "Envoi en cours..." : "Soumettre le formulaire de contact"}
-        />
+        >
+          {isSubmitting ? 'Envoi...' : 'Envoyer'}
+        </MetallicButton>
       </div>
     </form>
   );

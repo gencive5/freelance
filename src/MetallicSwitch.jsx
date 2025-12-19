@@ -1,9 +1,18 @@
-
-import { useEffect } from 'react';
+import { useEffect, useState, useId } from 'react';
 import 'metallicss';
-import './MetallicSwitch.css'; 
+import './MetallicSwitch.css';
 
-const MetallicButton = ({ children, onClick, className = '', style = {}, ...props }) => {
+const MetallicSwitch = ({ 
+  checked = false,
+  onChange,
+  size = 'xlg', // 'sm', 'm', 'lg', 'xlg'
+  disabled = false,
+  className = '',
+  ...props 
+}) => {
+  const [isChecked, setIsChecked] = useState(checked);
+  const id = useId();
+
   useEffect(() => {
     // Dynamically load the MetalliCSS script
     const script = document.createElement('script');
@@ -16,46 +25,64 @@ const MetallicButton = ({ children, onClick, className = '', style = {}, ...prop
     };
   }, []);
 
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
+
+  const handleChange = (e) => {
+    const newValue = e.target.checked;
+    setIsChecked(newValue);
+    if (onChange) {
+      onChange(newValue);
+    }
+  };
+
+  const sizeClass = `metalli-${size}`;
+  const bgColor = 'rgb(128, 128, 128)';
+
   return (
-
-<span>
-  <input type="checkbox" id="switch_t2vkl" class="metalli-switch" />
-  <label class="metalli-xlg" for="switch_t2vkl">
-    <span
-      class="bg metallicss"
-      style="background-color: rgb(128, 128, 128); --metal: gold;"
-    ></span>
-    <span
-      class="off metallicss"
-      style="background-color: rgb(128, 128, 128); --metal: gold;"
-    ></span>
-    <span
-      class="on metallicss"
-      style="background-color: rgb(128, 128, 128); --metal: gold;"
-    ></span>
-  </label>
-</span>
-<span>
-  <input type="checkbox" id="switch_wy0cq" class="metalli-switch" />
-  <label class="metalli-xlg" for="switch_wy0cq">
-    <span
-      class="bg metallicss"
-      style="background-color: rgb(128, 128, 128); --metal: silver;"
-    ></span>
-    <span
-      class="off metallicss"
-      style="background-color: rgb(128, 128, 128); --metal: silver;"
-    ></span>
-    <span
-      class="on metallicss"
-      style="background-color: rgb(128, 128, 128); --metal: silver;"
-    ></span>
-  </label>
-</span>
-
-
- );
+    <span className={`metallic-switch-container ${className}`}>
+      <input
+        type="checkbox"
+        id={`metallic-switch-${id}`}
+        className="metalli-switch"
+        checked={isChecked}
+        onChange={handleChange}
+        disabled={disabled}
+        aria-checked={isChecked}
+        {...props}
+      />
+      <label 
+        htmlFor={`metallic-switch-${id}`}
+        className={`${sizeClass} ${disabled ? 'disabled' : ''}`}
+        style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
+      >
+        <span
+          className="bg metallicss"
+          style={{
+            backgroundColor: bgColor,
+            '--metal': 'silver',
+          }}
+        ></span>
+        <span
+          className="off metallicss"
+          style={{
+            backgroundColor: bgColor,
+            '--metal': 'silver',
+            opacity: disabled ? 0.6 : 1,
+          }}
+        ></span>
+        <span
+          className="on metallicss"
+          style={{
+            backgroundColor: bgColor,
+            '--metal': 'silver',
+            opacity: disabled ? 0.6 : 1,
+          }}
+        ></span>
+      </label>
+    </span>
+  );
 };
-
 
 export default MetallicSwitch;

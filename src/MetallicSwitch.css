@@ -1,81 +1,126 @@
+.metallic-switch-container {
+  display: inline-block;
+  vertical-align: middle;
+}
 
-  .metalli-sm {
-    --convexity: 3;
-    font-size: 0.8em;
+/* Size variants */
+.metalli-sm {
+  --convexity: 3;
+  font-size: 0.8em;
+}
+
+.metalli-m {
+  --convexity: 3;
+  font-size: 1em;
+}
+
+.metalli-lg {
+  --convexity: 3;
+  font-size: 1.25em;
+}
+
+.metalli-xlg {
+  --convexity: 3;
+  font-size: 1.5625em;
+}
+
+/* Base switch styles */
+.metalli-switch {
+  border: 0;
+  height: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}
+
+.metalli-switch + label {
+  border-radius: 1.25em;
+  box-shadow: rgba(255, 255, 255, 0.5) 1px 1px 0px;
+  display: inline-block;
+  height: 2.5em;
+  margin: 0.5em;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  vertical-align: middle;
+  width: 5em;
+  transition: all 0.25s ease;
+}
+
+.metalli-switch + label.disabled {
+  opacity: 0.6;
+  filter: grayscale(0.3);
+}
+
+.metalli-switch + label .on,
+.metalli-switch + label .off {
+  border-radius: 1.09375em;
+  height: 2.1875em;
+  left: 0.15625em;
+  position: absolute;
+  top: 0.15625em;
+  transition: left 0.25s !important;
+  width: 2.1875em;
+}
+
+.metalli-switch + label .bg {
+  --convexity: -3;
+  border-radius: 1.25em;
+  display: inline-block;
+  height: 2.5em;
+  width: 5em;
+}
+
+.metalli-switch + label .on {
+  left: calc(75% - 2.34375em);
+  top: 2.5em;
+}
+
+.metalli-switch + label:active .off,
+.metalli-switch:checked + label:active .on {
+  left: calc(75% - 2.34375em);
+  top: 0.15625em;
+}
+
+.metalli-switch:checked + label .on {
+  left: calc(100% - 2.34375em);
+  top: 0.15625em;
+}
+
+.metalli-switch:checked + label .off {
+  left: calc(75% - 2.34375em);
+  top: 2.5em;
+}
+
+/* Enhanced silver effect */
+.metalli-switch + label .bg,
+.metalli-switch + label .off,
+.metalli-switch + label .on {
+  --metal: linear-gradient(145deg, #e0e0e0, #c0c0c0, #a0a0a0);
+}
+
+/* Hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .metalli-switch + label:not(.disabled):hover {
+    transform: scale(1.05);
+    transition: transform 0.15s ease;
+    filter: brightness(1.1);
   }
-
-  .metalli-m {
-    --convexity: 3;
-    font-size: 1em;
+  
+  .metalli-switch + label:not(.disabled):active {
+    transform: scale(0.98);
   }
-
-  .metalli-lg {
-    --convexity: 3;
-    font-size: 1.25em;
+  
+  /* Active/checked state enhancement */
+  .metalli-switch:checked + label:not(.disabled) .bg,
+  .metalli-switch:checked + label:not(.disabled) .on {
+    --metal: linear-gradient(145deg, #f0f0f0, #d0d0d0, #b0b0b0);
+    filter: brightness(1.05);
   }
+}
 
-  .metalli-xlg {
-    --convexity: 3;
-    font-size: 1.5625em;
-  }
-
-
-  .metalli-switch {
-    border: 0;
-    height: 0;
-    position: absolute;
-    visibility: hidden;
-    width: 0;
-  }
-
-  .metalli-switch + label {
-    border-radius: 1.25em;
-    box-shadow: rgba(255, 255, 255, 0.5) 1px 1px 0px;
-    cursor: pointer;
-    display: inline-block;
-    height: 2.5em;
-    margin: 0.5em;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
-    vertical-align: middle;
-    width: 5em;
-  }
-
-  .metalli-switch + label .on, .metalli-switch + label .off {
-    border-radius: 1.09375em;
-    height: 2.1875em;
-    left: 0.15625em;
-    position: absolute;
-    top: 0.15625em;
-    transition: left 0.25s !important;
-    width: 2.1875em;
-  }
-
-  .metalli-switch + label .bg {
-    --convexity: -3;
-    border-radius: 1.25em;
-    display: inline-block;
-    height: 2.5em;
-    width: 5em;
-  }
-
-  .metalli-switch + label .on {
-    left: calc(75% - 2.34375em);
-    top: 2.5em;
-  }
-
-  .metalli-switch + label:active .off, .metalli-switch:checked + label:active .on {
-    left: calc(75% - 2.34375em);
-    top: 0.15625em;
-  }
-
-  .metalli-switch:checked + label .on {
-    left: calc(100% - 2.34375em);
-    top: 0.15625em;
-  }
-
-  .metalli-switch:checked + label .off {
-    left: calc(75% - 2.34375em);
-    top: 2.5em;
-  }
+/* Focus state for accessibility */
+.metalli-switch:focus + label {
+  outline: 2px solid rgba(192, 192, 192, 0.8);
+  outline-offset: 2px;
+}
