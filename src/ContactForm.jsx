@@ -5,6 +5,7 @@ import './ContactForm.css';
 import MetallicButton from './MetallicButton';
 import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
 import MetallicSwitch from './MetallicSwitch';
+import Contact from './Contact';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -390,6 +391,7 @@ const handleSwitchChange = (checked) => {
           </div>
         )}
       </div>
+      <Contact />
     </form>
   );
 };
