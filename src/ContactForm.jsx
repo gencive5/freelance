@@ -86,30 +86,34 @@ const ContactForm = () => {
   };
 
 const handleSwitchChange = (checked) => {
-  // Prevent switching ON if form is invalid
+  // If form is invalid and user is trying to turn ON
   if (!isFormValid() && checked) {
-    // Show error feedback without allowing the switch to turn ON
+    // Create a spring-back effect
+    setIsSwitchOn(true); // Briefly show it moving
+    
+    // Show error feedback
     setFieldStatus(prev => {
       const newStatus = { ...prev };
-      let hasErrors = false;
       
       if (!formData.user_name.trim()) {
         newStatus.user_name = 'error';
-        hasErrors = true;
       }
       if (!formData.user_email.trim() || !validateEmail(formData.user_email)) {
         newStatus.user_email = 'error';
-        hasErrors = true;
       }
       if (!formData.user_message.trim()) {
         newStatus.user_message = 'error';
-        hasErrors = true;
       }
       
       return newStatus;
     });
     
-    // Briefly show error state
+    // Spring back after a short delay (for visual feedback)
+    setTimeout(() => {
+      setIsSwitchOn(false);
+    }, 200);
+    
+    // Reset error colors after 2 seconds
     setTimeout(() => {
       setFieldStatus({
         user_name: 'neutral',
@@ -118,9 +122,10 @@ const handleSwitchChange = (checked) => {
       });
     }, 2000);
     
-    return; // Don't change switch state
+    return; // Don't proceed to submission
   }
   
+  // Normal behavior when form is valid
   setIsSwitchOn(checked);
   
   // ON MOBILE ONLY: When user slides the switch to ON, automatically submit
