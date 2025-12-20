@@ -4,7 +4,6 @@ import ContactForm from './ContactForm';
 import DistortedText from './DistortedText';
 import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
-import Contact from './Contact';
 import MetallicCursor from './MetallicCursor';
 
 
@@ -118,7 +117,7 @@ const App = () => {
           <div className="desktop-second-row">
                     
             <ContactForm />
-            <Contact />
+            
           </div>
         )}
       </div>
