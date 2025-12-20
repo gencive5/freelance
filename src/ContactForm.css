@@ -98,6 +98,7 @@
   align-items: center;
   gap: 1rem;
   width: 100%;
+  
 }
 
 /* Desktop submit styles */
@@ -114,93 +115,8 @@
   width: 100% !important;
 }
 
-.mobile-slider.metalli-switch + label {
-  display: block !important;
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
-  height: 3.5em;
-  border-radius: 1.75em;
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.25),
-    inset 0 2px 6px rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-  position: relative;
-  margin: 0 !important;
-}
 
-.mobile-slider.metalli-switch + label .bg {
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
-  height: 3.5em;
-  border-radius: 1.75em;
-  --convexity: -2;
-}
 
-.mobile-slider.metalli-switch + label .on,
-.mobile-slider.metalli-switch + label .off {
-  height: 3em;
-  width: 3em;
-  border-radius: 1.5em;
-  top: 0.25em;
-  left: 0.25em;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-}
 
-.mobile-slider.metalli-switch:checked + label .on {
-  left: calc(100% - 3.25em);
-}
 
-/* Disabled state */
-.mobile-slider.disabled.metalli-switch + label {
-  opacity: 0.9;
-  cursor: not-allowed;
-}
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .mobile-slider.metalli-switch + label {
-    height: 3.2em;
-    border-radius: 1.6em;
-  }
-  
-  .mobile-slider.metalli-switch + label .bg {
-    height: 3.2em;
-    border-radius: 1.6em;
-  }
-  
-  .mobile-slider.metalli-switch + label .on,
-  .mobile-slider.metalli-switch + label .off {
-    height: 2.8em;
-    width: 2.8em;
-    border-radius: 1.4em;
-  }
-  
-  .mobile-slider.metalli-switch:checked + label .on {
-    left: calc(100% - 3.05em);
-  }
-}
-
-@media (max-width: 480px) {
-  .mobile-slider.metalli-switch + label {
-    height: 2.8em;
-    border-radius: 1.4em;
-  }
-  
-  .mobile-slider.metalli-switch + label .bg {
-    height: 2.8em;
-    border-radius: 1.4em;
-  }
-  
-  .mobile-slider.metalli-switch + label .on,
-  .mobile-slider.metalli-switch + label .off {
-    height: 2.4em;
-    width: 2.4em;
-    border-radius: 1.2em;
-  }
-  
-  .mobile-slider.metalli-switch:checked + label .on {
-    left: calc(100% - 2.65em);
-  }
-}

@@ -331,7 +331,7 @@ const handleSwitchChange = (checked) => {
         <div className="submit-header">
           <span className="submit-label">Envoyer:</span>
         </div>
-        
+         <div style={{ width: '100%' }}>
         {/* MOBILE: Slider switch */}
         {isMobile && (
           <div className="contact-form__mobile-submit">
@@ -343,6 +343,7 @@ const handleSwitchChange = (checked) => {
             />
           </div>
         )}
+        </div>
 
         {/* DESKTOP: Round button without text */}
         {!isMobile && (
