@@ -263,23 +263,6 @@ const handleSwitchChange = (checked) => {
   return (
     <form ref={formRef} onSubmit={!isMobile ? handleSubmit : (e) => e.preventDefault()} className="contact-form" noValidate>
       <div className="contact-form__group">
-         {isMobile && (
-         <span className="text-fit">
-                    <span>
-                    <span>Remplissez ce formulaire pour demander votre site</span></span>
-                    <span aria-hidden="true">Remplissez ce formulaire pour demander votre site</span>
-                  </span> 
-  
-                  
-        )}
-        {!isMobile && (
-          
-           <span className="text-fit">
-                    <span>
-                    <span>Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span></span>
-                    <span aria-hidden="true">Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
-                  </span>
-        )}
         <label htmlFor="user_name" className="contact-form__label">
           Nom:
         </label>
