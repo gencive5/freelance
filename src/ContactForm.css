@@ -43,12 +43,8 @@
 
 /* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
 .contact-form__input--success {
-  background:rgb(183, 253, 33) !important;
+  background: rgb(183, 253, 33) !important;
   color: #61DE2A !important;
-}
-
-.contact-form__input--success::placeholder {
-  color: rgb(183, 253, 33) !important;
 }
 
 /* ===== ERROR STATE (BRIGHT RED) ===== */
@@ -57,26 +53,12 @@
   color: #02bebe !important;
 }
 
-.contact-form__input--error::placeholder {
-  color: rgb(248, 96, 66) !important;
+/* Placeholder styling */
+.contact-form__input::placeholder {
+  color: rgba(2, 190, 190, 0.6);
+  opacity: 1;
+  transition: color 0.3s ease;
 }
-
-/* ===== TEXTAREA SPECIFIC ===== */
-.contact-form__input[type="textarea"] {
-  min-height: 150px;
-  resize: vertical;
-}
-
-/* ===== SUBMIT BUTTON AREA ===== */
-.contact-form__submit-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 2rem;
-}
-
 
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
@@ -102,44 +84,11 @@
   }
 }
 
-/* Placeholder styling */
-.contact-form__input::placeholder {
-  color: rgba(2, 190, 190, 0.6);
-  opacity: 1;
-  transition: color 0.3s ease;
-}
-
-
-
-@keyframes gentle-shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
-}
-
-/* Disabled button when switch is off */
-.contact-form__submit-container button:disabled {
-  pointer-events: none;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .contact-form__switch-container {
-    margin: 1.5rem 0;
-    padding: 1rem;
-  }
-  
-  .contact-form__switch-label {
-    flex-direction: column;
-    gap: 1rem;
-    font-size: 1rem;
-  }
-}
-
 /* Responsive submit section */
 .contact-form__submit-responsive {
   margin-top: 2rem;
   text-align: left;
+  width: 100%;
 }
 
 /* Mobile slider styles */
@@ -151,58 +100,6 @@
   width: 100%;
 }
 
-
-
-/* Make the switch look more like a slider on mobile */
-.mobile-slider.metalli-switch + label {
-  width: 100% !important;
-  height: 3em; /* Taller for easier touch */
-  border-radius: 1.5em;
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.2),
-    inset 0 2px 4px rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.mobile-slider.metalli-switch + label .bg {
-  width: 100% !important;
-  height: 3em;
-  border-radius: 1.5em;
-  --convexity: -2;
-}
-
-.mobile-slider.metalli-switch + label .on,
-.mobile-slider.metalli-switch + label .off {
-  height: 2.5em;
-  width: 2.5em;
-  border-radius: 1.25em;
-  top: 0.25em;
-  left: 0.25em;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.mobile-slider.metalli-switch:checked + label .on {
-  left: calc(100% - 2.75em);
-}
-
-
-.mobile-slider.disabled.metalli-switch + label .on,
-.mobile-slider.disabled.metalli-switch + label .off {
-  animation: none;
-}
-
-/* Hover effect for enabled slider */
-@media (hover: hover) and (pointer: fine) {
-  .mobile-slider:not(.disabled).metalli-switch + label:hover {
-    transform: scale(1.05);
-    box-shadow: 
-      0 6px 12px rgba(0, 0, 0, 0.25),
-      inset 0 2px 4px rgba(255, 255, 255, 0.4);
-  }
-}
-
-
 /* Desktop submit styles */
 .contact-form__desktop-submit {
   display: flex;
@@ -211,61 +108,99 @@
   gap: 1rem;
 }
 
-
-/* Animation for slider movement */
-@keyframes pulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+/* Make the switch look more like a slider on mobile - FULL WIDTH */
+.mobile-slider.metalli-switch {
+  display: block;
+  width: 100% !important;
 }
 
-/* Success animation */
-@keyframes success-pulse {
-  0%, 100% { 
-    transform: scale(1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  50% { 
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(72, 187, 120, 0.3);
-  }
+.mobile-slider.metalli-switch + label {
+  display: block !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: 3.5em;
+  border-radius: 1.75em;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    inset 0 2px 6px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  margin: 0 !important;
 }
 
-/* Error animation */
-@keyframes error-shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-  20%, 40%, 60%, 80% { transform: translateX(2px); }
+.mobile-slider.metalli-switch + label .bg {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: 3.5em;
+  border-radius: 1.75em;
+  --convexity: -2;
+}
+
+.mobile-slider.metalli-switch + label .on,
+.mobile-slider.metalli-switch + label .off {
+  height: 3em;
+  width: 3em;
+  border-radius: 1.5em;
+  top: 0.25em;
+  left: 0.25em;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-slider.metalli-switch:checked + label .on {
+  left: calc(100% - 3.25em);
+}
+
+/* Disabled state */
+.mobile-slider.disabled.metalli-switch + label {
+  opacity: 0.9;
+  cursor: not-allowed;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .slider-label {
-    font-size: 0.9rem;
-  }
-  
   .mobile-slider.metalli-switch + label {
-    width: 7em;
-    height: 2.8em;
+    height: 3.2em;
+    border-radius: 1.6em;
   }
   
   .mobile-slider.metalli-switch + label .bg {
-    width: 7em;
+    height: 3.2em;
+    border-radius: 1.6em;
+  }
+  
+  .mobile-slider.metalli-switch + label .on,
+  .mobile-slider.metalli-switch + label .off {
     height: 2.8em;
+    width: 2.8em;
+    border-radius: 1.4em;
+  }
+  
+  .mobile-slider.metalli-switch:checked + label .on {
+    left: calc(100% - 3.05em);
   }
 }
 
 @media (max-width: 480px) {
-  .slider-label {
-    font-size: 0.85rem;
-  }
-  
   .mobile-slider.metalli-switch + label {
-    width: 6em;
-    height: 2.5em;
+    height: 2.8em;
+    border-radius: 1.4em;
   }
   
   .mobile-slider.metalli-switch + label .bg {
-    width: 6em;
-    height: 2.5em;
+    height: 2.8em;
+    border-radius: 1.4em;
+  }
+  
+  .mobile-slider.metalli-switch + label .on,
+  .mobile-slider.metalli-switch + label .off {
+    height: 2.4em;
+    width: 2.4em;
+    border-radius: 1.2em;
+  }
+  
+  .mobile-slider.metalli-switch:checked + label .on {
+    left: calc(100% - 2.65em);
   }
 }
