@@ -1,3 +1,4 @@
+/* In ContactForm.css - Clean version */
 .contact-form {
   width: 100%;
   padding: 1rem;
@@ -5,118 +6,71 @@
   font-family: 'adineue', sans-serif;
   font-size: 1.5rem;
   color: #02bebe !important;
-  opacity: 1;
 }
 
-/* ===== FORM GROUP LAYOUT ===== */
 .contact-form__group {
   width: 100%;
-  display: flex;
   margin-bottom: 1.5rem;
-  flex-direction: column;
-  align-items: flex-start;
 }
 
 .contact-form__label {
   font-weight: 500;
-  margin-right: 15px;
-  white-space: nowrap;
-  width: 100%;
+  margin-bottom: 8px;
+  display: block;
 }
 
-/* ===== BASE INPUT STYLES ===== */
 .contact-form__input {
-  flex: 1;
+  width: 100%;
   padding: 15px 20px;
-  box-sizing: border-box;
-  border: 0px solid #02bebe;
   background: rgba(2, 190, 190, 0.1);
+  border: none;
+  border-radius: 50px;
   font-family: inherit;
   font-size: 1.5rem;
+  color: #02bebe;
   outline: none;
-  border-radius: 50px;
   transition: all 0.3s ease;
-  color: #02bebe !important;
-  opacity: 1;
-  width: 100%;
 }
 
-/* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
 .contact-form__input--success {
   background: rgb(183, 253, 33) !important;
   color: #61DE2A !important;
 }
 
-/* ===== ERROR STATE (BRIGHT RED) ===== */
 .contact-form__input--error {
   background: rgb(248, 96, 66) !important;
   color: #02bebe !important;
 }
 
-/* Placeholder styling */
-.contact-form__input::placeholder {
-  color: rgba(2, 190, 190, 0.6);
-  opacity: 1;
-  transition: color 0.3s ease;
+.contact-form__submit-responsive {
+  margin-top: 2rem;
+  width: 100%;
 }
 
-/* ===== MOBILE RESPONSIVENESS ===== */
+.contact-form__mobile-submit {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Make sure the MetallicSwitch container is full width */
+.mobile-slider.metalli-switch + label {
+  width: 100% !important;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .contact-form {
     font-size: 1.2rem;
   }
   
-  .contact-form__group {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .contact-form__label {
-    margin-right: 0;
-    margin-bottom: 8px;
-  }
-  
   .contact-form__input {
-    width: 100%;
     font-size: 1.2rem;
     padding: 12px 15px;
     border-radius: 25px;
   }
-}
-
-/* Responsive submit section */
-.contact-form__submit-responsive {
-  margin-top: 2rem;
-  text-align: left;
-  width: 100%;
-}
-
-/* Mobile slider styles */
-.contact-form__mobile-submit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  width: 100%;
   
+  /* Adjust switch size for mobile */
+  .metalli-xlg {
+    font-size: 1.3em; /* Slightly smaller for mobile */
+  }
 }
-
-/* Desktop submit styles */
-.contact-form__desktop-submit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* Make the switch look more like a slider on mobile - FULL WIDTH */
-.mobile-slider.metalli-switch {
-  display: block;
-  width: 100% !important;
-}
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 .metallic-switch-container {
   display: inline-block;
   vertical-align: middle;
+  width: 100%; /* Add this */
 }
 
 /* Size variants */
@@ -33,17 +34,20 @@
   width: 0;
 }
 
+/* MODIFIED FOR FULL WIDTH */
 .metalli-switch + label {
   border-radius: 1.25em;
   box-shadow: rgba(255, 255, 255, 0.5) 1px 1px 0px;
-  display: inline-block;
+  display: block; /* Changed from inline-block */
   height: 2.5em;
-  margin: 0.5em;
+  margin: 0.5em 0; /* Removed horizontal margin */
   overflow: hidden;
   position: relative;
   text-align: left;
   vertical-align: middle;
-  width: 5em;
+  width: 100% !important; /* Full width */
+  min-width: 100% !important;
+  max-width: 100% !important;
   transition: all 0.25s ease;
 }
 
@@ -63,12 +67,15 @@
   width: 2.1875em;
 }
 
+/* MODIFIED FOR FULL WIDTH */
 .metalli-switch + label .bg {
   --convexity: -3;
   border-radius: 1.25em;
-  display: inline-block;
+  display: block; /* Changed from inline-block */
   height: 2.5em;
-  width: 5em;
+  width: 100% !important; /* Full width */
+  min-width: 100% !important;
+  max-width: 100% !important;
 }
 
 .metalli-switch + label .on {
@@ -82,8 +89,9 @@
   top: 0.15625em;
 }
 
+/* ADJUSTED FOR FULL WIDTH */
 .metalli-switch:checked + label .on {
-  left: calc(100% - 2.34375em);
+  left: calc(100% - 2.5em); /* Adjusted for full width */
   top: 0.15625em;
 }
 
