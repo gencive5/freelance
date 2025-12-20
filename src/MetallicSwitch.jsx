@@ -8,6 +8,7 @@ const MetallicSwitch = ({
   size = 'xlg', // 'sm', 'm', 'lg', 'xlg'
   disabled = false,
   className = '',
+  label = 'glisser pour envoyer', // NEW PROP
   ...props 
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
@@ -80,6 +81,10 @@ const MetallicSwitch = ({
             opacity: disabled ? 0.6 : 1,
           }}
         ></span>
+        {/* ADD THIS TEXT SPAN */}
+        <span className="switch-label-text">
+          {label}
+        </span>
       </label>
     </span>
   );

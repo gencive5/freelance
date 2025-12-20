@@ -328,9 +328,7 @@ const handleSwitchChange = (checked) => {
 
       {/* RESPONSIVE SUBMIT SECTION */}
       <div className="contact-form__submit-responsive">
-        <div className="submit-header">
-          <span className="submit-label">Envoyer:</span>
-        </div>
+        
          <div style={{ width: '100%' }}>
         {/* MOBILE: Slider switch */}
         {isMobile && (
@@ -347,7 +345,10 @@ const handleSwitchChange = (checked) => {
 
         {/* DESKTOP: Round button without text */}
         {!isMobile && (
+          
+          
           <div className="contact-form__desktop-submit">
+               
             <MetallicButton
               type="submit"
               disabled={isSubmitting}
@@ -367,7 +368,7 @@ const handleSwitchChange = (checked) => {
                 }, 180);
               }}
             >
-              {/* Empty - no text inside the button */}
+              {<span className="submit-label">envoyer</span>}
             </MetallicButton>
           </div>
         )}
