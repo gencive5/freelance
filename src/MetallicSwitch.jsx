@@ -8,7 +8,7 @@ const MetallicSwitch = ({
   size = 'xlg', // 'sm', 'm', 'lg', 'xlg'
   disabled = false,
   className = '',
-  label = 'glisser pour envoyer', // NEW PROP
+  label = 'glissez pour envoyer', // NEW PROP
   ...props 
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
