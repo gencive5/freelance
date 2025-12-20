@@ -43,8 +43,8 @@
 
 /* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
 .contact-form__input--success {
-  background: rgb(183, 253, 33) !important;
-  color: #61DE2A !important;
+  background: #a6bf04 !important;
+  color: #02bebe !important;
 }
 
 /* ===== ERROR STATE (BRIGHT RED) ===== */
