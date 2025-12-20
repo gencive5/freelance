@@ -4,24 +4,6 @@
   cursor: none !important;
 }
 
-/* Base cursor styles - only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  .metallic-cursor {
-    position: fixed;
-    width: 24px;
-    height: 24px;
-    pointer-events: none;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    will-change: transform;
-    transition: 
-      width 0.15s ease-out,
-      height 0.15s ease-out,
-      border-radius 0.15s ease-out,
-      clip-path 0.15s ease-out;
-    transform-origin: center;
-  }
 
 /* Base cursor styles - only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
