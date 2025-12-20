@@ -155,7 +155,7 @@
 
 /* Make the switch look more like a slider on mobile */
 .mobile-slider.metalli-switch + label {
-  width: 8em; /* Wider for better slider feel */
+  width: 100% !important;
   height: 3em; /* Taller for easier touch */
   border-radius: 1.5em;
   box-shadow: 
@@ -166,7 +166,7 @@
 }
 
 .mobile-slider.metalli-switch + label .bg {
-  width: 8em;
+  width: 100% !important;
   height: 3em;
   border-radius: 1.5em;
   --convexity: -2;

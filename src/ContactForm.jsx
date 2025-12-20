@@ -302,11 +302,7 @@ const ContactForm = () => {
               disabled={isSubmitting || !isFormValid()}
               className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
             />
-            {isSubmitting && (
-              <div className="submitting-indicator">
-                Envoi en cours...
-              </div>
-            )}
+           
             {/* Show error message on mobile if form is invalid when trying to submit */}
             {!isFormValid() && isSwitchOn && (
               <div className="mobile-error-message">
@@ -340,11 +336,6 @@ const ContactForm = () => {
             >
               {/* Empty - no text inside the button */}
             </MetallicButton>
-            {isSubmitting && (
-              <div className="submitting-indicator">
-                Envoi en cours...
-              </div>
-            )}
           </div>
         )}
       </div>
