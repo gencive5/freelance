@@ -85,14 +85,49 @@ const ContactForm = () => {
     }
   };
 
-  const handleSwitchChange = (checked) => {
-    setIsSwitchOn(checked);
+const handleSwitchChange = (checked) => {
+  // Prevent switching ON if form is invalid
+  if (!isFormValid() && checked) {
+    // Show error feedback without allowing the switch to turn ON
+    setFieldStatus(prev => {
+      const newStatus = { ...prev };
+      let hasErrors = false;
+      
+      if (!formData.user_name.trim()) {
+        newStatus.user_name = 'error';
+        hasErrors = true;
+      }
+      if (!formData.user_email.trim() || !validateEmail(formData.user_email)) {
+        newStatus.user_email = 'error';
+        hasErrors = true;
+      }
+      if (!formData.user_message.trim()) {
+        newStatus.user_message = 'error';
+        hasErrors = true;
+      }
+      
+      return newStatus;
+    });
     
-    // ON MOBILE ONLY: When user slides the switch to ON, automatically submit
-    if (isMobile && checked) {
-      handleSubmit();
-    }
-  };
+    // Briefly show error state
+    setTimeout(() => {
+      setFieldStatus({
+        user_name: 'neutral',
+        user_email: 'neutral',
+        user_message: 'neutral'
+      });
+    }, 2000);
+    
+    return; // Don't change switch state
+  }
+  
+  setIsSwitchOn(checked);
+  
+  // ON MOBILE ONLY: When user slides the switch to ON, automatically submit
+  if (isMobile && checked) {
+    handleSubmit();
+  }
+};
 
   const isFormValid = () => {
     return formData.user_name.trim() !== '' && 
@@ -299,16 +334,8 @@ const ContactForm = () => {
               checked={isSwitchOn}
               onChange={handleSwitchChange}
               size="xlg"
-              disabled={isSubmitting || !isFormValid()}
               className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
             />
-           
-            {/* Show error message on mobile if form is invalid when trying to submit */}
-            {!isFormValid() && isSwitchOn && (
-              <div className="mobile-error-message">
-                ⚠️ Veuillez remplir tous les champs correctement
-              </div>
-            )}
           </div>
         )}
 
