@@ -45,7 +45,7 @@
   overflow: hidden;
   position: relative;
   text-align: center; /* Center text */
-  vertical-align: middle;
+  
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
@@ -84,10 +84,8 @@
 
 .metalli-switch + label.disabled .switch-label-text {
   color: rgba(2, 190, 190, 0.7) !important;
-/* Only apply cursor none when metallic cursor is active */
-.metallic-cursor-active * {
-  cursor: none !important;
-}
+
+  }
 
 /* Knob styles - larger for mobile */
 .metalli-switch + label .on,
@@ -101,103 +99,24 @@
   width: 3em; /* Larger */
   z-index: 3; /* Above text */
 }
-/* Base cursor styles - only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  .metallic-cursor {
-    position: fixed;
-    width: 24px;
-    height: 24px;
-    pointer-events: none;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    will-change: transform;
-    transition: 
-      width 0.15s ease-out,
-      height 0.15s ease-out,
-      border-radius 0.15s ease-out,
-      clip-path 0.15s ease-out;
-    transform-origin: center;
-  }
 
-/* Background */
-.metalli-switch + label .bg {
-  --convexity: -3;
-  border-radius: 1.25em;
-  display: block;
-  height: 3.5em;
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
-}
-/* Base cursor styles - only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  .metallic-cursor {
-    position: fixed;
-    width: 24px;
-    height: 24px;
-    pointer-events: none;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    will-change: transform;
-    transition: 
-      width 0.15s ease-out,
-      height 0.15s ease-out,
-      border-radius 0.15s ease-out,
-      clip-path 0.15s ease-out;
-    transform-origin: center;
-  }
 
 .metalli-switch + label .on {
   left: calc(75% - 2.34375em);
   top: 2.5em;
 }
-  /* Default circle shape */
-  .metallic-cursor.circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
-    box-shadow: 
-      2px 2px 4px rgba(0,0,0,0.3),
-      inset 1px 1px 3px rgba(255,255,255,0.8),
-      inset -1px -1px 3px rgba(0,0,0,0.2) !important;
-  }
 
 .metalli-switch + label:active .off,
 .metalli-switch:checked + label:active .on {
   left: calc(75% - 2.34375em);
   top: 0.15625em;
 }
-  /* Text input shape (slim I-beam) */
-  .metallic-cursor.text-shape {
-   width: 14px;  /* Wider than text cursor */
-  height: 28px; /* Taller than text cursor */
-  background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
-  box-shadow: 
-    2px 2px 4px rgba(0,0,0,0.3),
-    inset 1px 1px 3px rgba(255,255,255,0.8),
-    inset -1px -1px 3px rgba(0,0,0,0.2) !important;
-  border-radius: 50%; /* Creates the oval shape */
-  animation: oval-pulse 1.5s infinite alternate;
-  }
 
 /* Adjusted for full width */
 .metalli-switch:checked + label .on {
   left: calc(100% - 3.25em); /* Adjusted for larger knob */
   top: 0.25em;
-.metallic-cursor.pointer-oval {
-  width: 28px;  /* Wider than text cursor */
-  height: 14px; /* Taller than text cursor */
-  background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
-  box-shadow: 
-    2px 2px 4px rgba(0,0,0,0.3),
-    inset 1px 1px 3px rgba(255,255,255,0.8),
-    inset -1px -1px 3px rgba(0,0,0,0.2) !important;
-  border-radius: 50%; /* Creates the oval shape */
-  animation: oval-pulse 1.5s infinite alternate;
-}
+  }
 
 .metalli-switch:checked + label .off {
   left: calc(75% - 2.34375em);
@@ -209,18 +128,7 @@
 .metalli-switch + label .off,
 .metalli-switch + label .on {
   --metal: linear-gradient(145deg, #e0e0e0, #c0c0c0, #a0a0a0);
-.metallic-button {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  border-radius: 50%;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform, box-shadow, border-radius;
-  transition:
-    transform 180ms cubic-bezier(.25,.8,.25,1),
-    box-shadow 180ms ease,
-    border-radius 180ms ease;
+  
 }
 
 /* Hover effects */
@@ -233,14 +141,7 @@
   
   .metalli-switch + label:not(.disabled):hover .switch-label-text {
     opacity: 1;
-  .metallic-button:not([disabled]):hover {
-    transform: scaleX(1.35) scaleY(0.70) !important; /* squish into oval */
-    border-radius: 50% !important;
-    box-shadow:
-      2px 6px 10px rgba(0,0,0,0.30),
-      inset 1px 1px 3px rgba(255,255,255,0.9) !important;
-    --metal: hsl(0, 0%, 75%) !important;
-  }
+      }
   
   .metalli-switch + label:not(.disabled):active {
     transform: scale(0.98);
@@ -251,25 +152,14 @@
   .metalli-switch:checked + label:not(.disabled) .on {
     --metal: linear-gradient(145deg, #f0f0f0, #d0d0d0, #b0b0b0);
     filter: brightness(1.05);
-
-  .metallic-button:not([disabled]):active {
-    transform: scaleX(1.15) scaleY(0.85) !important;
-  }
+     }
 }
 
 /* Focus state for accessibility */
 .metalli-switch:focus + label {
   outline: 2px solid rgba(192, 192, 192, 0.8);
   outline-offset: 2px;
-/* 👇 Permanent squish class */
-.metallic-button.squished {
-  transform: scaleX(1.35) scaleY(0.70) !important;
-  border-radius: 50% !important;
-  box-shadow:
-    2px 6px 10px rgba(0,0,0,0.30),
-    inset 1px 1px 3px rgba(255,255,255,0.9) !important;
-  --metal: hsl(0, 0%, 75%) !important;
-}
+  }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
