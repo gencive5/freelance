@@ -1,4 +1,6 @@
 import './App.css';
+import EmailIcon from './icons/EmailIcon'; 
+import InstagramIcon from './icons/InstagramIcon';
 
 const Contact = () => (
   <footer className="footer">
@@ -8,7 +10,7 @@ const Contact = () => (
         className="link"
         style={{ color: '#02bebe'}}
       >
-        email
+        <EmailIcon color="#02bebe" size={24} />
       </a>
         <a
         href="https://instagram.com/gencive5"
@@ -17,7 +19,7 @@ const Contact = () => (
         className="link"
         style={{ color: '#02bebe' , marginLeft: '1rem' }}
       >
-        instagram
+         <InstagramIcon color="#02bebe" size={24} />
       </a>
     </div>
     
