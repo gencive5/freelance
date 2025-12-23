@@ -7,6 +7,7 @@ import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
 import MetallicSwitch from './MetallicSwitch';
 import EmailIcon from './icons/EmailIcon'; 
 import InstagramIcon from './icons/InstagramIcon';
+import YoutubeIcon from './icons/YoutubeIcon';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -408,6 +409,15 @@ const handleSwitchChange = (checked) => {
         style={{marginLeft: '1rem' }}
       >
          <InstagramIcon/>
+      </a>
+      <a
+        href="https://instagram.com/gencive5"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="link"
+        style={{marginLeft: '1rem' }}
+      >
+         <YoutubeIcon/>
       </a>
     </div>
     
