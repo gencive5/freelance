@@ -187,3 +187,60 @@
     width: 85%;
   }
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .metallic-cursor {
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    will-change: transform;
+    transition: 
+      width 0.15s ease-out,
+      height 0.15s ease-out,
+      border-radius 0.15s ease-out,
+      clip-path 0.15s ease-out;
+    transform-origin: center;
+  }
+
+    /* Default circle shape */
+  .metallic-cursor.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
+    box-shadow: 
+      2px 2px 4px rgba(0,0,0,0.3),
+      inset 1px 1px 3px rgba(255,255,255,0.8),
+      inset -1px -1px 3px rgba(0,0,0,0.2) !important;
+  }
+
+  /* Text input shape (slim I-beam) */
+  .metallic-cursor.text-shape {
+   width: 14px;  /* Wider than text cursor */
+  height: 28px; /* Taller than text cursor */
+  background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
+  box-shadow: 
+    2px 2px 4px rgba(0,0,0,0.3),
+    inset 1px 1px 3px rgba(255,255,255,0.8),
+    inset -1px -1px 3px rgba(0,0,0,0.2) !important;
+  border-radius: 50%; /* Creates the oval shape */
+  animation: oval-pulse 1.5s infinite alternate;
+  }
+
+  .metallic-cursor.pointer-oval {
+  width: 28px;  /* Wider than text cursor */
+  height: 14px; /* Taller than text cursor */
+  background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
+  box-shadow: 
+    2px 2px 4px rgba(0,0,0,0.3),
+    inset 1px 1px 3px rgba(255,255,255,0.8),
+    inset -1px -1px 3px rgba(0,0,0,0.2) !important;
+  border-radius: 50%; /* Creates the oval shape */
+  animation: oval-pulse 1.5s infinite alternate;
+}
+
+}
