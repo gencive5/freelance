@@ -103,12 +103,7 @@ const App = () => {
 
             <div className="mobile-second-row">
 
-              <container className="dvh-container">
-
               <ContactForm />
-              
-              <Contact />
-              </container>
             </div>
           </>
         )}

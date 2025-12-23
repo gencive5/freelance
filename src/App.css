@@ -479,12 +479,7 @@ height: 100% !important;
   z-index: 1;
 }
 
-.dvh-container {
-  height: 100vh;
-}
 
-
-/* Ensure form elements have proper z-index */
 .ContactForm {
   position: relative;
   z-index: 2;
