@@ -5,7 +5,8 @@ import './ContactForm.css';
 import MetallicButton from './MetallicButton';
 import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
 import MetallicSwitch from './MetallicSwitch';
-import Contact from './Contact';
+import EmailIcon from './icons/EmailIcon'; 
+import InstagramIcon from './icons/InstagramIcon';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -391,7 +392,36 @@ const handleSwitchChange = (checked) => {
           </div>
         )}
       </div>
-      <Contact />
+       <footer className="footer">
+    <div className="footer-left">
+      <a
+        href="mailto:vic.segen@gmail.com"
+        className="link"
+      >
+        <EmailIcon/>
+      </a>
+        <a
+        href="https://instagram.com/gencive5"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="link"
+        style={{marginLeft: '1rem' }}
+      >
+         <InstagramIcon/>
+      </a>
+    </div>
+    
+    <div className="footer-right">
+      <a
+        href="https://sm00ch.xyz/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: '#02bebe' }}
+      >
+        SM00CH
+      </a>
+    </div>
+  </footer>
     </form>
   );
 };

@@ -8,18 +8,17 @@ const Contact = () => (
       <a
         href="mailto:vic.segen@gmail.com"
         className="link"
-        style={{ color: '#02bebe'}}
       >
-        <EmailIcon color="#02bebe" size={24} />
+        <EmailIcon/>
       </a>
         <a
         href="https://instagram.com/gencive5"
         target="_blank"
         rel="noopener noreferrer"
         className="link"
-        style={{ color: '#02bebe' , marginLeft: '1rem' }}
+        style={{marginLeft: '1rem' }}
       >
-         <InstagramIcon color="#02bebe" size={24} />
+         <InstagramIcon/>
       </a>
     </div>
     
