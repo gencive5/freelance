@@ -1,3 +1,7 @@
+.metallic-cursor-active * {
+  cursor: none !important;
+}
+
 .metallic-switch-container {
   display: inline-block;
   vertical-align: middle;
