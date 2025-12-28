@@ -210,9 +210,6 @@ canvas {
   }
 
 
-  .link {
-    font-size: 1.2rem;
-  }
 
   .overlay-text,
   .overlay-text *,
@@ -479,16 +476,6 @@ height: 100% !important;
   z-index: 1;
 }
 
-
-.ContactForm {
-  position: relative;
-  z-index: 2;
-}
-
-.Contact {
-  position: relative;
-  z-index: 2;
-}
 
 /* Ensure metallic button has proper z-index */
 .metallic-button {
