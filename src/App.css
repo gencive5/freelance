@@ -141,7 +141,6 @@ html, body, #root {
   flex-direction: column;
   align-items: flex-end;
   width: 60%;
-
 }
 
 canvas {
@@ -346,6 +345,7 @@ height: 100% !important;
   width: 100%;
   height: auto;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
@@ -369,14 +369,14 @@ height: 100% !important;
 /* Mobile Styles */
 @media (max-width: 768px) {
   .footer {
-    position: absolute;
+    position: relative;
     padding: 1rem;
     font-family: 'adineue', sans-serif;
     width: 100%;
     height: auto;
     bottom: 0;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
     box-sizing: border-box;
   }
