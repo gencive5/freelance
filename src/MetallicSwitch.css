@@ -73,11 +73,6 @@
 }
 
 
-.metalli-switch + label.disabled {
-  opacity: 0.6;
-  filter: grayscale(0.3);
-}
-
 .metalli-switch + label.disabled .switch-label-text {
   color: rgba(255, 255, 255, 0.7) !important;
 }
@@ -86,12 +81,12 @@
 .metalli-switch + label .on,
 .metalli-switch + label .off {
   border-radius: 1.4em; /* More rounded */
-  height: 3em; /* Larger */
+  height: 2.5em; /* Larger */
   left: 0.25em;
   position: absolute;
   top: 0.25em;
   transition: left 0.25s !important;
-  width: 3em; /* Larger */
+  width: 2.5em; /* Larger */
   z-index: 3; /* Above text */
 }
 
@@ -100,7 +95,7 @@
   --convexity: -3;
   border-radius: 1.25em;
   display: block;
-  height: 3.5em;
+  height: 2em;
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
@@ -128,57 +123,22 @@
   top: 2.5em;
 }
 
-/* Enhanced silver effect */
-.metalli-switch + label .bg,
-.metalli-switch + label .off,
-.metalli-switch + label .on {
-  --metal: linear-gradient(145deg, #e0e0e0, #c0c0c0, #a0a0a0);
-}
 
-/* Hover effects */
-@media (hover: hover) and (pointer: fine) {
-  .metalli-switch + label:not(.disabled):hover {
-    transform: scale(1.02);
-    transition: transform 0.15s ease;
-    filter: brightness(1.1);
-  }
-  
-  .metalli-switch + label:not(.disabled):hover .switch-label-text {
-    opacity: 1;
-  }
-  
-  .metalli-switch + label:not(.disabled):active {
-    transform: scale(0.98);
-  }
-  
-  /* Active/checked state enhancement */
-  .metalli-switch:checked + label:not(.disabled) .bg,
-  .metalli-switch:checked + label:not(.disabled) .on {
-    --metal: linear-gradient(145deg, #f0f0f0, #d0d0d0, #b0b0b0);
-    filter: brightness(1.05);
-  }
-}
-
-/* Focus state for accessibility */
-.metalli-switch:focus + label {
-  outline: 2px solid rgba(192, 192, 192, 0.8);
-  outline-offset: 2px;
-}
 
 /* Mobile responsive */
 @media (max-width: 768px) {
   .metalli-xlg + label {
-    height: 4em; /* Even taller on mobile */
+    height: 2em; /* Even taller on mobile */
   }
   
   .metalli-xlg + label .bg {
-    height: 4em;
+    height: 2em;
   }
   
   .metalli-xlg + label .on,
   .metalli-xlg + label .off {
-    height: 3.5em;
-    width: 3.5em;
+    height: 2em;
+    width: 2em;
     border-radius: 1.75em;
   }
   
