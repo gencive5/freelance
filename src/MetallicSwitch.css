@@ -49,7 +49,6 @@
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  transition: all 0.25s ease;
 }
 
 /* Text inside the switch */
@@ -69,7 +68,7 @@
   text-align: center;
   opacity: 0.9;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  transition: opacity 0.25s ease;
+  
 }
 
 
@@ -149,5 +148,30 @@
   .switch-label-text {
     font-size: 1.2rem;
     width: 85%;
+  }
+}
+
+/* Disable hover effects on touch devices - stronger version */
+@media (hover: none) and (pointer: coarse) {
+  .metalli-switch + label:hover,
+  .metalli-switch + label:focus,
+  .metalli-switch + label:active {
+    transform: none !important;
+    box-shadow: rgba(255, 255, 255, 0.5) 1px 1px 0px !important;
+    filter: none !important;
+    scale: 1 !important;
+    background: none !important;
+  }
+  
+  .metalli-switch + label .on:hover,
+  .metalli-switch + label .off:hover,
+  .metalli-switch + label .bg:hover {
+    transform: none !important;
+    scale: 1 !important;
+  }
+  
+  /* Also target the metallicss classes */
+  .metallicss:hover {
+    transform: none !important;
   }
 }

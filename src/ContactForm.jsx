@@ -346,7 +346,6 @@ const handleSwitchChange = (checked) => {
         />
       </div>
 
-      {/* RESPONSIVE SUBMIT SECTION */}
       <div className="contact-form__submit-responsive">
         
          <div style={{ width: '100%' }}>
@@ -393,11 +392,12 @@ const handleSwitchChange = (checked) => {
           </div>
         )}
       </div>
+      
        <footer className="footer">
     <div className="footer-left">
       <a
         href="mailto:vic.segen@gmail.com"
-        className="link"
+        className="link contact-icon-link"
       >
         <EmailIcon/>
       </a>
@@ -405,7 +405,7 @@ const handleSwitchChange = (checked) => {
         href="https://instagram.com/gencive5"
         target="_blank"
         rel="noopener noreferrer"
-        className="link"
+        className="link contact-icon-link"
         style={{marginLeft: '1rem' }}
       >
          <InstagramIcon/>
@@ -414,7 +414,7 @@ const handleSwitchChange = (checked) => {
         href="https://instagram.com/gencive5"
         target="_blank"
         rel="noopener noreferrer"
-        className="link"
+        className="link contact-icon-link"
         style={{marginLeft: '1rem' }}
       >
          <YoutubeIcon/>
