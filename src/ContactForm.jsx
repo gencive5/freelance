@@ -268,17 +268,18 @@ const handleSwitchChange = (checked) => {
          {isMobile && (
          <span className="text-fit">
                     <span>
-                    <span>Contactez moi ci dessous pour demander</span></span>
-                    <span aria-hidden="true">Contactez moi ci dessous pour demander</span>
+                    <span>Demandez moi votre site,</span></span>
+                    <span aria-hidden="true">Demandez moi votre site,</span>
                   </span>                 
   
                   
         )}
+         
          {isMobile && (
          <span className="text-fit">
                     <span>
-                    <span>un site ou me parler de votre projet</span></span>
-                    <span aria-hidden="true">un site ou me parler de votre projet</span>
+                    <span>parlez moi de votre projet</span></span>
+                    <span aria-hidden="true">parlez moi de votre projet</span>
                   </span>                 
   
                   
