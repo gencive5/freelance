@@ -268,8 +268,8 @@ const handleSwitchChange = (checked) => {
          {isMobile && (
          <span className="text-fit">
                     <span>
-                    <span>Remplissez ce formulaire pour demander votre site</span></span>
-                    <span aria-hidden="true">Remplissez ce formulaire pour demander votre site</span>
+                    <span>Demandez un site ou parlez moi de votre projet</span></span>
+                    <span aria-hidden="true">Demandez un site ou parlez moi de votre projet</span>
                   </span> 
   
                   
