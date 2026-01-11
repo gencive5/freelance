@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import './App.css';
 import './ContactForm.css';
-import MetallicButton from './MetallicButton';
 import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
-import MetallicSwitch from './MetallicSwitch';
 import EmailIcon from './icons/EmailIcon'; 
 import InstagramIcon from './icons/InstagramIcon';
 import YoutubeIcon from './icons/YoutubeIcon';
@@ -23,7 +21,6 @@ const ContactForm = () => {
     user_message: 'neutral'
   });
   const [emailError, setEmailError] = useState(false);
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
   
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
@@ -84,55 +81,6 @@ const ContactForm = () => {
       } else {
         setEmailError(false);
       }
-    }
-  };
-
-  const handleSwitchChange = (checked) => {
-    // If form is invalid and user is trying to turn ON
-    if (!isFormValid() && checked) {
-      // Create a spring-back effect
-      setIsSwitchOn(true); // Briefly show it moving
-      
-      // Show error feedback
-      setFieldStatus(prev => {
-        const newStatus = { ...prev };
-        
-        if (!formData.user_name.trim()) {
-          newStatus.user_name = 'error';
-        }
-        if (!formData.user_email.trim() || !validateEmail(formData.user_email)) {
-          newStatus.user_email = 'error';
-        }
-        if (!formData.user_message.trim()) {
-          newStatus.user_message = 'error';
-        }
-        
-        return newStatus;
-      });
-      
-      // Spring back after a short delay (for visual feedback)
-      setTimeout(() => {
-        setIsSwitchOn(false);
-      }, 200);
-      
-      // Reset error colors after 2 seconds
-      setTimeout(() => {
-        setFieldStatus({
-          user_name: 'neutral',
-          user_email: 'neutral',
-          user_message: 'neutral'
-        });
-      }, 2000);
-      
-      return; // Don't proceed to submission
-    }
-    
-    // Normal behavior when form is valid
-    setIsSwitchOn(checked);
-    
-    // ON MOBILE ONLY: When user slides the switch to ON, automatically submit
-    if (isMobile && checked) {
-      handleSubmit();
     }
   };
 
@@ -204,9 +152,6 @@ const ContactForm = () => {
             user_email: '',
             user_message: ''
           });
-          
-          // Turn switch OFF after successful send
-          setIsSwitchOn(false);
 
           // Reset colors after 3 seconds
           setTimeout(() => {
@@ -225,7 +170,6 @@ const ContactForm = () => {
             user_message: 'error'
           });
           setIsSubmitting(false);
-          setIsSwitchOn(false); // Turn switch OFF on error
           
           // Reset colors after 3 seconds
           setTimeout(() => {
@@ -245,9 +189,8 @@ const ContactForm = () => {
   };
 
   return (
-    <form ref={formRef} onSubmit={!isMobile ? handleSubmit : (e) => e.preventDefault()} className="contact-form" noValidate>
+    <form ref={formRef} onSubmit={handleSubmit} className="contact-form" noValidate>
       <div className="contact-form__group">
-
         {isMobile && (
           <span className="text-fit marginb">
             <span>
@@ -329,34 +272,20 @@ const ContactForm = () => {
         />
       </div>
 
-      <div className="contact-form__submit-responsive">
-        
-          <div className="contact-form__desktop-submit">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              style={{
-                width: '100%',
-                height: '4rem',
-                position: 'relative',
-                cursor: 'pointer',
-                color: 'inherit', // Changed from 'transparent' to 'inherit'
-                backgroundColor: 'transparent', // Add this to remove gray background
-                border: 'none', // Remove default button border
-                padding: '0', // Remove default padding
-              }}
-              aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
-            >
-              { <span className="text-fit submit-label">
+      <div className="contact-form__submit">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="contact-form__submit-button"
+          aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
+        >
+          <span className="text-fit submit-label">
             <span>
-              <span>envoyez</span>
+              <span>{isSubmitting ? "Envoi..." : "envoyez"}</span>
             </span>
-            <span aria-hidden="true">envoyez</span>
-          </span>   }
-            </button>
-           
-          </div>
-        
+            <span aria-hidden="true">{isSubmitting ? "Envoi..." : "envoyez"}</span>
+          </span>
+        </button>
       </div>
       
       <footer className="footer">
