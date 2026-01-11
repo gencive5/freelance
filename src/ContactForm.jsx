@@ -11,7 +11,6 @@ import YoutubeIcon from './icons/YoutubeIcon';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSquished, setIsSquished] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [formData, setFormData] = useState({
     user_name: '',
@@ -88,54 +87,54 @@ const ContactForm = () => {
     }
   };
 
-const handleSwitchChange = (checked) => {
-  // If form is invalid and user is trying to turn ON
-  if (!isFormValid() && checked) {
-    // Create a spring-back effect
-    setIsSwitchOn(true); // Briefly show it moving
-    
-    // Show error feedback
-    setFieldStatus(prev => {
-      const newStatus = { ...prev };
+  const handleSwitchChange = (checked) => {
+    // If form is invalid and user is trying to turn ON
+    if (!isFormValid() && checked) {
+      // Create a spring-back effect
+      setIsSwitchOn(true); // Briefly show it moving
       
-      if (!formData.user_name.trim()) {
-        newStatus.user_name = 'error';
-      }
-      if (!formData.user_email.trim() || !validateEmail(formData.user_email)) {
-        newStatus.user_email = 'error';
-      }
-      if (!formData.user_message.trim()) {
-        newStatus.user_message = 'error';
-      }
-      
-      return newStatus;
-    });
-    
-    // Spring back after a short delay (for visual feedback)
-    setTimeout(() => {
-      setIsSwitchOn(false);
-    }, 200);
-    
-    // Reset error colors after 2 seconds
-    setTimeout(() => {
-      setFieldStatus({
-        user_name: 'neutral',
-        user_email: 'neutral',
-        user_message: 'neutral'
+      // Show error feedback
+      setFieldStatus(prev => {
+        const newStatus = { ...prev };
+        
+        if (!formData.user_name.trim()) {
+          newStatus.user_name = 'error';
+        }
+        if (!formData.user_email.trim() || !validateEmail(formData.user_email)) {
+          newStatus.user_email = 'error';
+        }
+        if (!formData.user_message.trim()) {
+          newStatus.user_message = 'error';
+        }
+        
+        return newStatus;
       });
-    }, 2000);
+      
+      // Spring back after a short delay (for visual feedback)
+      setTimeout(() => {
+        setIsSwitchOn(false);
+      }, 200);
+      
+      // Reset error colors after 2 seconds
+      setTimeout(() => {
+        setFieldStatus({
+          user_name: 'neutral',
+          user_email: 'neutral',
+          user_message: 'neutral'
+        });
+      }, 2000);
+      
+      return; // Don't proceed to submission
+    }
     
-    return; // Don't proceed to submission
-  }
-  
-  // Normal behavior when form is valid
-  setIsSwitchOn(checked);
-  
-  // ON MOBILE ONLY: When user slides the switch to ON, automatically submit
-  if (isMobile && checked) {
-    handleSubmit();
-  }
-};
+    // Normal behavior when form is valid
+    setIsSwitchOn(checked);
+    
+    // ON MOBILE ONLY: When user slides the switch to ON, automatically submit
+    if (isMobile && checked) {
+      handleSubmit();
+    }
+  };
 
   const isFormValid = () => {
     return formData.user_name.trim() !== '' && 
@@ -173,22 +172,8 @@ const handleSwitchChange = (checked) => {
           ...prev,
           ...newFieldStatus
         }));
-        
-        // On desktop, show squish briefly even for errors
-        if (!isMobile) {
-          setIsSquished(true);
-          setTimeout(() => {
-            setIsSquished(false);
-          }, 300);
-        }
       }
       return;
-    }
-    
-    // On mobile, the switch is already ON if we're submitting
-    // On desktop, trigger squish animation
-    if (!isMobile) {
-      setIsSquished(true);
     }
     
     setIsSubmitting(true);
@@ -212,7 +197,6 @@ const handleSwitchChange = (checked) => {
             user_message: 'success'
           });
           setIsSubmitting(false);
-          setIsSquished(true);
           
           // Reset form data
           setFormData({
@@ -231,7 +215,6 @@ const handleSwitchChange = (checked) => {
               user_email: 'neutral',
               user_message: 'neutral'
             });
-            setIsSquished(false);
           }, 3000);
         },
         (error) => {
@@ -243,7 +226,6 @@ const handleSwitchChange = (checked) => {
           });
           setIsSubmitting(false);
           setIsSwitchOn(false); // Turn switch OFF on error
-          setIsSquished(false); // Reset squish on error
           
           // Reset colors after 3 seconds
           setTimeout(() => {
@@ -266,20 +248,21 @@ const handleSwitchChange = (checked) => {
     <form ref={formRef} onSubmit={!isMobile ? handleSubmit : (e) => e.preventDefault()} className="contact-form" noValidate>
       <div className="contact-form__group">
 
-         {isMobile && (
-         <span className="text-fit">
-                    <span>
-                    <span>Parlez moi de votre projet</span></span>
-                    <span aria-hidden="true">Parlez moi de votre projet</span>
-                  </span>                     
+        {isMobile && (
+          <span className="text-fit">
+            <span>
+              <span>Parlez moi de votre projet</span>
+            </span>
+            <span aria-hidden="true">Parlez moi de votre projet</span>
+          </span>                     
         )}
         {!isMobile && (
-          
-           <span className="text-fit">
-                    <span>
-                    <span>Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span></span>
-                    <span aria-hidden="true">Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
-                  </span>
+          <span className="text-fit">
+            <span>
+              <span>Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
+            </span>
+            <span aria-hidden="true">Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
+          </span>
         )}
         <label htmlFor="user_name" className="contact-form__label">
           Nom:
@@ -346,31 +329,26 @@ const handleSwitchChange = (checked) => {
       </div>
 
       <div className="contact-form__submit-responsive">
-        
-         <div style={{ width: '100%' }}>
-        {/* MOBILE: Slider switch */}
-        {isMobile && (
-          <div className="contact-form__mobile-submit">
-            <MetallicSwitch
-              checked={isSwitchOn}
-              onChange={handleSwitchChange}
-              size="xlg"
-              className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
-            />
-          </div>
-        )}
+        <div style={{ width: '100%' }}>
+          {/* MOBILE: Slider switch */}
+          {isMobile && (
+            <div className="contact-form__mobile-submit">
+              <MetallicSwitch
+                checked={isSwitchOn}
+                onChange={handleSwitchChange}
+                size="xlg"
+                className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
+              />
+            </div>
+          )}
         </div>
 
         {/* DESKTOP: Round button without text */}
         {!isMobile && (
-          
-          
           <div className="contact-form__desktop-submit">
-               
             <MetallicButton
               type="submit"
               disabled={isSubmitting}
-              className={isSquished ? 'squished' : ''}
               style={{
                 width: '100%',
                 height: '4rem',
@@ -378,13 +356,6 @@ const handleSwitchChange = (checked) => {
                 cursor: 'pointer',
               }}
               aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
-              onClick={() => {
-                // Trigger squish immediately on click
-                setIsSquished(true);
-                setTimeout(() => {
-                  setIsSquished(false);
-                }, 180);
-              }}
             >
               {<span className="submit-label">envoyer</span>}
             </MetallicButton>
@@ -392,45 +363,45 @@ const handleSwitchChange = (checked) => {
         )}
       </div>
       
-       <footer className="footer">
-    <div className="footer-left">
-      <a
-        href="mailto:vic.segen@gmail.com"
-        className="link contact-icon-link"
-      >
-        <EmailIcon/>
-      </a>
-        <a
-        href="https://instagram.com/gencive5"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="link contact-icon-link"
-        style={{marginLeft: '1rem' }}
-      >
-         <InstagramIcon/>
-      </a>
-      <a
-        href="https://instagram.com/gencive5"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="link contact-icon-link"
-        style={{marginLeft: '1rem' }}
-      >
-         <YoutubeIcon/>
-      </a>
-    </div>
-    
-    <div className="footer-right">
-      <a
-        href="https://sm00ch.xyz/"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ color: '#02bebe' }}
-      >
-        SM00CH
-      </a>
-    </div>
-  </footer>
+      <footer className="footer">
+        <div className="footer-left">
+          <a
+            href="mailto:vic.segen@gmail.com"
+            className="link contact-icon-link"
+          >
+            <EmailIcon/>
+          </a>
+          <a
+            href="https://instagram.com/gencive5"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link contact-icon-link"
+            style={{marginLeft: '1rem' }}
+          >
+            <InstagramIcon/>
+          </a>
+          <a
+            href="https://instagram.com/gencive5"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link contact-icon-link"
+            style={{marginLeft: '1rem' }}
+          >
+            <YoutubeIcon/>
+          </a>
+        </div>
+        
+        <div className="footer-right">
+          <a
+            href="https://sm00ch.xyz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#02bebe' }}
+          >
+            SM00CH
+          </a>
+        </div>
+      </footer>
     </form>
   );
 };
