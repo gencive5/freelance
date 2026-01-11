@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const DistortedText = ({ 
   text = "observation",
-  fontFamily = "'sm00ch', 'Adobe Blank', sans-serif",
+  fontFamily = "'sm00ch', 'Adobe Blank' ",
   baseSize = 120,
   color = "#f7f0f0ff",
   padding = 40,
@@ -11,7 +11,7 @@ const DistortedText = ({
   seed = 0.3,
   className = "",
   desktopSizeMultiplier = 2,
-  mouseMovementMultiplier = 1.3,
+  mouseMovementMultiplier = 0.1,
   mouseDecayRate = 0.92
 }) => {
 
@@ -157,7 +157,7 @@ const DistortedText = ({
     if (isDesktopRef.current) return;
 
     if (materialRef.current) materialRef.current.uniforms.uSpeed.value = 1.3;
-    hoverMultiplierRef.current = 3;
+    hoverMultiplierRef.current = 2;
   }, []);
 
   const handleMobileHoverEnd = useCallback(() => {
