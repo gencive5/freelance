@@ -330,24 +330,9 @@ const ContactForm = () => {
       </div>
 
       <div className="contact-form__submit-responsive">
-        <div style={{ width: '100%' }}>
-          {/* MOBILE: Slider switch */}
-          {isMobile && (
-            <div className="contact-form__mobile-submit">
-              <MetallicSwitch
-                checked={isSwitchOn}
-                onChange={handleSwitchChange}
-                size="xlg"
-                className={`mobile-slider ${!isFormValid() ? 'disabled' : ''}`}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* DESKTOP: Round button without text */}
-        {!isMobile && (
+        
           <div className="contact-form__desktop-submit">
-            <MetallicButton
+            <button
               type="submit"
               disabled={isSubmitting}
               style={{
@@ -355,13 +340,23 @@ const ContactForm = () => {
                 height: '4rem',
                 position: 'relative',
                 cursor: 'pointer',
+                color: 'inherit', // Changed from 'transparent' to 'inherit'
+                backgroundColor: 'transparent', // Add this to remove gray background
+                border: 'none', // Remove default button border
+                padding: '0', // Remove default padding
               }}
               aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
             >
-              {<span className="submit-label">envoyer</span>}
-            </MetallicButton>
+              { <span className="text-fit submit-label">
+            <span>
+              <span>envoyez</span>
+            </span>
+            <span aria-hidden="true">envoyez</span>
+          </span>   }
+            </button>
+           
           </div>
-        )}
+        
       </div>
       
       <footer className="footer">
