@@ -310,6 +310,11 @@ canvas {
   width: 30%;
 }
 
+.marginb {
+  margin-bottom: 1rem;
+}
+
+
 /* Distorted Text Styles */
 .distorted-text-container {
 height: 100% !important;
