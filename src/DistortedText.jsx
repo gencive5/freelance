@@ -11,7 +11,7 @@ const DistortedText = ({
   seed = 0.3,
   className = "",
   desktopSizeMultiplier = 2,
-  mouseMovementMultiplier = 0.1,
+  mouseMovementMultiplier = 0.07,
   mouseDecayRate = 0.92
 }) => {
 
