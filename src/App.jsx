@@ -70,7 +70,7 @@ const App = () => {
           </div>
         )}
 
-        {/* Mobile layout remains the same */}
+        {/* Mobile layout */}
         {isMobile && (
           <>
             <div className="mobile-first-row">
