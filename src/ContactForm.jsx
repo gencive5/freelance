@@ -274,19 +274,30 @@ const ContactForm = () => {
 
      <div className="contact-form__submit">
   <button
-    type="submit"
-    disabled={isSubmitting}
-    className="contact-form-submit-button"
-    aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
-  >
-    <span className="text-fit">
-      <span>
-        <span>envoyer</span>
-      </span>
-      <span aria-hidden="true">envoyer</span>
-    </span>
-  </button>
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                width: '100%',
+                height: 'auto',
+                position: 'relative',
+                cursor: 'pointer',
+                color: 'inherit', 
+                backgroundColor: 'transparent',
+                border: 'none', 
+                padding: '0', 
+              }}
+              aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
+            >
+          { <span className="text-fit submit-label">
+            <span>
+              <span>envoyez</span>
+            </span>
+            <span aria-hidden="true">envoyez</span>
+          </span>   }
+    </button>
 </div>
+
+
       
       <footer className="footer">
         <div className="footer-left">
