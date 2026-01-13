@@ -460,8 +460,8 @@ height: 100% !important;
   flex-direction: column;
   height: 100vh;
   justify-content: flex-end;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .mobile-first-row .text-column.Figure-Demo > :first-child {
