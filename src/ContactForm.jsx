@@ -290,9 +290,9 @@ const ContactForm = () => {
             >
           { <span className="text-fit submit-label">
             <span>
-              <span>envoyez</span>
+              <span>envoyer</span>
             </span>
-            <span aria-hidden="true">envoyez</span>
+            <span aria-hidden="true">envoyer</span>
           </span>   }
     </button>
 </div>
