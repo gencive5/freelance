@@ -22,11 +22,6 @@ body {
   min-height: 100vh;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
 
 @font-face {
     font-family: 'Adobe Blank';
@@ -355,7 +350,7 @@ height: 100% !important;
 
 .link {
   font-size: 1.5rem;
-  padding: 0.5rem;
+  padding: 0;
 }
 
  .footer .link svg {
@@ -369,7 +364,7 @@ height: 100% !important;
 @media (max-width: 768px) {
   .footer {
     position: relative;
-    padding: 1rem;
+    padding: 0rem;
     font-family: 'adineue', sans-serif;
     width: 100%;
     height: auto;
