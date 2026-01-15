@@ -39,6 +39,7 @@
   color: #02bebe !important;
   opacity: 1;
   width: 100%;
+  z-index: 100;
 }
 
 /* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
@@ -117,8 +118,11 @@
 
 .submit-label {
  color: rgba(2, 190, 190, 0.15);
- margin-top: -6rem;
- 
+ margin-top: -3rem; 
+}
+
+.submit-label > * {
+  margin-top: -7rem;
 }
 
 @media (max-width: 768px) {
@@ -126,8 +130,12 @@
   .submit-label {
  color: rgba(2, 190, 190, 0.15);
  margin-top: 0;
- 
 } 
+
+.submit-label > * {
+  margin-top: 0rem; 
+}
+
 }
 
 
@@ -141,6 +149,3 @@
   border: 'none';
   padding: '0';
 }
-
-
-
