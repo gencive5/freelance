@@ -8,19 +8,44 @@
     <meta name="description" content="Freelance web designer & developer">
     <title>gencives</title>
 
-    <!-- ✅ Preconnect and preload key resources -->
-    <link rel="preconnect" href="https://unpkg.com" />
-    
-    <link rel="preload" href="./fonts/adineue.woff2" as="font">
-    <link rel="preload" href="./fonts/sm00ch.woff2" as="font">
-    <link rel="preload" href="./fonts/AdobeBlank.woff2" as="font">
+    <!-- Preload fonts -->
+    <link rel="preload" href="./fonts/adineue.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/sm00ch.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/AdobeBlank.woff2" as="font" type="font/woff2" crossorigin>
 
-
-    <!-- ✅ Inline CRITICAL CSS -->
+    <!-- Inline ALL font-related CSS -->
     <style>
-      /* === Critical Above-the-Fold CSS === */
+      /* === Font Definitions === */
+      @font-face {
+        font-family: 'adineue';
+        src: url('./fonts/adineue.woff2') format('woff2'),
+             url('./fonts/adineue.woff') format('woff');
+        font-display: block;
+        font-weight: normal;
+        font-style: normal;
+      }
+      
+      @font-face {
+        font-family: 'sm00ch';
+        src: url('./fonts/sm00ch.woff2') format('woff2'),
+             url('./fonts/sm00ch.woff') format('woff');
+        font-display: block;
+        font-weight: normal;
+        font-style: normal;
+      }
+      
+      @font-face {
+        font-family: 'Adobe Blank';
+        src: url('./fonts/AdobeBlank.woff2') format('woff2'),
+             url('./fonts/AdobeBlank.woff') format('woff');
+        font-display: fallback;
+        font-weight: normal;
+        font-style: normal;
+      }
+      
+      /* === Critical CSS === */
       :root {
-        font-family: adineue, sans-serif;
+        font-family: 'adineue', sans-serif;
         line-height: 1.5;
         font-weight: 400;
         color-scheme: light dark;
@@ -31,6 +56,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
+      
       html, body, #root {
         margin: 0;
         padding: 0;
@@ -38,6 +64,7 @@
         height: 100%;
         overflow: hidden;
       }
+      
       body {
         display: flex;
         place-items: center;
@@ -46,21 +73,13 @@
       }
     </style>
 
-    <!-- ✅ Load full CSS asynchronously (non-blocking) -->
-    <link
-      rel="preload"
-      href="/assets/index-1vALBTIu.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/assets/index-1vALBTIu.css"></noscript>
+    <!-- Keep external CSS ONLY if it has other styles you need -->
+    <link rel="stylesheet" href="/assets/index-1vALBTIu.css">
   </head>
 
   <body>
     <div id="root"></div>
-  
     <script type="module" src="/src/main.jsx"></script>
-    
-    <!-- SEULEMENT Blotter - il contient déjà Three.js et Underscore.js -->
     <script src="/blotter.min.js" defer></script>
     <script src="/liquidDistortMaterial.js" defer></script>
   </body>
