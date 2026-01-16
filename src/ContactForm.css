@@ -50,7 +50,7 @@
 
 /* ===== ERROR STATE (BRIGHT RED) ===== */
 .contact-form__input--error {
-  background: rgb(229, 120, 98) !important;
+  background: #ff6f61 !important;
   color: #02bebe !important;
 }
 
