@@ -83,7 +83,6 @@
     padding: 12px 15px;
     border-radius: 25px;
   }
-
 }
 
 /* Responsive submit section */
@@ -125,9 +124,14 @@
   margin-top: -7rem;
 }
 
+.submit-label:hover {
+  color: #02bebe;
+}
+
+
 @media (max-width: 768px) {
 
-  .submit-label {
+.submit-label {
  color: rgba(2, 190, 190, 0.15);
  margin-top: 0;
 } 
