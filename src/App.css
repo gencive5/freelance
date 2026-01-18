@@ -24,24 +24,16 @@ body {
 
 
 @font-face {
-    font-family: 'adineue';
-    src: url('./fonts/adineue.woff2') format('woff2'),
-          url('./fonts/adineue.woff') format('woff');
-      font-display: block; 
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-@font-face {
-  font-family: 'sm00ch';
-  src: url('/fonts/sm00ch.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
+  font-family: "sm00ch";
+  src: url("/fonts/sm00ch.woff2") format("woff2");
   font-display: swap;
 }
 
-
+@font-face {
+  font-family: "adineue";
+  src: url("/fonts/adineue.woff2") format("woff2");
+  font-display: swap;
+}
 
 
 .container {
