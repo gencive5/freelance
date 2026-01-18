@@ -35,13 +35,12 @@ body {
 
 @font-face {
   font-family: 'sm00ch';
-  src: local('sm00ch'), 
-       url('./fonts/sm00ch.woff2') format('woff2'),
-       url('./fonts/sm00ch.woff') format('woff');
-  font-weight: normal;
+  src: url('/fonts/sm00ch.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
-  font-display: block; 
+  font-display: swap;
 }
+
 
 
 
