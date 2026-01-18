@@ -1,5 +1,5 @@
 :root {
-  font-family: 'adineue', 'Adobe Blank', sans-serif;
+  font-family: 'sm00ch', 'adineue', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -20,16 +20,6 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-
-@font-face {
-    font-family: 'Adobe Blank';
-    src: url('./fonts/AdobeBlank.woff2') format('woff2'),
-        url('./fonts/AdobeBlank.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: fallback;
 }
 
 

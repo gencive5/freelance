@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const DistortedText = ({ 
   text = "observation",
-  fontFamily = "'sm00ch', 'Adobe Blank' ",
+  fontFamily = "'sm00ch', sans-serif ",
   baseSize = 120,
   color = "#f7f0f0ff",
   padding = 40,
@@ -47,9 +47,6 @@ const DistortedText = ({
 
     const loadFont = async () => {
       try {
-        const adobeBlank = new FontFace("Adobe Blank", "url(/fonts/AdobeBlank.woff2)");
-        await adobeBlank.load();
-        document.fonts.add(adobeBlank);
 
         const sm00chFont = new FontFace("sm00ch", "url(/fonts/sm00ch.woff2)");
         await sm00chFont.load();
@@ -83,7 +80,7 @@ const DistortedText = ({
       position:absolute;
       opacity:0;
       pointer-events:none;
-      font-family:'sm00ch','Adobe Blank',sans-serif;
+      font-family: 'sm00ch', sans-serif;
       font-size:${getResponsiveSize()}px;
       white-space:nowrap;
     `;
@@ -320,7 +317,8 @@ const DistortedText = ({
         opacity: blotterReady ? 1 : 0,
         transition: "opacity 0.3s ease-out",
         cursor: isDesktopRef.current ? "default" : "pointer",
-        fontFamily: "'sm00ch', 'Adobe Blank', sans-serif"
+        fontFamily: "'sm00ch', sans-serif"
+
       }}
       data-font-loaded={fontLoaded}
       data-blotter-ready={blotterReady}
