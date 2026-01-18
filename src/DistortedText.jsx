@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const DistortedText = ({ 
   text = "observation",
-  fontFamily = "'sm00ch', sans-serif ",
+  fontFamily = "sm00ch",
   baseSize = 120,
   color = "#f7f0f0ff",
   padding = 40,
@@ -21,7 +21,7 @@ const DistortedText = ({
   const materialRef = useRef(null);
   const animationFrameId = useRef(null);
   const resizeTimeout = useRef(null);
-
+  const fontRetryCountRef = useRef(0);
   const blotterInitRef = useRef(false);
 
   // POINT 2: Removed windowWidth state - only keeping necessary states
@@ -39,31 +39,32 @@ const DistortedText = ({
 
   const hoverMultiplierRef = useRef(1);
 
-  // ----------------------------------------------------------
-  // FONT LOADING (unchanged)
-  // ----------------------------------------------------------
-  useEffect(() => {
-    let mounted = true;
+// ----------------------------------------------------------
+// FONT LOADING (Safari-safe)
+// ----------------------------------------------------------
+useEffect(() => {
+  let mounted = true;
 
-    const loadFont = async () => {
-      try {
+  const waitForFonts = async () => {
+    try {
+      // Ask Safari to confirm CSS-loaded fonts
+      await document.fonts.load("400 16px sm00ch");
+      await document.fonts.load("400 16px adineue");
+      await document.fonts.ready;
 
-        const sm00chFont = new FontFace("sm00ch", "url(/fonts/sm00ch.woff2)");
-        await sm00chFont.load();
-        document.fonts.add(sm00chFont);
+      if (mounted) setFontLoaded(true);
+    } catch (err) {
+      console.warn("Font check failed, continuing anyway", err);
+      if (mounted) setFontLoaded(true);
+    }
+  };
 
-        await document.fonts.ready;
+  waitForFonts();
+  return () => {
+    mounted = false;
+  };
+}, []);
 
-        if (mounted) setFontLoaded(true);
-      } catch (err) {
-        console.warn("Font load failed, using fallback", err);
-        if (mounted) setFontLoaded(true);
-      }
-    };
-
-    loadFont();
-    return () => (mounted = false);
-  }, []);
 
   // ----------------------------------------------------------
   // FORCE FONT RENDER PASS (unchanged)
@@ -168,6 +169,14 @@ const DistortedText = ({
   // BLOTTER INITIALIZATION (unchanged)
   // ----------------------------------------------------------
   const initializeBlotter = useCallback(() => {
+    if (!document.fonts.check("16px sm00ch")) {
+  if (fontRetryCountRef.current < 10) {
+    fontRetryCountRef.current += 1;
+    setTimeout(initializeBlotter, 120);
+  }
+  return;
+}
+
     if (blotterInitRef.current) return;
     if (!window.Blotter || !containerRef.current || !fontLoaded) return;
 
@@ -301,6 +310,15 @@ const DistortedText = ({
     handleMobileHoverStart, handleMobileHoverEnd
   ]);
 
+  useEffect(() => {
+  setTimeout(() => {
+    console.log("fonts:", {
+      sm00ch: document.fonts.check("16px sm00ch"),
+      adineue: document.fonts.check("16px adineue")
+    });
+  }, 1500);
+}, []);
+
   // ----------------------------------------------------------
   // OUTPUT (unchanged)
   // ----------------------------------------------------------
@@ -317,7 +335,7 @@ const DistortedText = ({
         opacity: blotterReady ? 1 : 0,
         transition: "opacity 0.3s ease-out",
         cursor: isDesktopRef.current ? "default" : "pointer",
-        fontFamily: "'sm00ch', sans-serif"
+        fontFamily: "sm00ch"
 
       }}
       data-font-loaded={fontLoaded}
