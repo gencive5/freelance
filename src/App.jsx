@@ -77,7 +77,7 @@ useEffect(() => {
             </div>
 
             <div className="content-wrapper">
-              <DistortedText className="title-gap" text="Gencives" />
+              <DistortedText text="Gencives" />
               {/* <DistortedText text="développeur créatif" /> */}
             </div>
           </div>
