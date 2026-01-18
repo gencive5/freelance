@@ -1,0 +1,7 @@
+/fonts/*.woff2
+  Access-Control-Allow-Origin: *
+  Content-Type: font/woff2
+
+/fonts/*.woff
+  Access-Control-Allow-Origin: *
+  Content-Type: font/woff
