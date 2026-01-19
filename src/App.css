@@ -16,11 +16,10 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100%;
 }
+
 
 
 @font-face {
@@ -48,7 +47,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100) !important;
   z-index: 10;
   pointer-events: none;
 }
@@ -121,10 +120,8 @@ canvas {
     top: auto;
     width: 100%;
     height: calc(var(--vh, 1vh) * 100);
-
     z-index: 10;
     pointer-events: none;
-    padding-bottom: 2rem;
   }
 
   .flexcontainer {
@@ -159,8 +156,8 @@ canvas {
   }
 
   .distorted-text-container {
-    height: 100vh !important;
-    min-height: 100vh !important;
+    height: calc(var(--vh, 1vh) * 100) !important;
+    min-height: calc(var(--vh, 1vh) * 100) !important;
   }
   
   .distorted-text-container canvas {
@@ -171,7 +168,6 @@ canvas {
   
   .content-wrapper {
     height: calc(var(--vh, 1vh) * 100);
-
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -384,13 +380,13 @@ height: 100% !important;
 .desktop-first-row .flexcontainer {
   align-items: flex-end; 
   height: auto;
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
 }
 
 .desktop-first-row .text-column.Figure-Demo {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   justify-content: flex-end;
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -413,7 +409,7 @@ height: 100% !important;
   color: #02bebe ;
   position: relative;
   z-index: 1;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 
