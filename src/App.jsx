@@ -110,7 +110,7 @@ useEffect(() => {
                 </div>
               </div>
               <div className="content-wrapper">
-                <DistortedText className="title-wrapper" text="Gencives" />
+                <DistortedText text="Gencives" />
               </div>
             </div>
 
