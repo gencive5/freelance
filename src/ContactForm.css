@@ -109,11 +109,6 @@
   gap: 1rem;
 }
 
-/* Make the switch look more like a slider on mobile - FULL WIDTH */
-.mobile-slider.metalli-switch {
-  display: block;
-  width: 100% !important;
-}
 
 .submit-label {
  color: rgba(2, 190, 190, 0.15);
