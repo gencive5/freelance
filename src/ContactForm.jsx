@@ -303,7 +303,7 @@ const ContactForm = () => {
         <div className="footer-left">
           <a
             href="mailto:vic.segen@gmail.com"
-            className="link contact-icon-link"
+            className="link"
           >
             <EmailIcon/>
           </a>
@@ -311,8 +311,8 @@ const ContactForm = () => {
             href="https://instagram.com/gencive5"
             target="_blank"
             rel="noopener noreferrer"
-            className="link contact-icon-link"
-            style={{marginLeft: '1rem' }}
+            className="link"
+            style={{marginLeft: '2rem' }}
           >
             <InstagramIcon/>
           </a>
@@ -320,8 +320,8 @@ const ContactForm = () => {
             href="https://instagram.com/gencive5"
             target="_blank"
             rel="noopener noreferrer"
-            className="link contact-icon-link"
-            style={{marginLeft: '1rem' }}
+            className="link"
+            style={{marginLeft: '2rem' }}
           >
             <YoutubeIcon/>
           </a>
