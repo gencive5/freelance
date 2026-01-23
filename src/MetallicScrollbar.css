@@ -44,11 +44,11 @@
   opacity: 1;
 }
 
-/* mobile */
+
 .scrollbar-thumb {
   position: absolute;
   right: 1px;
-  width: 7px;
+  width: 12px;
   border-radius: 6px;
   min-height: 20px;
   cursor: grab;
@@ -61,6 +61,13 @@
     0 1px 3px rgba(0,0,0,0.3),
     inset 0 1px 1px rgba(255,255,255,0.4),
     inset 0 -1px 1px rgba(0,0,0,0.2);
+}
+
+/* mobile different width */
+@media (max-width: 768px) {
+.scrollbar-thumb {
+  width: 7px;
+}
 }
 
 
