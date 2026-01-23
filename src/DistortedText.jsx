@@ -310,14 +310,6 @@ useEffect(() => {
     handleMobileHoverStart, handleMobileHoverEnd
   ]);
 
-  useEffect(() => {
-  setTimeout(() => {
-    console.log("fonts:", {
-      sm00ch: document.fonts.check("16px sm00ch"),
-      adineue: document.fonts.check("16px adineue")
-    });
-  }, 1500);
-}, []);
 
   // ----------------------------------------------------------
   // OUTPUT (unchanged)
@@ -334,8 +326,7 @@ useEffect(() => {
         backfaceVisibility: "hidden",
         opacity: blotterReady ? 1 : 0,
         transition: "opacity 0.3s ease-out",
-        cursor: isDesktopRef.current ? "default" : "pointer",
-        fontFamily: "sm00ch"
+        cursor: isDesktopRef.current ? "default" : "pointer"
 
       }}
       data-font-loaded={fontLoaded}
