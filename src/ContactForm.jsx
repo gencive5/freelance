@@ -298,6 +298,7 @@ const ContactForm = () => {
           <a
             href="mailto:vic.segen@gmail.com"
             className="link"
+            aria-label="email"
           >
             <EmailIcon/>
           </a>
@@ -306,15 +307,17 @@ const ContactForm = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="link"
+            aria-label="instagram"
             style={{marginLeft: '2rem' }}
           >
             <InstagramIcon/>
           </a>
           <a
-            href="https://instagram.com/gencive5"
+            href="https://www.youtube.com/@Gencives"
             target="_blank"
             rel="noopener noreferrer"
             className="link"
+            aria-label="youtube"
             style={{marginLeft: '2rem' }}
           >
             <YoutubeIcon/>
@@ -326,6 +329,7 @@ const ContactForm = () => {
             href="https://sm00ch.xyz/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="visit sm00ch font"
             style={{ color: '#02bebe' }}
           >
             SM00CH
