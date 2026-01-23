@@ -129,13 +129,18 @@ const ContactForm = () => {
     // Create a form element for emailjs
     const formElement = formRef.current || document.createElement('form');
     
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_SERVICE_ID,
-        import.meta.env.VITE_TEMPLATE_ID,
-        formElement,
-        import.meta.env.VITE_PUBLIC_KEY
-      )
+    emailjs.send(
+      import.meta.env.VITE_SERVICE_ID,
+      import.meta.env.VITE_TEMPLATE_ID,
+      {
+        name: formData.user_name,
+        email: formData.user_email,
+        message: formData.user_message,
+        title: "Contact website"
+      },
+      import.meta.env.VITE_PUBLIC_KEY
+    )
+
       .then(
         (result) => {
           // SUCCESS: Turn all inputs bright green
