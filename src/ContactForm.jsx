@@ -20,7 +20,6 @@ const ContactForm = () => {
     user_email: 'neutral',
     user_message: 'neutral'
   });
-  const [emailError, setEmailError] = useState(false);
   
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
@@ -74,14 +73,6 @@ const ContactForm = () => {
       }));
     }
     
-    // Validate email in real-time
-    if (name === 'user_email') {
-      if (value.trim() && !validateEmail(value)) {
-        setEmailError(true);
-      } else {
-        setEmailError(false);
-      }
-    }
   };
 
   const isFormValid = () => {
