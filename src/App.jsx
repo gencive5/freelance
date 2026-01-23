@@ -53,7 +53,6 @@ useEffect(() => {
             <div className="overlay-text">
               <div className="flexcontainer">
                 <div className="text-column Figure-Demo">
-                  {/* gencives - will stay at top */}
                   <div className="text-fit1"> 
                     <span className="text-fit">
                       <span><span>gencives</span></span>
@@ -61,13 +60,11 @@ useEffect(() => {
                     </span>
                   </div>
                   
-                  {/* développeur créatif - will go to bottom */}
                   <span className="text-fit">
                     <span><span>développeur créatif</span></span>
                     <span aria-hidden="true">développeur créatif</span>
                   </span>
                   
-                  {/* design line - will go to bottom */}
                   <span className="text-fit">
                     <span><span>design - image de marque - développement - typographie</span></span>
                     <span aria-hidden="true">design - image de marque - développement - typographie</span>
@@ -78,7 +75,6 @@ useEffect(() => {
 
             <div className="content-wrapper">
               <DistortedText text="Gencives" />
-              {/* <DistortedText text="développeur créatif" /> */}
             </div>
           </div>
         )}

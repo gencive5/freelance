@@ -171,7 +171,6 @@ canvas {
   }
 
 
-
   .overlay-text,
   .overlay-text *,
   .text-column,
@@ -233,7 +232,7 @@ canvas {
       white-space: nowrap; /* ← from second block */
 
       @container (inline-size > 0) {
-        white-space: nowrap; /* ← this might be redundant now */
+        white-space: nowrap; 
       }
 
       &:not(.text-fit) {
@@ -324,7 +323,7 @@ height: 100% !important;
 .footer .link svg {
   width: 24px;
   height: 24px;
-  pointer-events: none; /* Let the link handle clicks */
+  pointer-events: none; 
 }
 
 
@@ -446,7 +445,6 @@ height: 100% !important;
 }
 
 
-/* Ensure metallic button has proper z-index */
 .metallic-button {
   position: relative;
   z-index: 3;

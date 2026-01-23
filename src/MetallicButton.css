@@ -23,15 +23,6 @@
   font-size: 1.5625em;
 }
 
-/* Base switch styles */
-.metalli-switch {
-  border: 0;
-  height: 0;
-  position: absolute;
-  visibility: hidden;
-  width: 0;
-}
-
 
 @media (hover: hover) and (pointer: fine) {
   .metallic-cursor {
@@ -65,26 +56,26 @@
 
   /* Text input shape (slim I-beam) */
   .metallic-cursor.text-shape {
-   width: 14px;  /* Wider than text cursor */
-  height: 28px; /* Taller than text cursor */
+   width: 14px;  
+  height: 28px; 
   background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
   box-shadow: 
     2px 2px 4px rgba(0,0,0,0.3),
     inset 1px 1px 3px rgba(255,255,255,0.8),
     inset -1px -1px 3px rgba(0,0,0,0.2) !important;
-  border-radius: 50%; /* Creates the oval shape */
+  border-radius: 50%; 
   animation: oval-pulse 1.5s infinite alternate;
   }
 
   .metallic-cursor.pointer-oval {
-  width: 28px;  /* Wider than text cursor */
-  height: 14px; /* Taller than text cursor */
+  width: 28px;  
+  height: 14px; 
   background: linear-gradient(145deg, #c0c0c0, #e0e0e0) !important;
   box-shadow: 
     2px 2px 4px rgba(0,0,0,0.3),
     inset 1px 1px 3px rgba(255,255,255,0.8),
     inset -1px -1px 3px rgba(0,0,0,0.2) !important;
-  border-radius: 50%; /* Creates the oval shape */
+  border-radius: 50%; 
   animation: oval-pulse 1.5s infinite alternate;
 }
 
