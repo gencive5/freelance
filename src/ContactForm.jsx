@@ -117,8 +117,6 @@ const ContactForm = () => {
     
     setIsSubmitting(true);
 
-    // Create a form element for emailjs
-    const formElement = formRef.current || document.createElement('form');
     
     emailjs.send(
       import.meta.env.VITE_SERVICE_ID,
