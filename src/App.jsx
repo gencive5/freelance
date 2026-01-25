@@ -1,7 +1,7 @@
 import './App.css';
 import './MetallicButton.css';
 import ContactForm from './ContactForm';
-import DistortedText from './DistortedText';
+import Distortion from './Distortion';
 import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 import MetallicCursor from './MetallicCursor';
@@ -74,7 +74,14 @@ useEffect(() => {
             </div>
 
             <div className="content-wrapper">
-              <DistortedText text="Gencives" />
+              <Distortion
+  text="observation"
+  fontFamily="sm00ch"
+  fontSize={120}
+  speed={0.6}
+  volatility={0.25}
+/>
+
             </div>
           </div>
         )}
@@ -106,7 +113,14 @@ useEffect(() => {
                 </div>
               </div>
               <div className="content-wrapper">
-                <DistortedText text="Gencives" />
+                <Distortion
+  text="observation"
+  fontFamily="sm00ch"
+  fontSize={120}
+  speed={0.6}
+  volatility={0.25}
+/>
+
               </div>
             </div>
 
