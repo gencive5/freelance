@@ -1,60 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-/* -------------------------------
-   SVG FALLBACK COMPONENT
--------------------------------- */
-const FallbackDistortedText = ({ text, color }) => {
-  const [active, setActive] = useState(false);
-
-  return (
-    <svg
-      width="100%"
-      height="1.2em"
-      viewBox="0 0 600 150"
-      style={{ overflow: "visible", cursor: "pointer" }}
-      onTouchStart={() => setActive(true)}
-      onTouchEnd={() => setActive(false)}
-      onMouseDown={() => setActive(true)}
-      onMouseUp={() => setActive(false)}
-    >
-      <defs>
-        <filter id="wave">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency={active ? 0.015 : 0.002}
-            numOctaves="2"
-            seed="2"
-          >
-            <animate
-              attributeName="baseFrequency"
-              dur="1.2s"
-              values="0.002;0.015;0.002"
-              repeatCount={active ? "indefinite" : "1"}
-            />
-          </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" scale="18" />
-        </filter>
-      </defs>
-
-      <text
-        x="50%"
-        y="50%"
-        dominantBaseline="middle"
-        textAnchor="middle"
-        fill={color}
-        fontFamily="sm00ch, sans-serif"
-        fontSize="120"
-        filter="url(#wave)"
-      >
-        {text}
-      </text>
-    </svg>
-  );
-};
-
-/* -------------------------------
-   MAIN COMPONENT
--------------------------------- */
 const DistortedText = ({ 
   text = "observation",
   fontFamily = "sm00ch",
@@ -78,72 +23,79 @@ const DistortedText = ({
   const resizeTimeout = useRef(null);
   const fontRetryCountRef = useRef(0);
   const blotterInitRef = useRef(false);
-  const blotterTimeoutRef = useRef(null);
 
+  // POINT 2: Removed windowWidth state - only keeping necessary states
   const [fontLoaded, setFontLoaded] = useState(false);
   const [blotterReady, setBlotterReady] = useState(false);
-  const [useFallback, setUseFallback] = useState(false);
 
   const timeRef = useRef(0);
+
+  // POINT 2: Calculate once and update ref directly on resize
   const isDesktopRef = useRef(window.innerWidth > 1024);
 
   const mouseMovementRef = useRef(0);
   const lastMousePositionRef = useRef({ x: 0, y: 0 });
   const mouseActiveRef = useRef(false);
+
   const hoverMultiplierRef = useRef(1);
 
-  /* -------------------------------
-     WEBGL CHECK
-  -------------------------------- */
-  const hasUsableWebGL = () => {
+// ----------------------------------------------------------
+// FONT LOADING (Safari-safe)
+// ----------------------------------------------------------
+useEffect(() => {
+  let mounted = true;
+
+  const waitForFonts = async () => {
     try {
-      const canvas = document.createElement("canvas");
-      return !!(
-        canvas.getContext("webgl") ||
-        canvas.getContext("experimental-webgl")
-      );
-    } catch {
-      return false;
+      // Ask Safari to confirm CSS-loaded fonts
+      await document.fonts.load("400 16px sm00ch");
+      await document.fonts.load("400 16px adineue");
+      await document.fonts.ready;
+
+      if (mounted) setFontLoaded(true);
+    } catch (err) {
+      console.warn("Font check failed, continuing anyway", err);
+      if (mounted) setFontLoaded(true);
     }
   };
 
-  useEffect(() => {
-    if (!hasUsableWebGL()) {
-      console.warn("WebGL unavailable → fallback");
-      setUseFallback(true);
-    }
-  }, []);
+  waitForFonts();
+  return () => {
+    mounted = false;
+  };
+}, []);
 
-  /* -------------------------------
-     FONT LOADING
-  -------------------------------- */
-  useEffect(() => {
-    let mounted = true;
 
-    const waitForFonts = async () => {
-      try {
-        await document.fonts.load("400 16px sm00ch");
-        await document.fonts.ready;
-        if (mounted) setFontLoaded(true);
-      } catch {
-        if (mounted) setFontLoaded(true);
-      }
-    };
-
-    waitForFonts();
-    return () => { mounted = false; };
-  }, []);
-
-  /* -------------------------------
-     SIZE
-  -------------------------------- */
+  // ----------------------------------------------------------
+  // FORCE FONT RENDER PASS (unchanged)
+  // ----------------------------------------------------------
   const getResponsiveSize = useCallback(() => {
     return isDesktopRef.current ? baseSize * desktopSizeMultiplier : baseSize;
   }, [baseSize, desktopSizeMultiplier]);
 
-  /* -------------------------------
-     MOUSE
-  -------------------------------- */
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const temp = document.createElement("div");
+    temp.style.cssText = `
+      position:absolute;
+      opacity:0;
+      pointer-events:none;
+      font-family: 'sm00ch', sans-serif;
+      font-size:${getResponsiveSize()}px;
+      white-space:nowrap;
+    `;
+    temp.textContent = text;
+
+    containerRef.current.appendChild(temp);
+    setTimeout(() => temp.remove(), 500);
+
+    return () => temp.remove();
+  }, [text, fontLoaded, getResponsiveSize]);
+
+  // ----------------------------------------------------------
+  // MOUSE MOVEMENT (unchanged)
+  // ----------------------------------------------------------
   const handleMouseMove = useCallback((e) => {
     if (!isDesktopRef.current) return;
 
@@ -162,9 +114,9 @@ const DistortedText = ({
     lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
   }, []);
 
-  /* -------------------------------
-     ANIMATION LOOP
-  -------------------------------- */
+  // ----------------------------------------------------------
+  // ANIMATION LOOP (unchanged)
+  // ----------------------------------------------------------
   const render = useCallback(() => {
     if (!materialRef.current) return;
 
@@ -177,6 +129,7 @@ const DistortedText = ({
         if (mouseMovementRef.current < 0.05) {
           mouseMovementRef.current = 0;
           mouseActiveRef.current = false;
+          timeRef.current -= 0.01;
         }
       }
 
@@ -195,19 +148,34 @@ const DistortedText = ({
     animationFrameId.current = requestAnimationFrame(render);
   }, [speed, volatility, mouseMovementMultiplier, mouseDecayRate]);
 
-  /* -------------------------------
-     BLOTTER INIT
-  -------------------------------- */
-  const initializeBlotter = useCallback(() => {
-    if (useFallback) return;
+  // ----------------------------------------------------------
+  // TOUCH/HOVER (unchanged)
+  // ----------------------------------------------------------
+  const handleMobileHoverStart = useCallback(() => {
+    if (isDesktopRef.current) return;
 
+    if (materialRef.current) materialRef.current.uniforms.uSpeed.value = 1.3;
+    hoverMultiplierRef.current = 2;
+  }, []);
+
+  const handleMobileHoverEnd = useCallback(() => {
+    if (isDesktopRef.current) return;
+
+    if (materialRef.current) materialRef.current.uniforms.uSpeed.value = speed;
+    hoverMultiplierRef.current = 1;
+  }, [speed]);
+
+  // ----------------------------------------------------------
+  // BLOTTER INITIALIZATION (unchanged)
+  // ----------------------------------------------------------
+  const initializeBlotter = useCallback(() => {
     if (!document.fonts.check("16px sm00ch")) {
-      if (fontRetryCountRef.current < 10) {
-        fontRetryCountRef.current += 1;
-        setTimeout(initializeBlotter, 120);
-      }
-      return;
-    }
+  if (fontRetryCountRef.current < 10) {
+    fontRetryCountRef.current += 1;
+    setTimeout(initializeBlotter, 120);
+  }
+  return;
+}
 
     if (blotterInitRef.current) return;
     if (!window.Blotter || !containerRef.current || !fontLoaded) return;
@@ -215,13 +183,7 @@ const DistortedText = ({
     blotterInitRef.current = true;
 
     try {
-      /* watchdog */
-      clearTimeout(blotterTimeoutRef.current);
-      blotterTimeoutRef.current = setTimeout(() => {
-        console.warn("Blotter timeout → fallback");
-        setUseFallback(true);
-      }, 1200);
-
+      const prevCanvas = containerRef.current.querySelector("canvas");
       const size = getResponsiveSize();
 
       const textObj = new window.Blotter.Text(text, {
@@ -254,63 +216,104 @@ const DistortedText = ({
       scopeRef.current.appendTo(tempDiv);
       const newCanvas = tempDiv.querySelector("canvas");
 
-      if (!newCanvas) {
-        throw new Error("Canvas not created");
+      if (newCanvas) {
+        newCanvas.style.opacity = "0";
+        newCanvas.style.transition = "opacity 0.3s ease-out";
       }
 
-      containerRef.current.appendChild(newCanvas);
+      if (prevCanvas && newCanvas) {
+        containerRef.current.appendChild(newCanvas);
 
-      clearTimeout(blotterTimeoutRef.current);
+        requestAnimationFrame(() => {
+          newCanvas.style.opacity = "1";
+          prevCanvas.style.opacity = "0";
+          setTimeout(() => prevCanvas.remove(), 300);
+        });
+      } else {
+        scopeRef.current.appendTo(containerRef.current);
+        const initial = containerRef.current.querySelector("canvas");
+        if (initial) {
+          initial.style.opacity = "0";
+          initial.style.transition = "opacity 0.3s";
+          requestAnimationFrame(() => (initial.style.opacity = "1"));
+        }
+      }
+
+      const el = containerRef.current;
 
       if (isDesktopRef.current) {
         document.addEventListener("mousemove", handleMouseMove);
+      } else {
+        el.addEventListener("mouseenter", handleMobileHoverStart);
+        el.addEventListener("mouseleave", handleMobileHoverEnd);
+        el.addEventListener("touchstart", handleMobileHoverStart);
+        el.addEventListener("touchend", handleMobileHoverEnd);
       }
 
       animationFrameId.current = requestAnimationFrame(render);
-      setBlotterReady(true);
 
+      setBlotterReady(true);
     } catch (err) {
       console.error("Blotter failed:", err);
-      clearTimeout(blotterTimeoutRef.current);
-      setUseFallback(true);
     }
   }, [
     text, fontFamily, color, padding, speed, volatility, seed,
-    getResponsiveSize, fontLoaded, handleMouseMove, render, useFallback
+    getResponsiveSize, fontLoaded, handleMouseMove,
+    handleMobileHoverStart, handleMobileHoverEnd, render
   ]);
 
+  // ----------------------------------------------------------
+  // INIT WHEN FONT IS READY (unchanged)
+  // ----------------------------------------------------------
   useEffect(() => {
     if (fontLoaded) initializeBlotter();
   }, [fontLoaded, initializeBlotter]);
 
-  /* -------------------------------
-     RESIZE
-  -------------------------------- */
-  useEffect(() => {
-    const handleResize = () => {
-      const wasDesktop = isDesktopRef.current;
-      isDesktopRef.current = window.innerWidth > 1024;
+  // ----------------------------------------------------------
+  // RESIZE HANDLER (updated for Point 2)
+  // ----------------------------------------------------------
+  const handleResize = useCallback(() => {
+    const newWidth = window.innerWidth;
+    const wasDesktop = isDesktopRef.current;
 
-      if (wasDesktop !== isDesktopRef.current) {
-        clearTimeout(resizeTimeout.current);
-        resizeTimeout.current = setTimeout(() => {
-          blotterInitRef.current = false;
-          initializeBlotter();
-        }, 150);
-      }
-    };
+    // POINT 2: Update ref directly without state
+    isDesktopRef.current = newWidth > 1024;
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    if (wasDesktop !== isDesktopRef.current) {
+      clearTimeout(resizeTimeout.current);
+      resizeTimeout.current = setTimeout(() => {
+        initializeBlotter();
+      }, 150);
+    }
   }, [initializeBlotter]);
 
-  /* -------------------------------
-     OUTPUT
-  -------------------------------- */
-  if (useFallback) {
-    return <FallbackDistortedText text={text} color={color} />;
-  }
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
 
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout.current);
+      cancelAnimationFrame(animationFrameId.current);
+
+      document.removeEventListener("mousemove", handleMouseMove);
+
+      const el = containerRef.current;
+      if (el) {
+        el.removeEventListener("mouseenter", handleMobileHoverStart);
+        el.removeEventListener("mouseleave", handleMobileHoverEnd);
+        el.removeEventListener("touchstart", handleMobileHoverStart);
+        el.removeEventListener("touchend", handleMobileHoverEnd);
+      }
+    };
+  }, [
+    handleResize, handleMouseMove,
+    handleMobileHoverStart, handleMobileHoverEnd
+  ]);
+
+
+  // ----------------------------------------------------------
+  // OUTPUT (unchanged)
+  // ----------------------------------------------------------
   return (
     <div
       ref={containerRef}
@@ -319,9 +322,16 @@ const DistortedText = ({
         display: "inline-block",
         position: "relative",
         lineHeight: 0,
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
         opacity: blotterReady ? 1 : 0,
-        transition: "opacity 0.3s ease-out"
+        transition: "opacity 0.3s ease-out",
+        cursor: isDesktopRef.current ? "default" : "pointer"
+
       }}
+      data-font-loaded={fontLoaded}
+      data-blotter-ready={blotterReady}
+      data-device-type={isDesktopRef.current ? "desktop" : "mobile"}
     />
   );
 };
