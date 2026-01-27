@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import './App.css';
 import './ContactForm.css';
 import MetallicTextareaScrollbar from './MetallicTextareaScrollbar';
 import EmailIcon from './icons/EmailIcon'; 
