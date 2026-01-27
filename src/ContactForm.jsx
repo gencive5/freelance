@@ -296,7 +296,7 @@ const ContactForm = () => {
       <footer className="footer">
         <div className="footer-left">
           <a
-            href="mailto:vic.segen@gmail.com"
+            href="mailto:contact@genciv.es"
             className="link"
             aria-label="email"
           >
