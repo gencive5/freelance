@@ -10,49 +10,59 @@ const Distortion = ({
   volatility = 0.25
 }) => {
   const containerRef = useRef(null);
+  const rendererRef = useRef(null);
+  const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
+  const materialRef = useRef(null);
+  const textureRef = useRef(null);
   const frameRef = useRef(null);
-  
-  // Refs for cleanup
-  const cleanupRefs = useRef({
-    geometry: null,
-    material: null,
-    texture: null,
-    renderer: null
-  });
+  const startTimeRef = useRef(performance.now());
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     let mounted = true;
+    let geometry, material, texture, renderer;
 
-    const init = async () => {
+    const initDistortion = async () => {
       try {
-        // 1. Wait for font to load (if needed)
+        // SMART FONT LOADING STRATEGY
+        // ---------------------------
         const fontString = `1em "${fontFamily}"`;
+        const isFontLoaded = document.fonts.check(fontString);
         
-        if (!document.fonts.check(fontString)) {
-          // Use CSS font loading API - much cleaner
-          await document.fonts.load(fontString);
+        // Mobile: Font is usually preloaded, so isFontLoaded = true
+        // Desktop: Font might not be loaded yet, so isFontLoaded = false
+        
+        if (!isFontLoaded) {
+          // Try to load font, but don't wait too long (especially for mobile)
+          const fontLoadPromise = document.fonts.load(fontString);
+          const timeoutPromise = new Promise(resolve => setTimeout(resolve, 50));
+          
+          // Race condition: font load vs short timeout
+          await Promise.race([fontLoadPromise, timeoutPromise]);
+          
+          // Small additional wait for font application
+          await new Promise(resolve => requestAnimationFrame(resolve));
         }
-        
-        // Optional: Wait for all fonts to be ready
-        await document.fonts.ready;
-        
-        if (!mounted) return;
 
-        // 2. Create canvas with loaded font
+        if (!mounted || !containerRef.current) return;
+
+        // ----------------------
+        // Canvas text creation
+        // ----------------------
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         const textCanvas = document.createElement("canvas");
         const ctx = textCanvas.getContext("2d");
 
-        // Font should now be loaded
+        // Font should be loaded by now (or fallback will be used)
         ctx.font = `${fontSize * dpr}px "${fontFamily}", sans-serif`;
         const metrics = ctx.measureText(text);
 
         textCanvas.width = Math.ceil(metrics.width + fontSize * dpr * 0.6);
         textCanvas.height = Math.ceil(fontSize * dpr * 1.4);
 
-        // Redraw with same settings
+        // Redraw with same font settings
         ctx.font = `${fontSize * dpr}px "${fontFamily}", sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -60,34 +70,49 @@ const Distortion = ({
         ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
         ctx.fillText(text, textCanvas.width / 2, textCanvas.height / 2);
 
-        // Debug log to verify
-        console.log(`Font "${fontFamily}" loaded, canvas width: ${metrics.width}`);
+        // Optional: Check if font rendered correctly (for debugging)
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`Font "${fontFamily}" loaded:`, document.fonts.check(`1em "${fontFamily}"`));
+          console.log('Canvas dimensions:', textCanvas.width, 'x', textCanvas.height);
+        }
 
-        const texture = new THREE.CanvasTexture(textCanvas);
+        // ----------------------
+        // Three.js setup
+        // ----------------------
+        texture = new THREE.CanvasTexture(textCanvas);
         texture.minFilter = THREE.LinearFilter;
         texture.magFilter = THREE.LinearFilter;
         texture.needsUpdate = true;
-        cleanupRefs.current.texture = texture;
+        textureRef.current = texture;
 
-        // 3. Three.js setup
         const scene = new THREE.Scene();
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
-        camera.position.z = 1;
+        sceneRef.current = scene;
 
-        const renderer = new THREE.WebGLRenderer({
+        const camera = new THREE.OrthographicCamera(
+          -1,
+          1,
+          1,
+          -1,
+          0,
+          10
+        );
+        camera.position.z = 1;
+        cameraRef.current = camera;
+
+        renderer = new THREE.WebGLRenderer({
           alpha: true,
           antialias: true
         });
 
         renderer.setPixelRatio(dpr);
         renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
-        cleanupRefs.current.renderer = renderer;
+        rendererRef.current = renderer;
         
-        // Clear and append
+        // Clear container and append new canvas
         containerRef.current.innerHTML = '';
         containerRef.current.appendChild(renderer.domElement);
 
-        const material = new THREE.ShaderMaterial({
+        material = new THREE.ShaderMaterial({
           transparent: true,
           uniforms: {
             uTime: { value: 0 },
@@ -121,34 +146,34 @@ const Distortion = ({
           `
         });
 
-        cleanupRefs.current.material = material;
+        materialRef.current = material;
 
-        const geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
-        cleanupRefs.current.geometry = geometry;
-        
+        geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        const startTime = performance.now();
-        
+        // ----------------------
+        // Animation loop
+        // ----------------------
         const animate = () => {
           if (!mounted) return;
-          
-          material.uniforms.uTime.value = (performance.now() - startTime) * 0.001;
+          material.uniforms.uTime.value = (performance.now() - startTimeRef.current) * 0.001;
           renderer.render(scene, camera);
           frameRef.current = requestAnimationFrame(animate);
         };
 
         animate();
-        
+
       } catch (error) {
-        console.error('Error initializing distortion:', error);
+        console.error('Error in Distortion component:', error);
       }
     };
 
-    init();
+    initDistortion();
 
+    // ----------------------
     // Cleanup
+    // ----------------------
     return () => {
       mounted = false;
       
@@ -157,8 +182,6 @@ const Distortion = ({
       }
 
       // Dispose Three.js resources
-      const { geometry, material, texture, renderer } = cleanupRefs.current;
-      
       if (geometry) geometry.dispose();
       if (material) material.dispose();
       if (texture) texture.dispose();
@@ -168,14 +191,6 @@ const Distortion = ({
         }
         renderer.dispose();
       }
-      
-      // Reset refs
-      cleanupRefs.current = {
-        geometry: null,
-        material: null,
-        texture: null,
-        renderer: null
-      };
     };
   }, [text, fontFamily, fontSize, color, speed, volatility]);
 

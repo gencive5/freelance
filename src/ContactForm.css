@@ -229,3 +229,7 @@
   position: relative;
   z-index: 3;
 }
+
+.marginb {
+  margin-bottom: 1rem;
+}

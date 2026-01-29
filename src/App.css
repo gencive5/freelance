@@ -75,7 +75,6 @@ html, body, #root {
   padding-right: 14px;
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
-
   align-items: end;
 }
 
@@ -83,7 +82,6 @@ html, body, #root {
   display: flex;
   align-items: flex-end;
   height: calc(var(--vh, 1vh) * 100);
-
 }
 
 .content-wrapper {
@@ -106,11 +104,6 @@ html, body, #root {
   width: 60%;
 }
 
-canvas {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
 
 @media (max-width: 768px) {
   .overlay-text {
@@ -147,22 +140,8 @@ canvas {
     align-items: center;
     gap: 1rem; 
   }
-  
-  canvas {
-    width: 100% !important;
-  }
 
-  .distorted-text-container {
-    height: calc(var(--vh, 1vh) * 100) !important;
-    min-height: calc(var(--vh, 1vh) * 100) !important;
-  }
-  
-  .distorted-text-container canvas {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: fill !important;
-  }
-  
+ 
   .content-wrapper {
     height: calc(var(--vh, 1vh) * 100);
     display: flex;
@@ -185,13 +164,6 @@ canvas {
     -webkit-touch-callout: none;
   }
 
-  .distorted-text-container,
-  .distorted-text-container * {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
 }
 
 .text-fit {
@@ -270,25 +242,6 @@ canvas {
 .text-fit1 {
   width: 30%;
 }
-
-.marginb {
-  margin-bottom: 1rem;
-}
-
-
-/* Distorted Text Styles */
-.distorted-text-container {
-height: 100% !important;
-    width: 100% !important;
-    object-fit: fill !important;
-}
-
-.distorted-text-container canvas {
- height: 100% !important;
-    width: 100% !important;
-    object-fit: fill !important;
-}
-
 
 
 .desktop-first-row .text-fit {
@@ -371,7 +324,6 @@ height: 100% !important;
   display: flex;
   flex-direction: column;
   height: calc(var(--vh, 1vh) * 100);
-
   background-color: #f7f0f0ff;
   color: #02bebe ;
   position: relative;
