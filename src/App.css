@@ -24,7 +24,7 @@ body {
 @font-face {
   font-family: "sm00ch";
   src: url("/fonts/sm00ch.woff2") format("woff2");
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
