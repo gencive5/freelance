@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 const Distortion = ({
@@ -7,7 +7,8 @@ const Distortion = ({
   color = "#f7f0f0",
   fontSize = 120,
   speed = 0.6,
-  volatility = 0.25
+  volatility = 0.25,
+  className = ""
 }) => {
   const containerRef = useRef(null);
   const rendererRef = useRef(null);
@@ -17,52 +18,62 @@ const Distortion = ({
   const textureRef = useRef(null);
   const frameRef = useRef(null);
   const startTimeRef = useRef(performance.now());
+  
+  // State for graceful loading like your old component
+  const [fontLoaded, setFontLoaded] = useState(false);
+  const [threeReady, setThreeReady] = useState(false);
+  const isDesktopRef = useRef(window.innerWidth > 768);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    // Device detection
+    isDesktopRef.current = window.innerWidth > 768;
+  }, []);
+
+  useEffect(() => {
+    // Load font first (like your old component)
+    const loadFont = async () => {
+      const fontString = `1em "${fontFamily}"`;
+      
+      // Check if already loaded (common on mobile)
+      if (document.fonts.check(fontString)) {
+        setFontLoaded(true);
+        return;
+      }
+      
+      // Try to load it
+      try {
+        await document.fonts.load(fontString);
+        setFontLoaded(true);
+      } catch (err) {
+        console.warn('Font load failed, continuing anyway:', err);
+        setFontLoaded(true); // Still continue
+      }
+    };
+    
+    loadFont();
+  }, [fontFamily]);
+
+  useEffect(() => {
+    if (!containerRef.current || !fontLoaded) return;
 
     let mounted = true;
     let geometry, material, texture, renderer;
 
-    const initDistortion = async () => {
+    const initThree = () => {
       try {
-        // SMART FONT LOADING STRATEGY
-        // ---------------------------
-        const fontString = `1em "${fontFamily}"`;
-        const isFontLoaded = document.fonts.check(fontString);
-        
-        // Mobile: Font is usually preloaded, so isFontLoaded = true
-        // Desktop: Font might not be loaded yet, so isFontLoaded = false
-        
-        if (!isFontLoaded) {
-          // Try to load font, but don't wait too long (especially for mobile)
-          const fontLoadPromise = document.fonts.load(fontString);
-          const timeoutPromise = new Promise(resolve => setTimeout(resolve, 50));
-          
-          // Race condition: font load vs short timeout
-          await Promise.race([fontLoadPromise, timeoutPromise]);
-          
-          // Small additional wait for font application
-          await new Promise(resolve => requestAnimationFrame(resolve));
-        }
-
-        if (!mounted || !containerRef.current) return;
-
         // ----------------------
-        // Canvas text creation
+        // Canvas text (font should be loaded now)
         // ----------------------
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         const textCanvas = document.createElement("canvas");
         const ctx = textCanvas.getContext("2d");
 
-        // Font should be loaded by now (or fallback will be used)
         ctx.font = `${fontSize * dpr}px "${fontFamily}", sans-serif`;
         const metrics = ctx.measureText(text);
 
         textCanvas.width = Math.ceil(metrics.width + fontSize * dpr * 0.6);
         textCanvas.height = Math.ceil(fontSize * dpr * 1.4);
 
-        // Redraw with same font settings
         ctx.font = `${fontSize * dpr}px "${fontFamily}", sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -70,45 +81,33 @@ const Distortion = ({
         ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
         ctx.fillText(text, textCanvas.width / 2, textCanvas.height / 2);
 
-        // Optional: Check if font rendered correctly (for debugging)
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`Font "${fontFamily}" loaded:`, document.fonts.check(`1em "${fontFamily}"`));
-          console.log('Canvas dimensions:', textCanvas.width, 'x', textCanvas.height);
-        }
-
-        // ----------------------
-        // Three.js setup
-        // ----------------------
         texture = new THREE.CanvasTexture(textCanvas);
         texture.minFilter = THREE.LinearFilter;
         texture.magFilter = THREE.LinearFilter;
         texture.needsUpdate = true;
         textureRef.current = texture;
 
+        // ----------------------
+        // Three.js setup
+        // ----------------------
         const scene = new THREE.Scene();
         sceneRef.current = scene;
 
-        const camera = new THREE.OrthographicCamera(
-          -1,
-          1,
-          1,
-          -1,
-          0,
-          10
-        );
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
         camera.position.z = 1;
         cameraRef.current = camera;
 
         renderer = new THREE.WebGLRenderer({
           alpha: true,
-          antialias: true
+          antialias: true,
+          powerPreference: "high-performance"
         });
 
         renderer.setPixelRatio(dpr);
         renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
         rendererRef.current = renderer;
         
-        // Clear container and append new canvas
+        // Clear and append
         containerRef.current.innerHTML = '';
         containerRef.current.appendChild(renderer.domElement);
 
@@ -152,9 +151,7 @@ const Distortion = ({
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        // ----------------------
         // Animation loop
-        // ----------------------
         const animate = () => {
           if (!mounted) return;
           material.uniforms.uTime.value = (performance.now() - startTimeRef.current) * 0.001;
@@ -163,45 +160,54 @@ const Distortion = ({
         };
 
         animate();
-
+        
+        // Mark as ready (like your old component's blotterReady)
+        setThreeReady(true);
+        
       } catch (error) {
-        console.error('Error in Distortion component:', error);
+        console.error('Three.js initialization error:', error);
       }
     };
 
-    initDistortion();
+    initThree();
 
-    // ----------------------
     // Cleanup
-    // ----------------------
     return () => {
       mounted = false;
+      setThreeReady(false);
       
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
-
-      // Dispose Three.js resources
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
       if (geometry) geometry.dispose();
       if (material) material.dispose();
       if (texture) texture.dispose();
       if (renderer) {
-        if (renderer.domElement && renderer.domElement.parentNode) {
+        if (renderer.domElement.parentNode) {
           renderer.domElement.parentNode.removeChild(renderer.domElement);
         }
         renderer.dispose();
       }
     };
-  }, [text, fontFamily, fontSize, color, speed, volatility]);
+  }, [fontLoaded, text, fontFamily, fontSize, color, speed, volatility]);
 
   return (
     <div
       ref={containerRef}
+      className={`distorted-text-container ${className}`}
       style={{
+        display: "inline-block",
+        position: "relative",
+        lineHeight: 0,
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+        opacity: threeReady ? 1 : 0,
+        transition: "opacity 0.3s ease-out",
+        cursor: isDesktopRef.current ? "default" : "pointer",
         width: "100%",
-        height: "100%",
-        position: "relative"
+        height: "100%"
       }}
+      data-font-loaded={fontLoaded}
+      data-three-ready={threeReady}
+      data-device-type={isDesktopRef.current ? "desktop" : "mobile"}
     />
   );
 };
