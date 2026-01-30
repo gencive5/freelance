@@ -183,6 +183,9 @@ const ContactForm = () => {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="contact-form" noValidate>
+
+    <div className="contact-form__content">
+
       <div className="contact-form__group">
         {isMobile && (
           <span className="text-fit marginb">
@@ -290,7 +293,7 @@ const ContactForm = () => {
     </button>
 </div>
 
-
+      {isMobile && (
       
       <footer className="footer">
         <div className="footer-left">
@@ -335,6 +338,56 @@ const ContactForm = () => {
           </a>
         </div>
       </footer>
+      )
+      }
+
+    </div>
+
+    {!isMobile && (<footer className="footer">
+        <div className="footer-left">
+          <a
+            href="mailto:contact@genciv.es"
+            className="link"
+            aria-label="email"
+          >
+            <EmailIcon/>
+          </a>
+          <a
+            href="https://instagram.com/gencive5"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+            aria-label="instagram"
+            style={{marginLeft: '2rem' }}
+          >
+            <InstagramIcon/>
+          </a>
+          <a
+            href="https://www.youtube.com/@Gencives"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+            aria-label="youtube"
+            style={{marginLeft: '2rem' }}
+          >
+            <YoutubeIcon/>
+          </a>
+        </div>
+        
+        <div className="footer-right">
+          <a
+            href="https://sm00ch.xyz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="visit sm00ch font"
+            style={{ color: '#02bebe' }}
+          >
+            SM00CH
+          </a>
+        </div>
+      </footer>
+      )}
+
     </form>
   );
 };
