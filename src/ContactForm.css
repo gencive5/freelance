@@ -14,7 +14,7 @@
   padding: 1rem;
   box-sizing: border-box;
   font-family: 'adineue', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #02bebe !important;
   display: flex;
   flex-direction: column;
@@ -45,11 +45,11 @@
   border: 0px solid #02bebe;
   background: rgba(2, 190, 190, 0.1);
   font-family: inherit;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   outline: none;
   border-radius: 50px;
   transition: all 0.3s ease;
-  color: #02bebe !important;
+  color: #7964cf !important;
   opacity: 1;
   width: 100%;
   z-index: 100;
@@ -232,4 +232,20 @@
 
 .marginb {
   margin-bottom: 1rem;
+}
+
+
+/* Add this to your existing CSS */
+.contact-form__group:has(textarea) {
+  position: relative;
+  min-height: 120px; /* Adjust as needed */
+}
+
+.contact-form__group textarea {
+  resize: none; /* Prevent manual resizing */
+  height: 6rem; /* Set fixed height */
+  min-height: 6rem;
+  max-height: 6rem;
+  line-height: 1.4; /* Match input line-height */
+  padding: 15px 20px; /* Match input padding exactly */
 }
