@@ -102,6 +102,24 @@
   }
 }
 
+.contact-form__submit button {
+  width: 100%;
+  display: block;
+  height: 4rem;
+}
+
+/* Create a modified version of text-fit for the submit button */
+.contact-form__submit .text-fit {
+  /* Keep all the original text-fit properties but adjust spacing */
+  --min-font-size: 1.4rem; /* Adjust as needed */
+  
+  & > :not([aria-hidden]) > * {
+    line-height: 0.5;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 
 .submit-label {
  color: rgba(2, 190, 190, 0.15);
