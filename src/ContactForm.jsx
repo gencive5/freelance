@@ -49,7 +49,84 @@ const ContactForm = () => {
       textareaRef.current.setAttribute('autocapitalize', 'off');
     }
 
-    return () => window.removeEventListener('resize', handleResize);
+    // ===== CHROME AUTOFILL FIX =====
+    const fixChromeAutofillStyles = () => {
+      const inputs = [nameInputRef.current, emailInputRef.current];
+      
+      inputs.forEach(input => {
+        if (input) {
+          // Check if input is autofilled by Chrome
+          // Method 1: Check for the autofill pseudo-class
+          const isAutofilled = input.matches(':-webkit-autofill') || 
+                             input.matches(':autofill');
+          
+          // Method 2: Check if Chrome has changed the background color
+          const computedStyle = window.getComputedStyle(input);
+          const bgColor = computedStyle.backgroundColor;
+          const textColor = computedStyle.color;
+          
+          // If autofilled or if colors don't match our theme
+          if (isAutofilled || 
+              (bgColor !== 'rgba(2, 190, 190, 0.1)' && bgColor !== 'rgba(2, 190, 190, 0.0980392)')) {
+            
+            // Apply our styles directly via inline styles
+            input.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
+            input.style.setProperty('color', '#7964cf', 'important');
+            input.style.setProperty('background-color', 'rgba(2, 190, 190, 0.1)', 'important');
+            input.style.setProperty('background-image', 'none', 'important');
+            input.style.setProperty('box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+            input.style.setProperty('-webkit-box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+            
+            // Add a custom attribute to track
+            input.setAttribute('data-autofilled', 'true');
+          }
+        }
+      });
+    };
+
+    // Run the fix at multiple intervals to catch autofill
+    const intervals = [0, 100, 300, 500, 1000, 2000];
+    intervals.forEach(timeout => {
+      setTimeout(fixChromeAutofillStyles, timeout);
+    });
+
+    // Also run on various events
+    const events = ['focus', 'blur', 'input', 'change', 'animationstart'];
+    events.forEach(eventName => {
+      document.addEventListener(eventName, fixChromeAutofillStyles, true);
+    });
+
+    // MutationObserver to watch for attribute changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'style' || mutation.attributeName === 'class') {
+          fixChromeAutofillStyles();
+        }
+      });
+    });
+
+    // Observe input elements
+    if (nameInputRef.current) {
+      observer.observe(nameInputRef.current, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      });
+    }
+    if (emailInputRef.current) {
+      observer.observe(emailInputRef.current, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      });
+    }
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      events.forEach(eventName => {
+        document.removeEventListener(eventName, fixChromeAutofillStyles, true);
+      });
+      observer.disconnect();
+    };
   }, []);
 
   const validateEmail = (email) => {
@@ -180,6 +257,8 @@ const ContactForm = () => {
     const status = fieldStatus[fieldName];
     return `contact-form__input contact-form__input--${status}`;
   };
+
+  
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="contact-form" noValidate>
