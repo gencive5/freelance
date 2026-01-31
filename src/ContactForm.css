@@ -57,16 +57,9 @@
   color: #7964cf !important;
   opacity: 1;
   width: 100%;
- 
-  position: relative;
-  z-index: 202;
+  z-index: 100;
 }
 
-
-/* When success overlay is shown, inputs should be below it but still usable */
-.contact-form__input:focus {
-  z-index: 203; /* Bring focused input above overlay */
-}
 
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
@@ -108,6 +101,19 @@
   color: rgba(2, 190, 190, 0.6);
   opacity: 1;
   transition: color 0.3s ease;
+}
+
+/* Add this to your ContactForm.css */
+.contact-form__input--success,
+.contact-form__input--success:-webkit-autofill,
+.contact-form__input--success:-webkit-autofill:hover,
+.contact-form__input--success:-webkit-autofill:focus,
+.contact-form__input--success:-webkit-autofill:active {
+  background: #a6bf04 !important;
+  -webkit-text-fill-color: #02bebe !important;
+  color: #02bebe !important;
+  -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
+  box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
 }
 
 

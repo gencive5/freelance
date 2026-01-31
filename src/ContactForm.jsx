@@ -19,7 +19,6 @@ const ContactForm = () => {
     user_email: 'neutral',
     user_message: 'neutral'
   });
-  const [showSuccessOverlay, setShowSuccessOverlay] = useState(false);
   
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
@@ -52,9 +51,6 @@ const ContactForm = () => {
 
     // ===== CHROME AUTOFILL FIX =====
     const fixChromeAutofillStyles = () => {
-      // Don't run if showing success overlay
-      if (showSuccessOverlay) return;
-      
       const inputs = [nameInputRef.current, emailInputRef.current];
       
       inputs.forEach(input => {
@@ -66,7 +62,6 @@ const ContactForm = () => {
           // Check if Chrome has changed the background color
           const computedStyle = window.getComputedStyle(input);
           const bgColor = computedStyle.backgroundColor;
-          const textColor = computedStyle.color;
           
           // If autofilled or if colors don't match our theme
           if (isAutofilled || 
@@ -130,7 +125,7 @@ const ContactForm = () => {
       });
       observer.disconnect();
     };
-  }, [showSuccessOverlay]);
+  }, []);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -143,6 +138,27 @@ const ContactForm = () => {
       ...prev,
       [name]: value
     }));
+    
+    // FIX FOR EMAIL FIELD AUTOFILL - SOLUTION 1
+    if (name === 'user_email') {
+      // Small delay to let Chrome apply its styles
+      setTimeout(() => {
+        const computedStyle = window.getComputedStyle(e.target);
+        const bgColor = computedStyle.backgroundColor;
+        
+        // Check if it's Chrome's autofill color (light yellow/blue)
+        if (bgColor.includes('250, 255, 189') || // Chrome's light yellow
+            bgColor.includes('232, 240, 254') || // Chrome's light blue
+            (bgColor !== 'rgba(2, 190, 190, 0.1)' && 
+             bgColor !== 'rgba(2, 190, 190, 0.0980392)')) {
+          
+          // Apply our styles
+          e.target.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
+          e.target.style.setProperty('background-color', 'rgba(2, 190, 190, 0.1)', 'important');
+          e.target.style.setProperty('box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+        }
+      }, 50); // 50ms delay
+    }
     
     // Reset field status when user starts typing
     if (fieldStatus[name] !== 'neutral') {
@@ -194,6 +210,7 @@ const ContactForm = () => {
     }
     
     setIsSubmitting(true);
+
     
     emailjs.send(
       import.meta.env.VITE_SERVICE_ID,
@@ -206,10 +223,10 @@ const ContactForm = () => {
       },
       import.meta.env.VITE_PUBLIC_KEY
     )
+
       .then(
         (result) => {
-          // SUCCESS: Show overlay and set status
-          setShowSuccessOverlay(true);
+          // SUCCESS: Turn all inputs bright green
           setFieldStatus({
             user_name: 'success',
             user_email: 'success',
@@ -224,9 +241,8 @@ const ContactForm = () => {
             user_message: ''
           });
 
-          // Hide overlay and reset after 3 seconds
+          // Reset colors after 3 seconds
           setTimeout(() => {
-            setShowSuccessOverlay(false);
             setFieldStatus({
               user_name: 'neutral',
               user_email: 'neutral',
@@ -235,7 +251,7 @@ const ContactForm = () => {
           }, 3000);
         },
         (error) => {
-          // ERROR: Turn all inputs red
+          // ERROR: Turn all inputs red, keep text
           setFieldStatus({
             user_name: 'error',
             user_email: 'error',
@@ -262,126 +278,119 @@ const ContactForm = () => {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="contact-form" noValidate>
-      
-      {/* SUCCESS OVERLAY - appears on top of inputs */}
-      {showSuccessOverlay && (
-        <div className="success-overlay">
-          <div className="success-overlay__box success-overlay__box--name"></div>
-          <div className="success-overlay__box success-overlay__box--email"></div>
-          <div className="success-overlay__box success-overlay__box--message"></div>
-        </div>
-      )}
 
-      <div className="contact-form__content">
-        <div className="contact-form__group">
-          {isMobile && (
-            <span className="text-fit marginb">
-              <span>
-                <span>Parlez moi de votre projet</span>
-              </span>
-              <span aria-hidden="true">Parlez moi de votre projet</span>
-            </span>                     
-          )}
-          {!isMobile && (
-            <span className="text-fit marginb">
-              <span>
-                <span>Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
-              </span>
-              <span aria-hidden="true">Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
+    <div className="contact-form__content">
+
+      <div className="contact-form__group">
+        {isMobile && (
+          <span className="text-fit marginb">
+            <span>
+              <span>Parlez moi de votre projet</span>
             </span>
-          )}
-
-          <label htmlFor="user_name" className="contact-form__label">
-            Nom:
-          </label>
-          <input
-            id="user_name"
-            ref={nameInputRef}
-            type="text"
-            name="user_name"
-            value={formData.user_name}
-            onChange={handleInputChange}
-            required
-            className={getInputClassName('user_name')}
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck="false"
-            autoComplete="name"
-          />
-        </div>
-
-        <div className="contact-form__group">
-          <label htmlFor="user_email" className="contact-form__label">
-            Email:
-          </label>
-          <input
-            id="user_email"
-            ref={emailInputRef}
-            type="email"
-            name="user_email"
-            value={formData.user_email}
-            onChange={handleInputChange}
-            required
-            className={getInputClassName('user_email')}
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck="false"
-            autoComplete="email"
-          />
-        </div>
-
-        <div className="contact-form__group">
-          <label htmlFor="user_message" className="contact-form__label">
-            Message:
-          </label>
-          <textarea
-            id="user_message"
-            ref={textareaRef}
-            name="user_message"
-            value={formData.user_message}
-            onChange={handleInputChange}
-            required
-            className={getInputClassName('user_message')}
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck="false"
-          />
-          <MetallicTextareaScrollbar
-            textareaRef={textareaRef}
-            style={{
-              '--metal': 'silver',
-              '--convexity': '1.5',
-            }}
-          />
-        </div>
-
-        <div className="contact-form__submit">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            style={{
-              width: '100%',
-              height: 'auto',
-              position: 'relative',
-              cursor: 'pointer',
-              color: 'inherit', 
-              backgroundColor: 'transparent',
-              border: 'none', 
-              padding: '0', 
-            }}
-            aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
-          >
-            <span className={`text-fit submit-label ${isFormValid() ? 'submit-label--active' : ''}`}>
-              <span>
-                <span>envoyer</span>
-              </span>
-              <span aria-hidden="true">envoyer</span>
+            <span aria-hidden="true">Parlez moi de votre projet</span>
+          </span>                     
+        )}
+        {!isMobile && (
+          <span className="text-fit marginb">
+            <span>
+              <span>Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
             </span>
-          </button>
-        </div>
+            <span aria-hidden="true">Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
+          </span>
+        )}
+
+        <label htmlFor="user_name" className="contact-form__label">
+          Nom:
+        </label>
+        <input
+          id="user_name"
+          ref={nameInputRef}
+          type="text"
+          name="user_name"
+          value={formData.user_name}
+          onChange={handleInputChange}
+          required
+          className={getInputClassName('user_name')}
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+          autoComplete="name"
+        />
       </div>
 
-      <footer className="footer">
+      <div className="contact-form__group">
+        <label htmlFor="user_email" className="contact-form__label">
+          Email:
+        </label>
+        <input
+          id="user_email"
+          ref={emailInputRef}
+          type="email"
+          name="user_email"
+          value={formData.user_email}
+          onChange={handleInputChange}
+          required
+          className={getInputClassName('user_email')}
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+          autoComplete="email"
+        />
+      </div>
+
+      <div className="contact-form__group">
+        <label htmlFor="user_message" className="contact-form__label">
+          Message:
+        </label>
+        <textarea
+          id="user_message"
+          ref={textareaRef}
+          name="user_message"
+          value={formData.user_message}
+          onChange={handleInputChange}
+          required
+          className={getInputClassName('user_message')}
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+        />
+        <MetallicTextareaScrollbar
+          textareaRef={textareaRef}
+          style={{
+            '--metal': 'silver',
+            '--convexity': '1.5',
+          }}
+        />
+      </div>
+
+     <div className="contact-form__submit">
+  <button
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                width: '100%',
+                height: 'auto',
+                position: 'relative',
+                cursor: 'pointer',
+                color: 'inherit', 
+                backgroundColor: 'transparent',
+                border: 'none', 
+                padding: '0', 
+              }}
+              aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
+            >
+          {  <span className={`text-fit submit-label ${isFormValid() ? 'submit-label--active' : ''}`}>
+            <span>
+              <span>envoyer</span>
+            </span>
+            <span aria-hidden="true">envoyer</span>
+          </span>   }
+    </button>
+</div>
+
+    </div>
+
+    <footer className="footer">
         <div className="footer-left">
           <a
             href="mailto:contact@genciv.es"
@@ -424,6 +433,8 @@ const ContactForm = () => {
           </a>
         </div>
       </footer>
+      
+
     </form>
   );
 };
