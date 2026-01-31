@@ -102,7 +102,6 @@
   }
 }
 
-
 /* Create a modified version of text-fit for the submit button */
 .contact-form__submit .text-fit {
   /* Keep all the original text-fit properties but adjust spacing */
@@ -128,6 +127,7 @@
 @media (max-width: 768px) {
   .submit-label {
    color: rgba(2, 190, 190, 0.15);
+   padding-top: 1rem;
   } 
 
   .submit-label > * {
@@ -175,7 +175,10 @@
 
 /* Mobile Styles */
 @media (max-width: 768px) {
- 
+
+  .footer {
+  bottom: 0rem;
+  }
 
   .footer-left {
     margin-left: 0rem;
@@ -210,4 +213,21 @@
   max-height: 6rem;
   line-height: 1.4; /* Match input line-height */
   padding: 15px 20px; /* Match input padding exactly */
+}
+
+
+@media (max-width: 768px) {
+.contact-form__group:has(textarea) {
+  position: relative;
+  min-height: 200px; /* Adjust as needed */
+}
+
+.contact-form__group textarea {
+  resize: none; /* Prevent manual resizing */
+  height: 12rem; /* Set fixed height */
+  min-height: 10rem;
+  max-height: 10rem;
+  line-height: 1.4; /* Match input line-height */
+  padding: 15px 20px; /* Match input padding exactly */
+}
 }
