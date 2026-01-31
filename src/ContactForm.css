@@ -233,40 +233,21 @@
 }
 
 
-/* ===== ULTIMATE CHROME AUTOFILL FIX ===== */
-.contact-form__input {
-  /* Your existing styles */
-  flex: 1;
-  padding: 15px 20px;
-  box-sizing: border-box;
-  border: 0px solid #02bebe;
-  background: rgba(2, 190, 190, 0.1);
-  font-family: inherit;
-  font-size: 1.2rem;
-  outline: none;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  color: #7964cf !important;
-  opacity: 1;
-  width: 100%;
-  z-index: 100;
-}
-
-/* Chrome fix test */
+/* ===== CHROME AUTOFILL FIX ===== */
 .contact-form__input:-webkit-autofill,
 .contact-form__input:-webkit-autofill:hover,
 .contact-form__input:-webkit-autofill:focus,
 .contact-form__input:-webkit-autofill:active {
-  /* Force the text color */
+  /* Force text color */
   -webkit-text-fill-color: #7964cf !important;
-  /* Force the background with HUGE box-shadow */
+  /* Force background color using box-shadow hack */
   -webkit-box-shadow: 0 0 0px 1000px rgba(2, 190, 190, 0.1) inset !important;
   box-shadow: 0 0 0px 1000px rgba(2, 190, 190, 0.1) inset !important;
-  /* Prevent Chrome from overriding */
+  /* THE MAGIC LINE: Makes Chrome think transition takes forever */
   transition: background-color 9999s ease-in-out 0s !important;
 }
 
-/* Apply to error state */
+/* Apply same fix to error state */
 .contact-form__input--error:-webkit-autofill,
 .contact-form__input--error:-webkit-autofill:hover,
 .contact-form__input--error:-webkit-autofill:focus,
@@ -274,9 +255,10 @@
   -webkit-text-fill-color: #f7f0f0ff !important;
   -webkit-box-shadow: 0 0 0px 1000px #ff6f61 inset !important;
   box-shadow: 0 0 0px 1000px #ff6f61 inset !important;
+  transition: background-color 9999s ease-in-out 0s !important;
 }
 
-/* Apply to success state */
+/* Apply same fix to success state */
 .contact-form__input--success:-webkit-autofill,
 .contact-form__input--success:-webkit-autofill:hover,
 .contact-form__input--success:-webkit-autofill:focus,
@@ -284,10 +266,5 @@
   -webkit-text-fill-color: #02bebe !important;
   -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
   box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
-}
-
-/* Force placeholder color even when autofilled */
-.contact-form__input:-webkit-autofill::placeholder {
-  color: rgba(2, 190, 190, 0.6) !important;
-  opacity: 1 !important;
+  transition: background-color 9999s ease-in-out 0s !important;
 }
