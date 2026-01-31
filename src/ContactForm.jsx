@@ -243,7 +243,11 @@ const ContactForm = () => {
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
-          autoComplete="off"
+          autoComplete="new-password"
+           data-lpignore="true"
+  data-form-type="other"
+  data-1p-ignore=""
+  data-bwignore=""
         />
       </div>
 
