@@ -125,6 +125,10 @@
   color: #02bebe;
 }
 
+.submit-label--active {
+  color: #02bebe !important;
+}
+
 @media (max-width: 768px) {
   .submit-label {
    padding-top: 0.3rem;

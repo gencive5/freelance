@@ -284,7 +284,7 @@ const ContactForm = () => {
               }}
               aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
             >
-          { <span className="text-fit submit-label">
+          {  <span className={`text-fit submit-label ${isFormValid() ? 'submit-label--active' : ''}`}>
             <span>
               <span>envoyer</span>
             </span>
