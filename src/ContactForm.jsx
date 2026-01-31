@@ -51,18 +51,25 @@ const ContactForm = () => {
 
     // ===== CHROME AUTOFILL FIX =====
     const fixChromeAutofillStyles = () => {
+      // FIRST: Check if ANY field is in success or error state
+      const isAnySuccess = fieldStatus.user_name === 'success' || 
+                          fieldStatus.user_email === 'success' || 
+                          fieldStatus.user_message === 'success';
+      
+      const isAnyError = fieldStatus.user_name === 'error' || 
+                        fieldStatus.user_email === 'error' || 
+                        fieldStatus.user_message === 'error';
+      
+      // If any field is in success or error state, STOP fixing autofill
+      if (isAnySuccess || isAnyError) {
+        return;
+      }
+      
+      // Only run autofill fix when ALL fields are neutral
       const inputs = [nameInputRef.current, emailInputRef.current];
       
-      inputs.forEach((input, index) => {
+      inputs.forEach((input) => {
         if (input) {
-          // Check if this field is in success or error state - DON'T override if it is!
-          const fieldName = index === 0 ? 'user_name' : 'user_email';
-          const status = fieldStatus[fieldName];
-          
-          if (status === 'success' || status === 'error') {
-            return; // Skip fixing - let success/error colors stay
-          }
-          
           // Check if input is autofilled by Chrome
           const isAutofilled = input.matches(':-webkit-autofill') || 
                               input.matches(':autofill');
@@ -70,8 +77,6 @@ const ContactForm = () => {
           // Check if Chrome has changed the background color
           const computedStyle = window.getComputedStyle(input);
           const bgColor = computedStyle.backgroundColor;
-          
-          // Convert to string for includes check
           const bgColorString = bgColor.toString();
           
           // If autofilled or if colors don't match our theme
@@ -155,8 +160,16 @@ const ContactForm = () => {
     
     // FIX FOR EMAIL FIELD AUTOFILL
     if (name === 'user_email' || name === 'user_name') {
-      // Don't fix if field is in success or error state
-      if (fieldStatus[name] === 'success' || fieldStatus[name] === 'error') {
+      // Don't fix if ANY field is in success or error state
+      const isAnySuccess = fieldStatus.user_name === 'success' || 
+                          fieldStatus.user_email === 'success' || 
+                          fieldStatus.user_message === 'success';
+      
+      const isAnyError = fieldStatus.user_name === 'error' || 
+                        fieldStatus.user_email === 'error' || 
+                        fieldStatus.user_message === 'error';
+      
+      if (isAnySuccess || isAnyError) {
         return;
       }
       
@@ -167,11 +180,10 @@ const ContactForm = () => {
         const bgColorString = bgColor.toString();
         
         // Check if it's Chrome's autofill color (light yellow/blue)
-        // But NOT if it's success green or error red
-        if ((bgColorString.includes('250, 255, 189') || // Chrome's light yellow
-             bgColorString.includes('232, 240, 254') || // Chrome's light blue
-             (bgColor !== 'rgba(2, 190, 190, 0.1)' && 
-              bgColor !== 'rgba(2, 190, 190, 0.0980392)'))) {
+        if (bgColorString.includes('250, 255, 189') || // Chrome's light yellow
+            bgColorString.includes('232, 240, 254') || // Chrome's light blue
+            (bgColor !== 'rgba(2, 190, 190, 0.1)' && 
+             bgColor !== 'rgba(2, 190, 190, 0.0980392)')) {
           
           // Apply our styles
           e.target.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
