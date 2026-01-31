@@ -12,7 +12,7 @@
   padding: 1rem;
   box-sizing: border-box;
   font-family: 'adineue', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #02bebe !important;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
   border: 0px solid #02bebe;
   background: rgba(2, 190, 190, 0.1);
   font-family: inherit;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   outline: none;
   border-radius: 50px;
   transition: all 0.3s ease;
@@ -58,25 +58,6 @@
   opacity: 1;
   width: 100%;
   z-index: 100;
-}
-
-/* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
-.contact-form__input--success {
-  background: #a6bf04 !important;
-  color: #02bebe !important;
-}
-
-/* ===== ERROR STATE (BRIGHT RED) ===== */
-.contact-form__input--error {
-  background: #ff6f61 !important;
-  color: #02bebe !important;
-}
-
-/* Placeholder styling */
-.contact-form__input::placeholder {
-  color: rgba(2, 190, 190, 0.6);
-  opacity: 1;
-  transition: color 0.3s ease;
 }
 
 /* ===== MOBILE RESPONSIVENESS ===== */
@@ -102,6 +83,26 @@
   }
 }
 
+/* ===== SUCCESS STATE (BRIGHT GREEN) ===== */
+.contact-form__input--success {
+  background: #a6bf04 !important;
+  color: #02bebe !important;
+}
+
+/* ===== ERROR STATE (BRIGHT RED) ===== */
+.contact-form__input--error {
+  background: #ff6f61 !important;
+  color: #f7f0f0ff !important;
+}
+
+/* Placeholder styling */
+.contact-form__input::placeholder {
+  color: rgba(2, 190, 190, 0.6);
+  opacity: 1;
+  transition: color 0.3s ease;
+}
+
+
 /* Create a modified version of text-fit for the submit button */
 .contact-form__submit .text-fit {
   /* Keep all the original text-fit properties but adjust spacing */
@@ -126,13 +127,8 @@
 
 @media (max-width: 768px) {
   .submit-label {
-   color: rgba(2, 190, 190, 0.15);
-   padding-top: 1rem;
+   padding-top: 0.3rem;
   } 
-
-  .submit-label > * {
-    margin-top: 0rem; 
-  }
 }
 
 /* FOOTER STYLES */
@@ -140,7 +136,7 @@
 .footer {
   position: absolute;
   left: 0;
-  bottom: 2rem;
+  bottom: 1rem;
   padding: 1rem;
   width: 100%;
   height: auto;
@@ -196,7 +192,7 @@
 }
 
 .marginb {
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
 }
 
 
