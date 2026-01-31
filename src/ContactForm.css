@@ -57,7 +57,15 @@
   color: #7964cf !important;
   opacity: 1;
   width: 100%;
-  z-index: 100;
+ 
+  position: relative;
+  z-index: 202;
+}
+
+
+/* When success overlay is shown, inputs should be below it but still usable */
+.contact-form__input:focus {
+  z-index: 203; /* Bring focused input above overlay */
 }
 
 /* ===== MOBILE RESPONSIVENESS ===== */
@@ -232,4 +240,78 @@
 }
 }
 
+
+/* ===== SUCCESS OVERLAY STYLES ===== */
+.success-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allows clicking through to inputs */
+  z-index: 200;
+}
+
+.success-overlay__box {
+  position: absolute;
+  background: #a6bf04 !important; /* Success green */
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  z-index: 201;
+  pointer-events: none;
+}
+
+/* Position for name input */
+.success-overlay__box--name {
+  top: calc(2rem + 2.5rem); /* Adjust based on your layout */
+  left: 2rem;
+  width: calc(100% - 4rem);
+  height: calc(1.2rem + 30px); /* font-size + padding */
+}
+
+/* Position for email input */
+.success-overlay__box--email {
+  top: calc(2rem + 2.5rem + 4rem); /* name height + margin */
+  left: 2rem;
+  width: calc(100% - 4rem);
+  height: calc(1.2rem + 30px);
+}
+
+/* Position for message textarea */
+.success-overlay__box--message {
+  top: calc(2rem + 2.5rem + 8rem); /* name + email heights + margins */
+  left: 2rem;
+  width: calc(100% - 4rem);
+  height: 6rem; /* Match textarea height */
+  border-radius: 50px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .success-overlay__box {
+    border-radius: 25px;
+  }
+  
+  .success-overlay__box--name {
+    top: calc(1rem + 2rem);
+    left: 1rem;
+    width: calc(100% - 2rem);
+    height: calc(1.2rem + 24px); /* Smaller on mobile */
+  }
+  
+  .success-overlay__box--email {
+    top: calc(1rem + 2rem + 3.5rem);
+    left: 1rem;
+    width: calc(100% - 2rem);
+    height: calc(1.2rem + 24px);
+  }
+  
+  .success-overlay__box--message {
+    top: calc(1rem + 2rem + 7rem);
+    left: 1rem;
+    width: calc(100% - 2rem);
+    height: 12rem; /* Mobile textarea height */
+    border-radius: 25px;
+  }
+}
 

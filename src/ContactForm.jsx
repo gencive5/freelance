@@ -19,14 +19,12 @@ const ContactForm = () => {
     user_email: 'neutral',
     user_message: 'neutral'
   });
+  const [showSuccessOverlay, setShowSuccessOverlay] = useState(false);
   
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const formRef = useRef(null);
-  
-  // Track autofill fix timeouts
-  const timeoutIdsRef = useRef([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,57 +50,87 @@ const ContactForm = () => {
       textareaRef.current.setAttribute('autocapitalize', 'off');
     }
 
-    // ===== SIMPLER CHROME AUTOFILL FIX =====
+    // ===== CHROME AUTOFILL FIX =====
     const fixChromeAutofillStyles = () => {
-      // Skip if any field is in success or error state
-      const isAnySuccessOrError = 
-        fieldStatus.user_name === 'success' || fieldStatus.user_name === 'error' ||
-        fieldStatus.user_email === 'success' || fieldStatus.user_email === 'error' ||
-        fieldStatus.user_message === 'success' || fieldStatus.user_message === 'error';
-      
-      if (isAnySuccessOrError) {
-        return;
-      }
+      // Don't run if showing success overlay
+      if (showSuccessOverlay) return;
       
       const inputs = [nameInputRef.current, emailInputRef.current];
       
-      inputs.forEach((input) => {
+      inputs.forEach(input => {
         if (input) {
+          // Check if input is autofilled by Chrome
+          const isAutofilled = input.matches(':-webkit-autofill') || 
+                             input.matches(':autofill');
+          
+          // Check if Chrome has changed the background color
           const computedStyle = window.getComputedStyle(input);
           const bgColor = computedStyle.backgroundColor;
+          const textColor = computedStyle.color;
           
-          // Check if it's Chrome's autofill (not our color, not success, not error)
-          if (bgColor !== 'rgba(2, 190, 190, 0.1)' && 
-              bgColor !== 'rgba(2, 190, 190, 0.0980392)' &&
-              !bgColor.includes('a6bf04') && 
-              !bgColor.includes('ff6f61')) {
+          // If autofilled or if colors don't match our theme
+          if (isAutofilled || 
+              (bgColor !== 'rgba(2, 190, 190, 0.1)' && bgColor !== 'rgba(2, 190, 190, 0.0980392)')) {
             
-            // Apply minimal fix
+            // Apply our styles directly via inline styles
             input.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
+            input.style.setProperty('color', '#7964cf', 'important');
             input.style.setProperty('background-color', 'rgba(2, 190, 190, 0.1)', 'important');
+            input.style.setProperty('background-image', 'none', 'important');
+            input.style.setProperty('box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+            input.style.setProperty('-webkit-box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+            
+            // Add a custom attribute to track
+            input.setAttribute('data-autofilled', 'true');
           }
         }
       });
     };
 
-    // Clear any existing timeouts
-    timeoutIdsRef.current.forEach(id => clearTimeout(id));
-    timeoutIdsRef.current = [];
-
-    // Run the fix at intervals (but not too many)
-    const intervals = [0, 300, 1000];
+    // Run the fix at multiple intervals to catch autofill
+    const intervals = [0, 100, 300, 500, 1000, 2000];
     intervals.forEach(timeout => {
-      const id = setTimeout(fixChromeAutofillStyles, timeout);
-      timeoutIdsRef.current.push(id);
+      setTimeout(fixChromeAutofillStyles, timeout);
     });
+
+    // Also run on various events
+    const events = ['focus', 'blur', 'input', 'change', 'animationstart'];
+    events.forEach(eventName => {
+      document.addEventListener(eventName, fixChromeAutofillStyles, true);
+    });
+
+    // MutationObserver to watch for attribute changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'style' || mutation.attributeName === 'class') {
+          fixChromeAutofillStyles();
+        }
+      });
+    });
+
+    // Observe input elements
+    if (nameInputRef.current) {
+      observer.observe(nameInputRef.current, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      });
+    }
+    if (emailInputRef.current) {
+      observer.observe(emailInputRef.current, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      });
+    }
 
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
-      timeoutIdsRef.current.forEach(id => clearTimeout(id));
-      timeoutIdsRef.current = [];
+      events.forEach(eventName => {
+        document.removeEventListener(eventName, fixChromeAutofillStyles, true);
+      });
+      observer.disconnect();
     };
-  }, [fieldStatus]);
+  }, [showSuccessOverlay]);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -166,7 +194,7 @@ const ContactForm = () => {
     }
     
     setIsSubmitting(true);
-
+    
     emailjs.send(
       import.meta.env.VITE_SERVICE_ID,
       import.meta.env.VITE_TEMPLATE_ID,
@@ -180,7 +208,8 @@ const ContactForm = () => {
     )
       .then(
         (result) => {
-          // SUCCESS: Turn all inputs bright green
+          // SUCCESS: Show overlay and set status
+          setShowSuccessOverlay(true);
           setFieldStatus({
             user_name: 'success',
             user_email: 'success',
@@ -195,20 +224,9 @@ const ContactForm = () => {
             user_message: ''
           });
 
-          // ===== CRITICAL: Remove all inline styles on success =====
-          [nameInputRef.current, emailInputRef.current].forEach(input => {
-            if (input) {
-              // Clear ALL inline styles that might override CSS
-              input.style.cssText = '';
-            }
-          });
-
-          // Clear all autofill fix timeouts
-          timeoutIdsRef.current.forEach(id => clearTimeout(id));
-          timeoutIdsRef.current = [];
-
-          // Reset colors after 3 seconds
+          // Hide overlay and reset after 3 seconds
           setTimeout(() => {
+            setShowSuccessOverlay(false);
             setFieldStatus({
               user_name: 'neutral',
               user_email: 'neutral',
@@ -217,7 +235,7 @@ const ContactForm = () => {
           }, 3000);
         },
         (error) => {
-          // ERROR: Turn all inputs red, keep text
+          // ERROR: Turn all inputs red
           setFieldStatus({
             user_name: 'error',
             user_email: 'error',
@@ -225,10 +243,6 @@ const ContactForm = () => {
           });
           setIsSubmitting(false);
           
-          // Clear all autofill fix timeouts
-          timeoutIdsRef.current.forEach(id => clearTimeout(id));
-          timeoutIdsRef.current = [];
-
           // Reset colors after 3 seconds
           setTimeout(() => {
             setFieldStatus({
@@ -248,6 +262,16 @@ const ContactForm = () => {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="contact-form" noValidate>
+      
+      {/* SUCCESS OVERLAY - appears on top of inputs */}
+      {showSuccessOverlay && (
+        <div className="success-overlay">
+          <div className="success-overlay__box success-overlay__box--name"></div>
+          <div className="success-overlay__box success-overlay__box--email"></div>
+          <div className="success-overlay__box success-overlay__box--message"></div>
+        </div>
+      )}
+
       <div className="contact-form__content">
         <div className="contact-form__group">
           {isMobile && (
