@@ -91,7 +91,6 @@
   
   .contact-form__label {
     margin-right: 0;
-    margin-bottom: 8px;
   }
   
   .contact-form__input {
@@ -102,11 +101,6 @@
   }
 }
 
-.contact-form__submit button {
-  width: 100%;
-  display: block;
-  height: 4rem;
-}
 
 /* Create a modified version of text-fit for the submit button */
 .contact-form__submit .text-fit {
@@ -152,7 +146,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   box-sizing: border-box;
   font-family: 'adineue', sans-serif;
 }
@@ -168,7 +162,6 @@
 }
 
 .link {
-  font-size: 1.5rem;
   padding: 0;
 }
 
@@ -190,7 +183,7 @@
     bottom: 0;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     box-sizing: border-box;
   }
 
@@ -201,10 +194,6 @@
   .footer-right {
     margin-right: 1rem;
     font-size: 2rem;
-  }
-
-  .link {
-    font-size: 1.2rem;
   }
 }
 
