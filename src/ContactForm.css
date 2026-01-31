@@ -233,26 +233,3 @@
 }
 
 
-/* In ContactForm.css - KEEP THESE */
-.contact-form__input:-webkit-autofill,
-.contact-form__input:-webkit-autofill:hover,
-.contact-form__input:-webkit-autofill:focus,
-.contact-form__input:-webkit-autofill:active {
-  -webkit-text-fill-color: #7964cf !important;
-  -webkit-box-shadow: 0 0 0px 1000px rgba(2, 190, 190, 0.1) inset !important;
-  box-shadow: 0 0 0px 1000px rgba(2, 190, 190, 0.1) inset !important;
-  transition: background-color 9999s ease-in-out 0s !important;
-}
-
-/* Keep the error/success state overrides too */
-.contact-form__input--error:-webkit-autofill {
-  -webkit-text-fill-color: #f7f0f0ff !important;
-  -webkit-box-shadow: 0 0 0px 1000px #ff6f61 inset !important;
-  box-shadow: 0 0 0px 1000px #ff6f61 inset !important;
-}
-
-.contact-form__input--success:-webkit-autofill {
-  -webkit-text-fill-color: #02bebe !important;
-  -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
-  box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
-}
