@@ -24,6 +24,9 @@ const ContactForm = () => {
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const formRef = useRef(null);
+  
+  // Track autofill fix timeouts
+  const timeoutIdsRef = useRef([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,102 +52,57 @@ const ContactForm = () => {
       textareaRef.current.setAttribute('autocapitalize', 'off');
     }
 
-    // ===== CHROME AUTOFILL FIX =====
+    // ===== SIMPLER CHROME AUTOFILL FIX =====
     const fixChromeAutofillStyles = () => {
-      // FIRST: Check if ANY field is in success or error state
-      const isAnySuccess = fieldStatus.user_name === 'success' || 
-                          fieldStatus.user_email === 'success' || 
-                          fieldStatus.user_message === 'success';
+      // Skip if any field is in success or error state
+      const isAnySuccessOrError = 
+        fieldStatus.user_name === 'success' || fieldStatus.user_name === 'error' ||
+        fieldStatus.user_email === 'success' || fieldStatus.user_email === 'error' ||
+        fieldStatus.user_message === 'success' || fieldStatus.user_message === 'error';
       
-      const isAnyError = fieldStatus.user_name === 'error' || 
-                        fieldStatus.user_email === 'error' || 
-                        fieldStatus.user_message === 'error';
-      
-      // If any field is in success or error state, STOP fixing autofill
-      if (isAnySuccess || isAnyError) {
+      if (isAnySuccessOrError) {
         return;
       }
       
-      // Only run autofill fix when ALL fields are neutral
       const inputs = [nameInputRef.current, emailInputRef.current];
       
       inputs.forEach((input) => {
         if (input) {
-          // Check if input is autofilled by Chrome
-          const isAutofilled = input.matches(':-webkit-autofill') || 
-                              input.matches(':autofill');
-          
-          // Check if Chrome has changed the background color
           const computedStyle = window.getComputedStyle(input);
           const bgColor = computedStyle.backgroundColor;
-          const bgColorString = bgColor.toString();
           
-          // If autofilled or if colors don't match our theme
-          if (isAutofilled || 
-              (bgColor !== 'rgba(2, 190, 190, 0.1)' && 
-               bgColor !== 'rgba(2, 190, 190, 0.0980392)' &&
-               !bgColorString.includes('a6bf04') && // Not success green
-               !bgColorString.includes('ff6f61'))) { // Not error red
+          // Check if it's Chrome's autofill (not our color, not success, not error)
+          if (bgColor !== 'rgba(2, 190, 190, 0.1)' && 
+              bgColor !== 'rgba(2, 190, 190, 0.0980392)' &&
+              !bgColor.includes('a6bf04') && 
+              !bgColor.includes('ff6f61')) {
             
-            // Apply our styles directly via inline styles
+            // Apply minimal fix
             input.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
-            input.style.setProperty('color', '#7964cf', 'important');
             input.style.setProperty('background-color', 'rgba(2, 190, 190, 0.1)', 'important');
-            input.style.setProperty('background-image', 'none', 'important');
-            input.style.setProperty('box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
-            input.style.setProperty('-webkit-box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
-            
-            // Add a custom attribute to track
-            input.setAttribute('data-autofilled', 'true');
           }
         }
       });
     };
 
-    // Run the fix at multiple intervals to catch autofill
-    const intervals = [0, 100, 300, 500, 1000, 2000];
+    // Clear any existing timeouts
+    timeoutIdsRef.current.forEach(id => clearTimeout(id));
+    timeoutIdsRef.current = [];
+
+    // Run the fix at intervals (but not too many)
+    const intervals = [0, 300, 1000];
     intervals.forEach(timeout => {
-      setTimeout(fixChromeAutofillStyles, timeout);
+      const id = setTimeout(fixChromeAutofillStyles, timeout);
+      timeoutIdsRef.current.push(id);
     });
-
-    // Also run on various events
-    const events = ['focus', 'blur', 'input', 'change', 'animationstart'];
-    events.forEach(eventName => {
-      document.addEventListener(eventName, fixChromeAutofillStyles, true);
-    });
-
-    // MutationObserver to watch for attribute changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'style' || mutation.attributeName === 'class') {
-          fixChromeAutofillStyles();
-        }
-      });
-    });
-
-    // Observe input elements
-    if (nameInputRef.current) {
-      observer.observe(nameInputRef.current, { 
-        attributes: true, 
-        attributeFilter: ['style', 'class'] 
-      });
-    }
-    if (emailInputRef.current) {
-      observer.observe(emailInputRef.current, { 
-        attributes: true, 
-        attributeFilter: ['style', 'class'] 
-      });
-    }
 
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
-      events.forEach(eventName => {
-        document.removeEventListener(eventName, fixChromeAutofillStyles, true);
-      });
-      observer.disconnect();
+      timeoutIdsRef.current.forEach(id => clearTimeout(id));
+      timeoutIdsRef.current = [];
     };
-  }, [fieldStatus]); // Added fieldStatus as dependency
+  }, [fieldStatus]);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -157,41 +115,6 @@ const ContactForm = () => {
       ...prev,
       [name]: value
     }));
-    
-    // FIX FOR EMAIL FIELD AUTOFILL
-    if (name === 'user_email' || name === 'user_name') {
-      // Don't fix if ANY field is in success or error state
-      const isAnySuccess = fieldStatus.user_name === 'success' || 
-                          fieldStatus.user_email === 'success' || 
-                          fieldStatus.user_message === 'success';
-      
-      const isAnyError = fieldStatus.user_name === 'error' || 
-                        fieldStatus.user_email === 'error' || 
-                        fieldStatus.user_message === 'error';
-      
-      if (isAnySuccess || isAnyError) {
-        return;
-      }
-      
-      // Small delay to let Chrome apply its styles
-      setTimeout(() => {
-        const computedStyle = window.getComputedStyle(e.target);
-        const bgColor = computedStyle.backgroundColor;
-        const bgColorString = bgColor.toString();
-        
-        // Check if it's Chrome's autofill color (light yellow/blue)
-        if (bgColorString.includes('250, 255, 189') || // Chrome's light yellow
-            bgColorString.includes('232, 240, 254') || // Chrome's light blue
-            (bgColor !== 'rgba(2, 190, 190, 0.1)' && 
-             bgColor !== 'rgba(2, 190, 190, 0.0980392)')) {
-          
-          // Apply our styles
-          e.target.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
-          e.target.style.setProperty('background-color', 'rgba(2, 190, 190, 0.1)', 'important');
-          e.target.style.setProperty('box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
-        }
-      }, 50); // 50ms delay
-    }
     
     // Reset field status when user starts typing
     if (fieldStatus[name] !== 'neutral') {
@@ -244,7 +167,6 @@ const ContactForm = () => {
     
     setIsSubmitting(true);
 
-    
     emailjs.send(
       import.meta.env.VITE_SERVICE_ID,
       import.meta.env.VITE_TEMPLATE_ID,
@@ -256,7 +178,6 @@ const ContactForm = () => {
       },
       import.meta.env.VITE_PUBLIC_KEY
     )
-
       .then(
         (result) => {
           // SUCCESS: Turn all inputs bright green
@@ -273,6 +194,18 @@ const ContactForm = () => {
             user_email: '',
             user_message: ''
           });
+
+          // ===== CRITICAL: Remove all inline styles on success =====
+          [nameInputRef.current, emailInputRef.current].forEach(input => {
+            if (input) {
+              // Clear ALL inline styles that might override CSS
+              input.style.cssText = '';
+            }
+          });
+
+          // Clear all autofill fix timeouts
+          timeoutIdsRef.current.forEach(id => clearTimeout(id));
+          timeoutIdsRef.current = [];
 
           // Reset colors after 3 seconds
           setTimeout(() => {
@@ -292,6 +225,10 @@ const ContactForm = () => {
           });
           setIsSubmitting(false);
           
+          // Clear all autofill fix timeouts
+          timeoutIdsRef.current.forEach(id => clearTimeout(id));
+          timeoutIdsRef.current = [];
+
           // Reset colors after 3 seconds
           setTimeout(() => {
             setFieldStatus({
@@ -311,119 +248,116 @@ const ContactForm = () => {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="contact-form" noValidate>
-
-    <div className="contact-form__content">
-
-      <div className="contact-form__group">
-        {isMobile && (
-          <span className="text-fit marginb">
-            <span>
-              <span>Parlez moi de votre projet</span>
+      <div className="contact-form__content">
+        <div className="contact-form__group">
+          {isMobile && (
+            <span className="text-fit marginb">
+              <span>
+                <span>Parlez moi de votre projet</span>
+              </span>
+              <span aria-hidden="true">Parlez moi de votre projet</span>
+            </span>                     
+          )}
+          {!isMobile && (
+            <span className="text-fit marginb">
+              <span>
+                <span>Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
+              </span>
+              <span aria-hidden="true">Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
             </span>
-            <span aria-hidden="true">Parlez moi de votre projet</span>
-          </span>                     
-        )}
-        {!isMobile && (
-          <span className="text-fit marginb">
-            <span>
-              <span>Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
-            </span>
-            <span aria-hidden="true">Pour demander votre site ou me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
-          </span>
-        )}
+          )}
 
-        <label htmlFor="user_name" className="contact-form__label">
-          Nom:
-        </label>
-        <input
-          id="user_name"
-          ref={nameInputRef}
-          type="text"
-          name="user_name"
-          value={formData.user_name}
-          onChange={handleInputChange}
-          required
-          className={getInputClassName('user_name')}
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-          autoComplete="name"
-        />
+          <label htmlFor="user_name" className="contact-form__label">
+            Nom:
+          </label>
+          <input
+            id="user_name"
+            ref={nameInputRef}
+            type="text"
+            name="user_name"
+            value={formData.user_name}
+            onChange={handleInputChange}
+            required
+            className={getInputClassName('user_name')}
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            autoComplete="name"
+          />
+        </div>
+
+        <div className="contact-form__group">
+          <label htmlFor="user_email" className="contact-form__label">
+            Email:
+          </label>
+          <input
+            id="user_email"
+            ref={emailInputRef}
+            type="email"
+            name="user_email"
+            value={formData.user_email}
+            onChange={handleInputChange}
+            required
+            className={getInputClassName('user_email')}
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            autoComplete="email"
+          />
+        </div>
+
+        <div className="contact-form__group">
+          <label htmlFor="user_message" className="contact-form__label">
+            Message:
+          </label>
+          <textarea
+            id="user_message"
+            ref={textareaRef}
+            name="user_message"
+            value={formData.user_message}
+            onChange={handleInputChange}
+            required
+            className={getInputClassName('user_message')}
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+          />
+          <MetallicTextareaScrollbar
+            textareaRef={textareaRef}
+            style={{
+              '--metal': 'silver',
+              '--convexity': '1.5',
+            }}
+          />
+        </div>
+
+        <div className="contact-form__submit">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            style={{
+              width: '100%',
+              height: 'auto',
+              position: 'relative',
+              cursor: 'pointer',
+              color: 'inherit', 
+              backgroundColor: 'transparent',
+              border: 'none', 
+              padding: '0', 
+            }}
+            aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
+          >
+            <span className={`text-fit submit-label ${isFormValid() ? 'submit-label--active' : ''}`}>
+              <span>
+                <span>envoyer</span>
+              </span>
+              <span aria-hidden="true">envoyer</span>
+            </span>
+          </button>
+        </div>
       </div>
 
-      <div className="contact-form__group">
-        <label htmlFor="user_email" className="contact-form__label">
-          Email:
-        </label>
-        <input
-          id="user_email"
-          ref={emailInputRef}
-          type="email"
-          name="user_email"
-          value={formData.user_email}
-          onChange={handleInputChange}
-          required
-          className={getInputClassName('user_email')}
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-          autoComplete="email"
-        />
-      </div>
-
-      <div className="contact-form__group">
-        <label htmlFor="user_message" className="contact-form__label">
-          Message:
-        </label>
-        <textarea
-          id="user_message"
-          ref={textareaRef}
-          name="user_message"
-          value={formData.user_message}
-          onChange={handleInputChange}
-          required
-          className={getInputClassName('user_message')}
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-        />
-        <MetallicTextareaScrollbar
-          textareaRef={textareaRef}
-          style={{
-            '--metal': 'silver',
-            '--convexity': '1.5',
-          }}
-        />
-      </div>
-
-     <div className="contact-form__submit">
-  <button
-              type="submit"
-              disabled={isSubmitting}
-              style={{
-                width: '100%',
-                height: 'auto',
-                position: 'relative',
-                cursor: 'pointer',
-                color: 'inherit', 
-                backgroundColor: 'transparent',
-                border: 'none', 
-                padding: '0', 
-              }}
-              aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
-            >
-          {  <span className={`text-fit submit-label ${isFormValid() ? 'submit-label--active' : ''}`}>
-            <span>
-              <span>envoyer</span>
-            </span>
-            <span aria-hidden="true">envoyer</span>
-          </span>   }
-    </button>
-</div>
-
-    </div>
-
-    <footer className="footer">
+      <footer className="footer">
         <div className="footer-left">
           <a
             href="mailto:contact@genciv.es"
@@ -466,8 +400,6 @@ const ContactForm = () => {
           </a>
         </div>
       </footer>
-      
-
     </form>
   );
 };
