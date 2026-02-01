@@ -103,27 +103,6 @@
   transition: color 0.3s ease;
 }
 
-/* ===== SUPER STRONG SUCCESS STATE ===== */
-.contact-form__input--success,
-.contact-form__input--success:-webkit-autofill,
-.contact-form__input--success:-webkit-autofill:hover,
-.contact-form__input--success:-webkit-autofill:focus,
-.contact-form__input--success:-webkit-autofill:active {
-  background: #a6bf04 !important;
-  -webkit-text-fill-color: #02bebe !important;
-  color: #02bebe !important;
-  -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
-  box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
-  background-image: none !important;
-  background-color: #a6bf04 !important;
-}
-
-/* Remove Chrome's autofill fix when in success state */
-.contact-form__input--success[style*="background-color"],
-.contact-form__input--success[style*="-webkit-text-fill-color"] {
-  background-color: #a6bf04 !important;
-  -webkit-text-fill-color: #02bebe !important;
-}
 
 /* Create a modified version of text-fit for the submit button */
 .contact-form__submit .text-fit {
@@ -247,85 +226,10 @@
 .contact-form__group textarea {
   resize: none; /* Prevent manual resizing */
   height: 12rem; /* Set fixed height */
-  min-height: 10rem;
-  max-height: 10rem;
+  min-height: 12rem;
+  max-height: 12rem;
   line-height: 1.4; /* Match input line-height */
   padding: 15px 20px; /* Match input padding exactly */
 }
-}
-
-
-/* ===== SUCCESS OVERLAY STYLES ===== */
-.success-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Allows clicking through to inputs */
-  z-index: 200;
-}
-
-.success-overlay__box {
-  position: absolute;
-  background: #a6bf04 !important; /* Success green */
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  z-index: 201;
-  pointer-events: none;
-}
-
-/* Position for name input */
-.success-overlay__box--name {
-  top: calc(2rem + 2.5rem); /* Adjust based on your layout */
-  left: 2rem;
-  width: calc(100% - 4rem);
-  height: calc(1.2rem + 30px); /* font-size + padding */
-}
-
-/* Position for email input */
-.success-overlay__box--email {
-  top: calc(2rem + 2.5rem + 4rem); /* name height + margin */
-  left: 2rem;
-  width: calc(100% - 4rem);
-  height: calc(1.2rem + 30px);
-}
-
-/* Position for message textarea */
-.success-overlay__box--message {
-  top: calc(2rem + 2.5rem + 8rem); /* name + email heights + margins */
-  left: 2rem;
-  width: calc(100% - 4rem);
-  height: 6rem; /* Match textarea height */
-  border-radius: 50px;
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .success-overlay__box {
-    border-radius: 25px;
-  }
-  
-  .success-overlay__box--name {
-    top: calc(1rem + 2rem);
-    left: 1rem;
-    width: calc(100% - 2rem);
-    height: calc(1.2rem + 24px); /* Smaller on mobile */
-  }
-  
-  .success-overlay__box--email {
-    top: calc(1rem + 2rem + 3.5rem);
-    left: 1rem;
-    width: calc(100% - 2rem);
-    height: calc(1.2rem + 24px);
-  }
-  
-  .success-overlay__box--message {
-    top: calc(1rem + 2rem + 7rem);
-    left: 1rem;
-    width: calc(100% - 2rem);
-    height: 12rem; /* Mobile textarea height */
-    border-radius: 25px;
-  }
 }
 
