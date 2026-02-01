@@ -34,6 +34,9 @@ useEffect(() => {
 
 
   window.addEventListener('resize', setVh);
+  if (!isFirefoxAndroid) {
+  window.addEventListener('resize', setVh);
+}
   return () => window.removeEventListener('resize', setVh);
 }, []);
 
