@@ -2,7 +2,7 @@ import './App.css';
 import './MetallicButton.css';
 import ContactForm from './ContactForm';
 import Distortion from './Distortion';
-// import MetallicScrollbar from './MetallicScrollbar';
+import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 import MetallicCursor from './MetallicCursor';
 
@@ -12,15 +12,7 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
 useEffect(() => {
-
-
   const setVh = () => {
-
-
-
-
-
-
     document.documentElement.style.setProperty(
       '--vh',
       `${window.innerHeight * 0.01}px`
@@ -28,37 +20,8 @@ useEffect(() => {
   };
 
   setVh(); // Set on load
-
-
-
-
-
   window.addEventListener('resize', setVh);
-  if (!isFirefoxAndroid) {
-  window.addEventListener('resize', setVh);
-}
   return () => window.removeEventListener('resize', setVh);
-}, []);
-
-const isFirefoxAndroid = /Android.*Firefox/i.test(navigator.userAgent);
-useEffect(() => {
-  if (!/Android.*Firefox/i.test(navigator.userAgent)) return;
-
-  const onFocus = () => {
-    document.documentElement.classList.add('ff-input-focus');
-  };
-
-  const onBlur = () => {
-    document.documentElement.classList.remove('ff-input-focus');
-  };
-
-  document.addEventListener('focusin', onFocus);
-  document.addEventListener('focusout', onBlur);
-
-  return () => {
-    document.removeEventListener('focusin', onFocus);
-    document.removeEventListener('focusout', onBlur);
-  };
 }, []);
 
 
@@ -74,12 +37,12 @@ useEffect(() => {
 
   return (
 
-    // <MetallicScrollbar style={{
-    //   '--scrollbar-bg': '#ffffffff',
-    //   '--scrollbar-metal': 'silver',
-    //   '--convexity': 2
-    // }}>
-      // <MetallicCursor />
+    <MetallicScrollbar style={{
+      '--scrollbar-bg': '#ffffffff',
+      '--scrollbar-metal': 'silver',
+      '--convexity': 2
+    }}>
+      <MetallicCursor />
 
        <main role="main">
 
@@ -181,7 +144,7 @@ useEffect(() => {
 
       </main>
       
-    // </MetallicScrollbar>
+    </MetallicScrollbar>
   );
 };
 
