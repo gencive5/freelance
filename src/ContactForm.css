@@ -103,7 +103,7 @@
   transition: color 0.3s ease;
 }
 
-/* Add this to your ContactForm.css */
+/* ===== SUPER STRONG SUCCESS STATE ===== */
 .contact-form__input--success,
 .contact-form__input--success:-webkit-autofill,
 .contact-form__input--success:-webkit-autofill:hover,
@@ -114,8 +114,16 @@
   color: #02bebe !important;
   -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
   box-shadow: 0 0 0px 1000px #a6bf04 inset !important;
+  background-image: none !important;
+  background-color: #a6bf04 !important;
 }
 
+/* Remove Chrome's autofill fix when in success state */
+.contact-form__input--success[style*="background-color"],
+.contact-form__input--success[style*="-webkit-text-fill-color"] {
+  background-color: #a6bf04 !important;
+  -webkit-text-fill-color: #02bebe !important;
+}
 
 /* Create a modified version of text-fit for the submit button */
 .contact-form__submit .text-fit {
