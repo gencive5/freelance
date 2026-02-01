@@ -2,7 +2,7 @@ import './App.css';
 import './MetallicButton.css';
 import ContactForm from './ContactForm';
 import Distortion from './Distortion';
-import MetallicScrollbar from './MetallicScrollbar';
+// import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 import MetallicCursor from './MetallicCursor';
 
@@ -74,12 +74,12 @@ useEffect(() => {
 
   return (
 
-    <MetallicScrollbar style={{
-      '--scrollbar-bg': '#ffffffff',
-      '--scrollbar-metal': 'silver',
-      '--convexity': 2
-    }}>
-      <MetallicCursor />
+    // <MetallicScrollbar style={{
+    //   '--scrollbar-bg': '#ffffffff',
+    //   '--scrollbar-metal': 'silver',
+    //   '--convexity': 2
+    // }}>
+      // <MetallicCursor />
 
        <main role="main">
 
@@ -181,7 +181,7 @@ useEffect(() => {
 
       </main>
       
-    </MetallicScrollbar>
+    // </MetallicScrollbar>
   );
 };
 
