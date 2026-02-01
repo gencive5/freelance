@@ -119,7 +119,7 @@
 
 .submit-label {
  color: rgba(2, 190, 190, 0.15);
- margin-top: 1rem !important;
+ padding-top: 1rem !important;
 }
 
 .submit-label:hover {
