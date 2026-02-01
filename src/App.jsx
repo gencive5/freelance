@@ -6,24 +6,40 @@ import MetallicScrollbar from './MetallicScrollbar';
 import { useState, useEffect } from 'react';
 import MetallicCursor from './MetallicCursor';
 
-
-
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isFirefoxMobile, setIsFirefoxMobile] = useState(false);
 
-useEffect(() => {
-  const setVh = () => {
-    document.documentElement.style.setProperty(
-      '--vh',
-      `${window.innerHeight * 0.01}px`
-    );
-  };
+  // Detect if it's Firefox on mobile
+  useEffect(() => {
+    const detectFirefoxMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isFirefox = /firefox|fxios/i.test(userAgent);
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|windows phone/i.test(userAgent);
+      setIsFirefoxMobile(isFirefox && isMobileDevice);
+    };
 
-  setVh(); // Set on load
-  window.addEventListener('resize', setVh);
-  return () => window.removeEventListener('resize', setVh);
-}, []);
+    detectFirefoxMobile();
+    window.addEventListener('resize', detectFirefoxMobile);
+    return () => window.removeEventListener('resize', detectFirefoxMobile);
+  }, []);
 
+  // Only set --vh for non-Firefox mobile browsers
+  useEffect(() => {
+    const setVh = () => {
+      // Don't set --vh on Firefox mobile
+      if (!isFirefoxMobile) {
+        document.documentElement.style.setProperty(
+          '--vh',
+          `${window.innerHeight * 0.01}px`
+        );
+      }
+    };
+
+    setVh(); // Set on load
+    window.addEventListener('resize', setVh);
+    return () => window.removeEventListener('resize', setVh);
+  }, [isFirefoxMobile]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,6 +50,32 @@ useEffect(() => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Handle Firefox mobile input focus/blur for better scrolling
+  useEffect(() => {
+    if (!isFirefoxMobile) return;
+
+    const handleFocus = () => {
+      document.documentElement.classList.add('firefox-mobile-input-focus');
+    };
+
+    const handleBlur = () => {
+      document.documentElement.classList.remove('firefox-mobile-input-focus');
+    };
+
+    // Add listeners to all inputs and textareas
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('focus', handleFocus);
+      input.addEventListener('blur', handleBlur);
+    });
+
+    return () => {
+      inputs.forEach(input => {
+        input.removeEventListener('focus', handleFocus);
+        input.removeEventListener('blur', handleBlur);
+      });
+    };
+  }, [isFirefoxMobile]);
 
   return (
 

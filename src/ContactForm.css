@@ -263,3 +263,38 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 input {
   filter: none;
 }
+
+
+/* Add to ContactForm.css */
+
+/* Firefox Mobile Form Adjustments */
+.firefox-mobile .contact-form {
+  min-height: 100vh;
+  position: relative;
+}
+
+.firefox-mobile-input-focus .contact-form {
+  position: relative;
+  z-index: 1001;
+}
+
+/* Ensure inputs are visible when keyboard is open */
+.firefox-mobile-input-focus input,
+.firefox-mobile-input-focus textarea {
+  position: relative;
+  z-index: 1002;
+}
+
+/* Make sure the footer stays at bottom */
+.firefox-mobile .footer {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+}
+
+/* When input is focused, push footer down if needed */
+.firefox-mobile-input-focus .footer {
+  position: relative;
+  margin-top: 2rem;
+}

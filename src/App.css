@@ -338,3 +338,126 @@ html, body, #root {
 }
 
 
+/* ===== FIREFOX ANDROID INPUT MODE ===== */
+.ff-input-focus .container,
+.ff-input-focus .mobile-first-row,
+.ff-input-focus .mobile-second-row,
+.ff-input-focus .desktop-first-row,
+.ff-input-focus .desktop-second-row,
+.ff-input-focus .content-wrapper,
+.ff-input-focus .flexcontainer,
+.ff-input-focus .text-column {
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
+}
+
+.ff-input-focus html,
+.ff-input-focus body,
+.ff-input-focus #root {
+  height: auto !important;
+  min-height: auto !important;
+  overflow-y: auto !important;
+}
+
+.ff-input-focus .container {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+
+/* Add to your existing App.css */
+
+/* Firefox Mobile Base Styles */
+html.firefox-mobile,
+body.firefox-mobile,
+#root.firefox-mobile {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+}
+
+.container.firefox-mobile {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow: visible !important;
+}
+
+/* Firefox Mobile - Use 100vh instead of --vh */
+.firefox-mobile .overlay-text,
+.firefox-mobile .flexcontainer,
+.firefox-mobile .text-column,
+.firefox-mobile .content-wrapper,
+.firefox-mobile .desktop-second-row,
+.firefox-mobile .mobile-second-row {
+  height: 100vh !important;
+  min-height: 100vh !important;
+}
+
+/* Firefox Mobile Input Focus Mode - Allow scrolling */
+.firefox-mobile-input-focus .container,
+.firefox-mobile-input-focus .mobile-first-row,
+.firefox-mobile-input-focus .mobile-second-row,
+.firefox-mobile-input-focus .desktop-first-row,
+.firefox-mobile-input-focus .desktop-second-row,
+.firefox-mobile-input-focus .content-wrapper,
+.firefox-mobile-input-focus .flexcontainer,
+.firefox-mobile-input-focus .text-column {
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
+  position: static !important;
+}
+
+.firefox-mobile-input-focus .overlay-text {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Ensure form elements are accessible when keyboard is open */
+.firefox-mobile-input-focus .contact-form {
+  position: relative;
+  z-index: 1001;
+}
+
+/* Add smooth transitions */
+.overlay-text,
+.flexcontainer,
+.text-column,
+.content-wrapper {
+  transition: height 0.2s ease-out;
+}
+
+/* Responsive adjustments for Firefox Mobile */
+@media (max-width: 768px) {
+  .firefox-mobile .mobile-first-row {
+    height: 100vh !important;
+    position: relative;
+  }
+  
+  .firefox-mobile .mobile-second-row {
+    height: 100vh !important;
+    position: relative;
+  }
+  
+  /* When input is focused on mobile, make more space */
+  .firefox-mobile-input-focus .mobile-second-row {
+    padding-bottom: 50vh; /* Give enough space for keyboard */
+  }
+}
+
+/* Keep existing --vh styles for non-Firefox browsers */
+.overlay-text,
+.flexcontainer,
+.text-column,
+.content-wrapper {
+  height: calc(var(--vh, 1vh) * 100) !important;
+}
+
+/* Remove the old .ff-input-focus styles since we're replacing them */
+/* Delete or comment out the entire .ff-input-focus section in your existing CSS */
