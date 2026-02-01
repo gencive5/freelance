@@ -90,6 +90,17 @@
   color: #02bebe !important;
 }
 
+/* Override autofill styling for success state */
+.contact-form__input--success:-webkit-autofill,
+.contact-form__input--success:-webkit-autofill:hover,
+.contact-form__input--success:-webkit-autofill:focus,
+.contact-form__input--success:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important; /* Green background */
+    -webkit-text-fill-color: #02bebe !important; /* Teal text */
+    background-clip: content-box !important;
+}
+
 /* ===== ERROR STATE (BRIGHT RED) ===== */
 .contact-form__input--error {
   background: #ff6f61 !important;
@@ -247,17 +258,6 @@ input:-webkit-autofill:active {
 
 
 
-input:-webkit-autofill {
-    -webkit-animation-delay: 1s; /* Safari support - any positive time runs instantly */
-    -webkit-animation-name: autofill;
-    -webkit-animation-fill-mode: both;
-}
-
-
-
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
-  transition-delay: 3600s;
-}
 
 /* firefox apparently */
 input {
