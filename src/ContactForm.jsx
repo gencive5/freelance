@@ -341,7 +341,7 @@ const ContactForm = () => {
         
         <div className="footer-right">
           <a
-            href="https://sm00ch.xyz/"
+            href="https://sm00ch.site/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="visit sm00ch font"
