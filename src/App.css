@@ -338,17 +338,30 @@ html, body, #root {
 }
 
 
-/* ===== FIREFOX ANDROID FIX ===== */
-@supports (-moz-appearance: none) {
-  .container {
-    overflow-y: auto;
-    height: auto;
-    min-height: 100%;
-  }
-
-  .mobile-second-row {
-    height: auto;
-    min-height: 100vh;
-  }
+/* ===== FIREFOX ANDROID INPUT MODE ===== */
+.ff-input-focus .container,
+.ff-input-focus .mobile-first-row,
+.ff-input-focus .mobile-second-row,
+.ff-input-focus .desktop-first-row,
+.ff-input-focus .desktop-second-row,
+.ff-input-focus .content-wrapper,
+.ff-input-focus .flexcontainer,
+.ff-input-focus .text-column {
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
 }
-     
+
+.ff-input-focus html,
+.ff-input-focus body,
+.ff-input-focus #root {
+  height: auto !important;
+  min-height: auto !important;
+  overflow-y: auto !important;
+}
+
+.ff-input-focus .container {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}

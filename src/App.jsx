@@ -12,31 +12,51 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
 useEffect(() => {
-  let lastHeight = window.innerHeight;
+
 
   const setVh = () => {
-    const height = window.innerHeight;
 
-    // Ignore keyboard-driven micro-resizes (Firefox Android)
-    if (Math.abs(height - lastHeight) < 120) return;
 
-    lastHeight = height;
+
+
+
+
     document.documentElement.style.setProperty(
       '--vh',
-      `${height * 0.01}px`
+      `${window.innerHeight * 0.01}px`
     );
   };
 
-  // Initial set
-  document.documentElement.style.setProperty(
-    '--vh',
-    `${window.innerHeight * 0.01}px`
-  );
+  setVh(); // Set on load
+
+
+
+
 
   window.addEventListener('resize', setVh);
   return () => window.removeEventListener('resize', setVh);
 }, []);
 
+const isFirefoxAndroid = /Android.*Firefox/i.test(navigator.userAgent);
+useEffect(() => {
+  if (!/Android.*Firefox/i.test(navigator.userAgent)) return;
+
+  const onFocus = () => {
+    document.documentElement.classList.add('ff-input-focus');
+  };
+
+  const onBlur = () => {
+    document.documentElement.classList.remove('ff-input-focus');
+  };
+
+  document.addEventListener('focusin', onFocus);
+  document.addEventListener('focusout', onBlur);
+
+  return () => {
+    document.removeEventListener('focusin', onFocus);
+    document.removeEventListener('focusout', onBlur);
+  };
+}, []);
 
 
   useEffect(() => {
