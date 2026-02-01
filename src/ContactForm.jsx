@@ -19,6 +19,7 @@ const ContactForm = () => {
     user_email: 'neutral',
     user_message: 'neutral'
   });
+  const [isSuccess, setIsSuccess] = useState(false);
   
   const textareaRef = useRef(null);
   const nameInputRef = useRef(null);
@@ -88,7 +89,7 @@ const ContactForm = () => {
     if (!isFormValid()) {
       // Highlight invalid fields
       const newFieldStatus = {};
-      let hasErrors = false;
+      let hasErrors = true;
       
       if (formData.user_name.trim() === '') {
         newFieldStatus.user_name = 'error';
@@ -137,6 +138,7 @@ const ContactForm = () => {
             user_email: 'success',
             user_message: 'success'
           });
+          setIsSuccess(true);
           setIsSubmitting(false);
           
           // Reset form data
@@ -146,13 +148,14 @@ const ContactForm = () => {
             user_message: ''
           });
 
-          // Reset colors after 3 seconds
+          // Reset colors and success state after 3 seconds
           setTimeout(() => {
             setFieldStatus({
               user_name: 'neutral',
               user_email: 'neutral',
               user_message: 'neutral'
             });
+            setIsSuccess(false);
           }, 3000);
         },
         (error) => {
@@ -270,27 +273,37 @@ const ContactForm = () => {
 
      <div className="contact-form__submit">
   <button
-              type="submit"
-              disabled={isSubmitting}
-              style={{
-                width: '100%',
-                height: 'auto',
-                position: 'relative',
-                cursor: 'pointer',
-                color: 'inherit', 
-                backgroundColor: 'transparent',
-                border: 'none', 
-                padding: '0', 
-              }}
-              aria-label={isSubmitting ? "Envoi en cours" : "Envoyer le message"}
-            >
-          {  <span className={`text-fit submit-label ${isFormValid() ? 'submit-label--active' : ''}`}>
-            <span>
-              <span>envoyer</span>
-            </span>
-            <span aria-hidden="true">envoyer</span>
-          </span>   }
-    </button>
+    type="submit"
+    disabled={isSubmitting}
+    style={{
+      width: '100%',
+      height: 'auto',
+      position: 'relative',
+      cursor: 'pointer',
+      color: 'inherit', 
+      backgroundColor: 'transparent',
+      border: 'none', 
+      padding: '0', 
+    }}
+    aria-label={isSubmitting ? "Envoi en cours" : isSuccess ? "Message envoyé" : "Envoyer le message"}
+  >
+    {/* CORRECTED: Show "envoyé" with the "r" fully transparent */}
+    {isSuccess ? (
+      <span className={`text-fit submit-label submit-label--active`}>
+        <span>
+          <span>envoyé<span style={{ opacity: 0 }}>r</span></span>
+        </span>
+        <span aria-hidden="true">envoyé<span style={{ opacity: 0 }}>r</span></span>
+      </span>
+    ) : (
+      <span className={`text-fit submit-label ${isFormValid() ? 'submit-label--active' : ''}`}>
+        <span>
+          <span>envoyer</span>
+        </span>
+        <span aria-hidden="true">envoyer</span>
+      </span>
+    )}
+  </button>
 </div>
 
     </div>
@@ -338,8 +351,6 @@ const ContactForm = () => {
           </a>
         </div>
       </footer>
-      
-
     </form>
   );
 };
