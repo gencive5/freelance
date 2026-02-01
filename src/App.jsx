@@ -12,17 +12,31 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
 useEffect(() => {
+  let lastHeight = window.innerHeight;
+
   const setVh = () => {
+    const height = window.innerHeight;
+
+    // Ignore keyboard-driven micro-resizes (Firefox Android)
+    if (Math.abs(height - lastHeight) < 120) return;
+
+    lastHeight = height;
     document.documentElement.style.setProperty(
       '--vh',
-      `${window.innerHeight * 0.01}px`
+      `${height * 0.01}px`
     );
   };
 
-  setVh(); // Set on load
+  // Initial set
+  document.documentElement.style.setProperty(
+    '--vh',
+    `${window.innerHeight * 0.01}px`
+  );
+
   window.addEventListener('resize', setVh);
   return () => window.removeEventListener('resize', setVh);
 }, []);
+
 
 
   useEffect(() => {
