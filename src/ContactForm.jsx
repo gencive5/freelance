@@ -49,34 +49,52 @@ const ContactForm = () => {
       textareaRef.current.setAttribute('autocapitalize', 'off');
     }
 
-    // ===== CHROME AUTOFILL FIX =====
+    // ===== UPDATED CHROME AUTOFILL FIX =====
     const fixChromeAutofillStyles = () => {
-      const inputs = [nameInputRef.current, emailInputRef.current];
+      const inputs = [nameInputRef.current, emailInputRef.current, textareaRef.current];
+      const fieldNames = ['user_name', 'user_email', 'user_message'];
       
-      inputs.forEach(input => {
+      inputs.forEach((input, index) => {
         if (input) {
-          // Check if input is autofilled by Chrome
-          const isAutofilled = input.matches(':-webkit-autofill') || 
-                             input.matches(':autofill');
+          const status = fieldStatus[fieldNames[index]];
           
-          // Check if Chrome has changed the background color
-          const computedStyle = window.getComputedStyle(input);
-          const bgColor = computedStyle.backgroundColor;
-          
-          // If autofilled or if colors don't match our theme
-          if (isAutofilled || 
-              (bgColor !== 'rgba(2, 190, 190, 0.1)' && bgColor !== 'rgba(2, 190, 190, 0.0980392)')) {
+          if (status === 'success') {
+            // SUCCESS: Force green, overriding everything
+            input.style.setProperty('-webkit-text-fill-color', '#02bebe', 'important');
+            input.style.setProperty('color', '#02bebe', 'important');
+            input.style.setProperty('background-color', '#a6bf04', 'important');
+            input.style.setProperty('box-shadow', '0 0 0px 1000px #a6bf04 inset', 'important');
+            input.style.setProperty('-webkit-box-shadow', '0 0 0px 1000px #a6bf04 inset', 'important');
             
-            // Apply our styles directly via inline styles
-            input.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
-            input.style.setProperty('color', '#7964cf', 'important');
-            input.style.setProperty('background-color', 'rgba(2, 190, 190, 0.1)', 'important');
-            input.style.setProperty('background-image', 'none', 'important');
-            input.style.setProperty('box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
-            input.style.setProperty('-webkit-box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+          } else if (status === 'error') {
+            // ERROR: Force red, overriding everything
+            input.style.setProperty('-webkit-text-fill-color', '#f7f0f0ff', 'important');
+            input.style.setProperty('color', '#f7f0f0ff', 'important');
+            input.style.setProperty('background-color', '#ff6f61', 'important');
+            input.style.setProperty('box-shadow', '0 0 0px 1000px #ff6f61 inset', 'important');
+            input.style.setProperty('-webkit-box-shadow', '0 0 0px 1000px #ff6f61 inset', 'important');
             
-            // Add a custom attribute to track
-            input.setAttribute('data-autofilled', 'true');
+          } else {
+            // NEUTRAL: Fix Chrome autofill colors (only for name and email inputs)
+            if (index < 2) { // Only name and email inputs
+              const isAutofilled = input.matches(':-webkit-autofill') || 
+                                  input.matches(':autofill');
+              
+              const computedStyle = window.getComputedStyle(input);
+              const bgColor = computedStyle.backgroundColor;
+              
+              // If autofilled or if colors don't match our theme
+              if (isAutofilled || 
+                  (bgColor !== 'rgba(2, 190, 190, 0.1)' && bgColor !== 'rgba(2, 190, 190, 0.0980392)')) {
+                
+                // Apply our neutral styles
+                input.style.setProperty('-webkit-text-fill-color', '#7964cf', 'important');
+                input.style.setProperty('color', '#7964cf', 'important');
+                input.style.setProperty('background-color', 'rgba(2, 190, 190, 0.1)', 'important');
+                input.style.setProperty('box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+                input.style.setProperty('-webkit-box-shadow', '0 0 0px 1000px rgba(2, 190, 190, 0.1) inset', 'important');
+              }
+            }
           }
         }
       });
@@ -116,6 +134,12 @@ const ContactForm = () => {
         attributeFilter: ['style', 'class'] 
       });
     }
+    if (textareaRef.current) {
+      observer.observe(textareaRef.current, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      });
+    }
 
     // Cleanup
     return () => {
@@ -125,7 +149,7 @@ const ContactForm = () => {
       });
       observer.disconnect();
     };
-  }, []);
+  }, [fieldStatus]); // Added fieldStatus as dependency
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -139,8 +163,13 @@ const ContactForm = () => {
       [name]: value
     }));
     
-    // FIX FOR EMAIL FIELD AUTOFILL - SOLUTION 1
+    // FIX FOR EMAIL FIELD AUTOFILL
     if (name === 'user_email') {
+      // Don't fix if field is in success or error state
+      if (fieldStatus[name] === 'success' || fieldStatus[name] === 'error') {
+        return;
+      }
+      
       // Small delay to let Chrome apply its styles
       setTimeout(() => {
         const computedStyle = window.getComputedStyle(e.target);
@@ -210,7 +239,6 @@ const ContactForm = () => {
     }
     
     setIsSubmitting(true);
-
     
     emailjs.send(
       import.meta.env.VITE_SERVICE_ID,
@@ -223,7 +251,6 @@ const ContactForm = () => {
       },
       import.meta.env.VITE_PUBLIC_KEY
     )
-
       .then(
         (result) => {
           // SUCCESS: Turn all inputs bright green
