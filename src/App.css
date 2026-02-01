@@ -338,3 +338,17 @@ html, body, #root {
 }
 
 
+/* ===== FIREFOX ANDROID FIX ===== */
+@supports (-moz-appearance: none) {
+  .container {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100%;
+  }
+
+  .mobile-second-row {
+    height: auto;
+    min-height: 100vh;
+  }
+}
+     
