@@ -119,7 +119,7 @@
 
 .submit-label {
  color: rgba(2, 190, 190, 0.15);
- margin-top: 0 !important;
+ margin-top: 1rem !important;
 }
 
 .submit-label:hover {
@@ -265,7 +265,7 @@ input {
 }
 
 
-/* Add to ContactForm.css */
+
 
 /* Firefox Mobile Form Adjustments */
 .firefox-mobile .contact-form {
