@@ -11,7 +11,7 @@
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  font-family: 'adineue', sans-serif;
+  font-family: 'outfit', sans-serif;
   font-size: 1.2rem;
   color: #02bebe !important;
   display: flex;
@@ -161,7 +161,7 @@
   justify-content: space-between;
   align-items: flex-end;
   box-sizing: border-box;
-  font-family: 'adineue', sans-serif;
+  font-family: 'outfit', sans-serif;
 }
 
 .footer-left {

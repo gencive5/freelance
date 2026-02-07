@@ -1,5 +1,5 @@
 :root {
-  font-family: 'sm00ch', 'adineue', sans-serif;
+  font-family: 'sm00ch', 'outfit', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -27,9 +27,10 @@ body {
   font-display: block;
 }
 
+
 @font-face {
-  font-family: "adineue";
-  src: url("/fonts/adineue.woff2") format("woff2");
+  font-family: "outfit";
+  src: url("/fonts/outfit-bold.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -170,7 +171,7 @@ html, body, #root {
 }
 
 .text-fit {
-  font-family: 'adineue', sans-serif;
+  font-family: 'outfit', sans-serif;
   display: flex;
   container-type: inline-size;
   width: 100%; /* ← from second block */
