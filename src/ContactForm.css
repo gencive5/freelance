@@ -64,7 +64,7 @@
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
   .contact-form {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   
   .contact-form__group {
@@ -78,7 +78,7 @@
   
   .contact-form__input {
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     padding: 12px 15px;
     border-radius: 25px;
   }
