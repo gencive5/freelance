@@ -11,7 +11,7 @@
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  font-family: 'outfit', sans-serif;
+  font-family: 'tex', sans-serif;
   font-size: 1.2rem;
   color: #02bebe !important;
   display: flex;
@@ -121,7 +121,7 @@
   --min-font-size: 1.4rem; /* Adjust as needed */
   
   & > :not([aria-hidden]) > * {
-    line-height: 0.5;
+    line-height: 0.3;
     margin: 0;
     padding: 0;
   }
@@ -130,7 +130,7 @@
 
 .submit-label {
  color: rgba(2, 190, 190, 0.15);
- padding-top: 1rem !important;
+ padding-top: 0rem !important;
 }
 
 .submit-label:hover {
@@ -143,7 +143,7 @@
 
 @media (max-width: 768px) {
   .submit-label {
-   padding-top: 0.3rem;
+   padding-top: 0.4rem;
   } 
 }
 
@@ -161,7 +161,7 @@
   justify-content: space-between;
   align-items: flex-end;
   box-sizing: border-box;
-  font-family: 'outfit', sans-serif;
+  font-family: 'tex', sans-serif;
 }
 
 .footer-left {

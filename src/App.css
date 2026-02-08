@@ -1,5 +1,5 @@
 :root {
-  font-family: 'sm00ch', 'outfit', sans-serif;
+  font-family: 'sm00ch', 'tex', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -29,8 +29,8 @@ body {
 
 
 @font-face {
-  font-family: "outfit";
-  src: url("/fonts/outfit-bold.woff2") format("woff2");
+  font-family: "tex";
+  src: url("/fonts/tex.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -171,7 +171,7 @@ html, body, #root {
 }
 
 .text-fit {
-  font-family: 'outfit', sans-serif;
+  font-family: 'tex', sans-serif;
   display: flex;
   container-type: inline-size;
   width: 100%; /* ← from second block */
