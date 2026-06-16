@@ -117,13 +117,12 @@ const App = () => {
 
             <div className="content-wrapper">
               <Distortion
-  text="observation"
-  fontFamily="sm00ch"
-  fontSize={120}
-  speed={0.6}
-  volatility={0.25}
-/>
-
+                text="observation"
+                fontFamily="sm00ch"
+                fontSize={120}
+                speed={0.6}
+                volatility={0.25}
+              />
             </div>
           </div>
         )}
@@ -167,7 +166,6 @@ const App = () => {
             </div>
 
             <div className="mobile-second-row">
-
               <ContactForm />
             </div>
           </>
@@ -176,10 +174,7 @@ const App = () => {
         {/* Second Row - Only on Desktop */}
         {!isMobile && (
           <div className="desktop-second-row">
-                    
             <ContactForm />
-         
-            
           </div>
         )}
       </div>

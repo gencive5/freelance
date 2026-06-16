@@ -1,22 +1,23 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [react({
-    // Add these babel configs for better HMR
-    babel: {
-      plugins: [
-        ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
-      ],
+
+
+    build:
+    {
+        outDir: 'dist', // Output in the dist/ folder
+        emptyOutDir: true, // Empty the folder first
+        sourcemap: true // Add sourcemap
     },
-  })],
+
   server: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 3000,
     hmr: {
       overlay: true, // Shows error overlays
       protocol: 'ws', // WebSocket protocol
-      host: 'localhost',
+      host: '172.17.172.108',
       port: 3000,
     },
     watch: {
@@ -27,4 +28,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom'], // Ensure these are optimized
   },
+  plugins: [
+    react()
+  ]
 })
+
+

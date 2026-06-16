@@ -115,10 +115,12 @@
 }
 
 
-/* Create a modified version of text-fit for the submit button */
 .contact-form__submit .text-fit {
-  /* Keep all the original text-fit properties but adjust spacing */
-  --min-font-size: 1.4rem; /* Adjust as needed */
+  
+  z-index: 200;
+  position: relative;
+
+  --min-font-size: 1.4rem; 
   
   & > :not([aria-hidden]) > * {
     line-height: 0.3;
