@@ -95,7 +95,7 @@ const App = () => {
             <div className="overlay-text">
               <div className="flexcontainer">
                 <div className="text-column Figure-Demo">
-                  <div className="text-fit1"> 
+                  <div className="text-fit-name"> 
                     <span className="text-fit">
                       <span><span>gencives</span></span>
                       <span aria-hidden="true">gencives</span>
@@ -136,6 +136,7 @@ const App = () => {
                     <span><span>mr-rat</span></span>
                     <span aria-hidden="true">mr-rat</span>
                   </span>
+                
                
             </div>
             <div className="content-wrapper">

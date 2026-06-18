@@ -110,12 +110,6 @@ html, body, #root {
   padding: 1rem;
 }
 
-.textfit-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 60%;
-}
 
 
 @media (max-width: 768px) {
@@ -149,12 +143,6 @@ html, body, #root {
   .overlay-text .text-fit [aria-hidden] {
     opacity: 0; 
   }
-
-  .textfit-container {
-    align-items: center;
-    gap: 1rem; 
-  }
-
  
   .content-wrapper {
     height: calc(var(--vh, 1vh) * 100);
@@ -253,11 +241,11 @@ html, body, #root {
 }
 
 
-.text-fit1 {
+.text-fit-name {
   width: 30%;
 }
 
-
+/* Desktop First Row */
 .desktop-first-row .text-fit {
   margin-bottom: -0.1rem; 
   line-height: 1.1;
@@ -289,11 +277,13 @@ html, body, #root {
   align-self: flex-end;
 }
 
+/* Desktop deuxième row */
 .desktop-deuxieme-row{
   display: flex;
   flex-direction: column;
 }
 
+/* Desktop second row */
 .desktop-second-row {
   display: flex;
   flex-direction: column;
@@ -304,7 +294,7 @@ html, body, #root {
   height: calc(var(--vh, 1vh) * 100);
 }
 
-
+/* Mobile First Row */
 .mobile-first-row .flexcontainer {
   align-items: flex-end; 
   height: calc(var(--vh, 1vh) * 100);
@@ -339,6 +329,7 @@ html, body, #root {
   line-height: 1.3;
 }
 
+/* Mobile First Row */
 .mobile-second-row {
   display: flex;
   flex-direction: column;
@@ -356,36 +347,9 @@ html, body, #root {
 }
 
 
-/* ===== FIREFOX ANDROID INPUT MODE ===== */
-.ff-input-focus .container,
-.ff-input-focus .mobile-first-row,
-.ff-input-focus .mobile-second-row,
-.ff-input-focus .desktop-first-row,
-.ff-input-focus .desktop-second-row,
-.ff-input-focus .content-wrapper,
-.ff-input-focus .flexcontainer,
-.ff-input-focus .text-column {
-  height: auto !important;
-  min-height: auto !important;
-  overflow: visible !important;
-}
-
-.ff-input-focus html,
-.ff-input-focus body,
-.ff-input-focus #root {
-  height: auto !important;
-  min-height: auto !important;
-  overflow-y: auto !important;
-}
-
-.ff-input-focus .container {
-  height: auto !important;
-  min-height: 0 !important;
-  overflow: visible !important;
-}
 
 
-/* Add to your existing App.css */
+
 
 /* Firefox Mobile Base Styles */
 html.firefox-mobile,
@@ -476,6 +440,3 @@ body.firefox-mobile,
 .content-wrapper {
   height: calc(var(--vh, 1vh) * 100) !important;
 }
-
-/* Remove the old .ff-input-focus styles since we're replacing them */
-/* Delete or comment out the entire .ff-input-focus section in your existing CSS */
