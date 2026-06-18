@@ -63,7 +63,7 @@ html, body, #root {
 .overlay-text .text-fit > :not([aria-hidden]) > span {
   color: #f7f0f0ff !important;
   opacity: 1 !important;
-  pointer-events: auto;
+  pointer-events: none !important;
 }
 
 .overlay-text .text-fit [aria-hidden] {
@@ -102,7 +102,8 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: orangered;
+  color: #e980fc;
+  background-color: #02bebe;
 }
 
 

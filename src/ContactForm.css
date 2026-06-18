@@ -116,7 +116,7 @@
 
 
 .contact-form__submit .text-fit {
-  z-index: 200;
+  z-index: 0;
   position: relative;
   --min-font-size: 1.4rem; 
   

@@ -133,11 +133,11 @@ const App = () => {
                   <span className="text-fit">
                     <span><span>mr-rat</span></span>
                     <span aria-hidden="true">mr-rat</span>
-                  </span>
+                  </span>         
             </div>
 
             {/* third Row - Desktop */}
-            <div className="content-wrapper">
+            <div className="project-wrapper">
                   <span className="text-fit">
                     <span><span>Eviljis</span></span>
                     <span aria-hidden="true">Eviljis</span>
