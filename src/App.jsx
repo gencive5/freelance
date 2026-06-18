@@ -89,8 +89,10 @@ const App = () => {
        <main role="main">
 
       <div className="container">
-        {/* First Rows - Desktop */}
+        {/* Desktop */}
+        {/* First Row - Desktop */}
         {!isMobile && (
+          <div>
           <div className="desktop-first-row">
             <div className="overlay-text">
               <div className="flexcontainer">
@@ -124,8 +126,9 @@ const App = () => {
                 volatility={0.25}
               />
             </div>
-
-            
+            </div>
+          <div className="portfolio">
+            {/* second Row - Desktop */}
             <div className="project-wrapper">
                   <span className="text-fit">
                     <span><span>mr-rat</span></span>
@@ -147,7 +150,7 @@ const App = () => {
                     <span aria-hidden="true">Tender</span>
                   </span>
             </div>
-          
+          </div>
           </div>
         )}
       
@@ -198,7 +201,7 @@ const App = () => {
 
         {/* Fifth Row - Only on Desktop */}
         {!isMobile && (
-          <div className="desktop-second-row">
+          <div className="desktop-contact-row">
             <ContactForm />
           </div>
         )}

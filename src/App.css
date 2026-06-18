@@ -245,7 +245,7 @@ html, body, #root {
   width: 30%;
 }
 
-/* Desktop First Row */
+/* Desktop First Row, styles for 1st panel */
 .desktop-first-row .text-fit {
   margin-bottom: -0.1rem; 
   line-height: 1.1;
@@ -277,9 +277,24 @@ html, body, #root {
   align-self: flex-end;
 }
 
+/* Desktop  portfolio styles */
+.portfolio .text-fit {
+  margin-bottom: -0.1rem; 
+  line-height: 1.1;
+}
+
+.portfolio .text-column.Figure-Demo {
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--vh, 1vh) * 100);
+  justify-content: flex-end;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 
 /* Desktop second row */
-.desktop-second-row {
+.desktop-contact-row {
   display: flex;
   flex-direction: column;
   background-color: #f7f0f0ff;
@@ -361,7 +376,7 @@ body.firefox-mobile,
 .firefox-mobile .flexcontainer,
 .firefox-mobile .text-column,
 .firefox-mobile .content-wrapper,
-.firefox-mobile .desktop-second-row,
+.firefox-mobile .desktop-contact-row,
 .firefox-mobile .mobile-second-row {
   height: 100vh !important;
   min-height: 100vh !important;
@@ -372,7 +387,7 @@ body.firefox-mobile,
 .firefox-mobile-input-focus .mobile-first-row,
 .firefox-mobile-input-focus .mobile-second-row,
 .firefox-mobile-input-focus .desktop-first-row,
-.firefox-mobile-input-focus .desktop-second-row,
+.firefox-mobile-input-focus .desktop-contact-row,
 .firefox-mobile-input-focus .content-wrapper,
 .firefox-mobile-input-focus .flexcontainer,
 .firefox-mobile-input-focus .text-column {
