@@ -198,14 +198,14 @@ const ContactForm = () => {
             <span aria-hidden="true">Parlez moi de votre projet</span>
           </span>                     
         )}
-        {/* {!isMobile && (
+        {!isMobile && (
           <span className="text-fit marginb">
             <span>
-              <span>Pour me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
+              <span>Si vous souhaitez discuter de vos idées ou projets vous pouvez me contacter ci-dessous, je vous répondrai dans les plus brefs délais</span>
             </span>
-            <span aria-hidden="true">Pour me parler de vos idées et projets, vous pouvez remplir ce formulaire</span>
+            <span aria-hidden="true">Si vous souhaitez discuter de vos idées ou projets vous pouvez me contacter ci-dessous, je vous répondrai dans les plus brefs délais</span>
           </span>
-        )} */}
+        )}
 
         <label htmlFor="user_name" className="contact-form__label">
           Nom:

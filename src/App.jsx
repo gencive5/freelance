@@ -110,8 +110,8 @@ const App = () => {
                   </span>
                   
                   <span className="text-fit">
-                    <span><span>design - image de marque - développement - typographie</span></span>
-                    <span aria-hidden="true">design - image de marque - développement - typographie</span>
+                    <span><span>design • identité • développement front-end • typographie</span></span>
+                    <span aria-hidden="true">design • identité • développement front-end • typographie</span>
                   </span>
                 </div>
               </div>
