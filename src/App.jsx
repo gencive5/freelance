@@ -144,81 +144,75 @@ const App = () => {
         <span><span>https://tendrr.netlify.app/</span></span>
         <span aria-hidden="true">https://tendrr.netlify.app/</span>
       </span>   
-      {/* <span className="text-fit">
-        <span><span>mr-rat</span></span>
-        <span aria-hidden="true">mr-rat</span>
-      </span>          */}
     </div>
 
-    {/* Third Row - Desktop */}
-    {/* <div className="project-wrapper">
-      <span className="text-fit">
-        <span><span>Eviljis</span></span>
-        <span aria-hidden="true">Eviljis</span>
-      </span>
-    </div> */}
-    
-    {/* Fourth Row - Desktop */}
-    {/* <div className="project-wrapper">
-      <span className="text-fit">
-        <span><span>Tender</span></span>
-        <span aria-hidden="true">Tender</span>
-      </span>
-    </div> */}
   </div>
 )}
       
 
         {/* Mobile layout */}
         {isMobile && (
-          <>
-            <div className="mobile-first-row">
-              <div className="overlay-text">
-                <div className="flexcontainer">
-                  <div className="text-column Figure-Demo">
-                    <span className="text-fit">
-                      <span><span>gencives</span></span>
-                      <span aria-hidden="true">gencives</span>
-                    </span>
-                    <span className="text-fit">
-                      <span><span>développeur créatif</span></span>
-                      <span aria-hidden="true">développeur créatif</span>
-                    </span>
-                    <span className="text-fit">
-                      <span><span>design • développement web</span></span>
-                      <span aria-hidden="true">design • développement web</span>
-                    </span>
-                    <span className="text-fit">
-                      <span><span>identité visuelle • typographie</span></span>
-                      <span aria-hidden="true">identité visuelle • typographie</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="content-wrapper">
-                <Distortion
-  text="observation"
-  fontFamily="sm00ch"
-  fontSize={120}
-  speed={0.6}
-  volatility={0.25}
-/>
-
-              </div>
+  <>
+    <div className="mobile-content">
+      <div className="distort-wrapper">
+        <Distortion
+          text="welcome"
+          fontFamily="sm00ch"
+          fontSize={120}
+          speed={0.6}
+          volatility={0.25}
+        />
+      </div>
+      
+      {/* First Row - Mobile */}
+      <div className="mobile-first-row">
+        <div className="overlay-text">
+          <div className="flexcontainer">
+            <div className="text-column Figure-Demo">
+              <span className="text-fit">
+                <span><span>gencives</span></span>
+                <span aria-hidden="true">gencives</span>
+              </span>
+              <span className="text-fit">
+                <span><span>développeur créatif</span></span>
+                <span aria-hidden="true">développeur créatif</span>
+              </span>
+              <span className="text-fit">
+                <span><span>design • développement web</span></span>
+                <span aria-hidden="true">design • développement web</span>
+              </span>
+              <span className="text-fit">
+                <span><span>identité visuelle • typographie</span></span>
+                <span aria-hidden="true">identité visuelle • typographie</span>
+              </span>
             </div>
-
-            <div className="mobile-second-row">
-              <ContactForm />
-            </div>
-          </>
-        )}
-
-        {/* Fifth Row - Only on Desktop */}
-        {!isMobile && (
-          <div className="desktop-contact-row">
-            <ContactForm />
           </div>
-        )}
+        </div>
+      </div>
+      
+      {/* Second Row - Mobile Links */}
+      <div className="mobile-links-row">
+        <span className="text-fit">
+          <span><span>https://mr-rat.netlify.app/</span></span>
+          <span aria-hidden="true">https://mr-rat.netlify.app/</span>
+        </span>   
+        <span className="text-fit">
+          <span><span>https://eviljis.netlify.app/</span></span>
+          <span aria-hidden="true">https://eviljis.netlify.app/</span>
+        </span>   
+        <span className="text-fit">
+          <span><span>https://tendrr.netlify.app/</span></span>
+          <span aria-hidden="true">https://tendrr.netlify.app/</span>
+        </span>   
+      </div>
+    </div>
+
+    {/* Third Row - Contact Form */}
+    <div className="mobile-second-row">
+      <ContactForm />
+    </div>
+  </>
+)}
       </div>
    
       </main>
