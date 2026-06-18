@@ -95,16 +95,30 @@ html, body, #root {
   flex-direction: column;
 }
 
-.project-wrapper {
+.project-wrapper1 {
   position: relative;
   z-index: 1;
   height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #e980fc;
+  color: inherit;
   background-color: transparent;
 }
+
+.rat {
+  color: #574dec;
+}
+
+.eviljis {
+  color: #2dffb2;
+}
+
+.tender {
+  color: #ff66ff;
+}
+
+
 
 .desktop-content {
   position: relative;
@@ -394,7 +408,7 @@ html, body, #root {
   flex-direction: column;
   justify-content: center; /* Centers vertically */
   align-items: center;
-  color: #e980fc;
+  color: inherit;
   background-color: transparent;
   padding: 1rem;
   gap: 2rem;
@@ -434,7 +448,7 @@ html, body, #root {
 }
 
 .mobile-links-row .text-fit > :not([aria-hidden]) > span {
-  color: #e980fc;
+  color: inherit;
 }
 
 /* Mobile Second Row (Contact Form) */

@@ -132,15 +132,15 @@ const App = () => {
     
     {/* Second Row - Desktop */}
     <div className="project-wrapper">
-      <span className="text-fit">
+      <span className="text-fit rat">
         <span><span>https://mr-rat.netlify.app/</span></span>
         <span aria-hidden="true">https://mr-rat.netlify.app/</span>
       </span>   
-      <span className="text-fit">
+      <span className="text-fit eviljis">
         <span><span>https://eviljis.netlify.app/</span></span>
         <span aria-hidden="true">https://eviljis.netlify.app/</span>
       </span>   
-      <span className="text-fit">
+      <span className="text-fit tender">
         <span><span>https://tendrr.netlify.app/</span></span>
         <span aria-hidden="true">https://tendrr.netlify.app/</span>
       </span>   
@@ -199,15 +199,15 @@ const App = () => {
       
       {/* Second Row - Mobile Links */}
       <div className="mobile-links-row">
-        <span className="text-fit">
+        <span className="text-fit rat">
           <span><span>mr-rat</span></span>
           <span aria-hidden="true">mr-rat</span>
         </span>   
-        <span className="text-fit">
+        <span className="text-fit eviljis">
           <span><span>eviljis</span></span>
           <span aria-hidden="true">eviljis</span>
         </span>   
-        <span className="text-fit">
+        <span className="text-fit tender">
           <span><span>tender</span></span>
           <span aria-hidden="true">tender</span>
         </span>   
