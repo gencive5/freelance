@@ -1,5 +1,5 @@
 import './App.css';
-import './MetallicButton.css';
+import './MetallicCursor.css';
 import ContactForm from './ContactForm';
 import Distortion from './Distortion';
 import MetallicScrollbar from './MetallicScrollbar';
