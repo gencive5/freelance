@@ -136,11 +136,11 @@
 }
 
 .submit-label:hover {
-  color: #02bebe;
+  color: #a69cce;
 }
 
 .submit-label--active {
-  color: #02bebe !important;
+  color: #a69cce !important;
 }
 
 @media (max-width: 768px) {

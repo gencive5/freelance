@@ -89,7 +89,7 @@ const App = () => {
        <main role="main">
 
       <div className="container">
-        {/* First Row - Only on Desktop */}
+        {/* First Row - Desktop */}
         {!isMobile && (
           <div className="desktop-first-row">
             <div className="overlay-text">
@@ -123,6 +123,32 @@ const App = () => {
                 speed={0.6}
                 volatility={0.25}
               />
+            </div>
+          </div>
+        )}
+
+         {/* Second Row - Desktop */}
+        {!isMobile && (
+          <div className="desktop-deuxieme-row">
+ 
+            <div className="project-wrapper">
+                  <span className="text-fit">
+                    <span><span>mr-rat</span></span>
+                    <span aria-hidden="true">mr-rat</span>
+                  </span>
+               
+            </div>
+            <div className="content-wrapper">
+                  <span className="text-fit">
+                    <span><span>Eviljis</span></span>
+                    <span aria-hidden="true">Eviljis</span>
+                  </span>
+            </div>
+            <div className="project-wrapper">
+                    <span className="text-fit">
+                    <span><span>Tender</span></span>
+                    <span aria-hidden="true">Tender</span>
+                  </span>
             </div>
           </div>
         )}
@@ -171,14 +197,14 @@ const App = () => {
           </>
         )}
 
-        {/* Second Row - Only on Desktop */}
+        {/* Third Row - Only on Desktop */}
         {!isMobile && (
           <div className="desktop-second-row">
             <ContactForm />
           </div>
         )}
       </div>
-
+   
       </main>
       
     </MetallicScrollbar>
