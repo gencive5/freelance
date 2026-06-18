@@ -350,7 +350,6 @@ html, body, #root {
 
 
 
-
 /* Firefox Mobile Base Styles */
 html.firefox-mobile,
 body.firefox-mobile,
@@ -440,3 +439,4 @@ body.firefox-mobile,
 .content-wrapper {
   height: calc(var(--vh, 1vh) * 100) !important;
 }
+

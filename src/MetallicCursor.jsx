@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import 'metallicss';
 import './App.css';
 
 const SHAPES = {
   default: 'circle',
   text: 'text-shape',
-  pointer: 'pointer-oval' // New shape for clickable elements
+  pointer: 'pointer-oval'
 };
 
 const isTouchDevice = () => {
@@ -15,12 +15,16 @@ const isTouchDevice = () => {
 };
 
 const MetallicCursor = () => {
+  const cursorRef = useRef(null);
+
   useEffect(() => {
     // Skip entirely on touch devices
     if (isTouchDevice()) return;
 
+    // Create cursor element
     const cursor = document.createElement('div');
     cursor.className = 'metallicss metallic-cursor';
+    cursorRef.current = cursor;
     
     // Enhanced metallic properties
     cursor.style.setProperty('--convexity', '2');
@@ -44,7 +48,7 @@ const MetallicCursor = () => {
     const animate = () => {
       cursorX = lerp(cursorX, mouseX, 0.2);
       cursorY = lerp(cursorY, mouseY, 0.2);
-      cursor.style.transform = `translate(calc(${cursorX}px - 50%), calc(${cursorY}px - 50%)`;
+      cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
       requestId = requestAnimationFrame(animate);
     };
 
@@ -56,31 +60,43 @@ const MetallicCursor = () => {
       }
     };
 
-    // Shape detection with three states
-    const updateCursorShape = (e) => {
+    // Shape detection using event delegation (MORE RELIABLE)
+    const handleMouseOver = (e) => {
       const target = e.target;
+      
+      // Remove all shape classes
       cursor.classList.remove(...Object.values(SHAPES));
       
-      if (target.matches('input, textarea, [contenteditable]')) {
+      // IMPORTANT: Check for INPUTS FIRST (before clickable)
+      // This prevents inputs from being misidentified as clickable
+      const isInput = target.matches('input, textarea, [contenteditable="true"]') || 
+                     target.closest('input, textarea, [contenteditable="true"]');
+      
+      if (isInput) {
         cursor.classList.add(SHAPES.text);
+        return; // Exit early - don't check for clickable
       }
-      else if (target.matches('button, a, [role="button"], [onclick], .clickable, .metallic-button')) {
+      
+      // Check for clickable elements
+      const isClickable = target.matches('button, a, [role="button"], [onclick], .clickable, .metallic-button, .link') || 
+                         target.closest('button, a, [role="button"], [onclick], .clickable, .metallic-button, .link');
+      
+      if (isClickable) {
         cursor.classList.add(SHAPES.pointer);
-      }
-      else {
+      } else {
         cursor.classList.add(SHAPES.default);
       }
     };
 
-    // Event listeners
+    // Use event delegation on document with capture phase
+    document.addEventListener('mouseover', handleMouseOver, true);
     window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseover', updateCursorShape);
 
     // Cleanup
     return () => {
       cancelAnimationFrame(requestId);
+      document.removeEventListener('mouseover', handleMouseOver, true);
       window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseover', updateCursorShape);
       document.body.classList.remove('metallic-cursor-active');
       if (cursor.parentNode) {
         document.body.removeChild(cursor);

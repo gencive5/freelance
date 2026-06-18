@@ -96,8 +96,8 @@
 .contact-form__input--success:-webkit-autofill:focus,
 .contact-form__input--success:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important; /* Green background */
-    -webkit-text-fill-color: #02bebe !important; /* Teal text */
+    -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important; 
+    -webkit-text-fill-color: #02bebe !important; 
     background-clip: content-box !important;
 }
 
@@ -116,10 +116,8 @@
 
 
 .contact-form__submit .text-fit {
-  
   z-index: 200;
   position: relative;
-
   --min-font-size: 1.4rem; 
   
   & > :not([aria-hidden]) > * {
@@ -217,32 +215,32 @@
 /* txt input boxes*/
 .contact-form__group:has(textarea) {
   position: relative;
-  min-height: 120px; /* Adjust as needed */
+  min-height: 7rem; 
 }
 
 .contact-form__group textarea {
-  resize: none; /* Prevent manual resizing */
-  height: 6rem; /* Set fixed height */
+  resize: none; 
+  height: 6rem; 
   min-height: 6rem;
   max-height: 6rem;
-  line-height: 1.4; /* Match input line-height */
-  padding: 15px 20px; /* Match input padding exactly */
+  line-height: 1.4; 
+  padding: 15px 20px; 
 }
 
 
 @media (max-width: 768px) {
 .contact-form__group:has(textarea) {
   position: relative;
-  min-height: 200px; /* Adjust as needed */
+  min-height: 13rem; 
 }
 
 .contact-form__group textarea {
-  resize: none; /* Prevent manual resizing */
-  height: 12rem; /* Set fixed height */
+  resize: none; 
+  height: 12rem; 
   min-height: 12rem;
   max-height: 12rem;
-  line-height: 1.4; /* Match input line-height */
-  padding: 15px 20px; /* Match input padding exactly */
+  line-height: 1.4;
+  padding: 15px 20px; 
 }
 }
 
@@ -261,12 +259,10 @@ input:-webkit-autofill:active {
 
 
 
-/* firefox apparently */
+/* firefox */
 input {
   filter: none;
 }
-
-
 
 
 /* Firefox Mobile Form Adjustments */
