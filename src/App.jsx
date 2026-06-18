@@ -148,6 +148,13 @@ const App = () => {
 
   </div>
 )}
+
+{/* Third Row - Desktop Contact Form */}
+{!isMobile && (
+          <div className="desktop-contact-row">
+            <ContactForm />
+          </div>
+        )}
       
 
         {/* Mobile layout */}
@@ -193,26 +200,27 @@ const App = () => {
       {/* Second Row - Mobile Links */}
       <div className="mobile-links-row">
         <span className="text-fit">
-          <span><span>https://mr-rat.netlify.app/</span></span>
-          <span aria-hidden="true">https://mr-rat.netlify.app/</span>
+          <span><span>mr-rat</span></span>
+          <span aria-hidden="true">mr-rat</span>
         </span>   
         <span className="text-fit">
-          <span><span>https://eviljis.netlify.app/</span></span>
-          <span aria-hidden="true">https://eviljis.netlify.app/</span>
+          <span><span>eviljis</span></span>
+          <span aria-hidden="true">eviljis</span>
         </span>   
         <span className="text-fit">
-          <span><span>https://tendrr.netlify.app/</span></span>
-          <span aria-hidden="true">https://tendrr.netlify.app/</span>
+          <span><span>tender</span></span>
+          <span aria-hidden="true">tender</span>
         </span>   
       </div>
     </div>
 
-    {/* Third Row - Contact Form */}
+    {/* Third Row - MobileContact Form */}
     <div className="mobile-second-row">
       <ContactForm />
     </div>
   </>
 )}
+
       </div>
    
       </main>
