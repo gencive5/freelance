@@ -89,70 +89,84 @@ const App = () => {
        <main role="main">
 
       <div className="container">
+      
         {/* Desktop */}
         {/* First Row - Desktop */}
         {!isMobile && (
-          <div>
-          <div className="desktop-first-row">
-            <div className="overlay-text">
-              <div className="flexcontainer">
-                <div className="text-column Figure-Demo">
-                  <div className="text-fit-name"> 
-                    <span className="text-fit">
-                      <span><span>gencives</span></span>
-                      <span aria-hidden="true">gencives</span>
-                    </span>
-                  </div>
-                  
-                  <span className="text-fit">
-                    <span><span>développeur créatif</span></span>
-                    <span aria-hidden="true">développeur créatif</span>
-                  </span>
-                  
-                  <span className="text-fit">
-                    <span><span>design • identité • développement front-end • typographie</span></span>
-                    <span aria-hidden="true">design • identité • développement front-end • typographie</span>
-                  </span>
-                </div>
-              </div>
+  <div className="desktop-content">
+    <div className="distort-wrapper">
+      <Distortion
+        text="welcome"
+        fontFamily="sm00ch"
+        fontSize={120}
+        speed={0.6}
+        volatility={0.25}
+      />
+    </div>
+    
+    {/* First Row - Desktop */}
+    <div className="desktop-first-row">
+      <div className="overlay-text">
+        <div className="flexcontainer">
+          <div className="text-column Figure-Demo">
+            <div className="text-fit-name"> 
+              <span className="text-fit">
+                <span><span>gencives</span></span>
+                <span aria-hidden="true">gencives</span>
+              </span>
             </div>
-
-            <div className="content-wrapper">
-              <Distortion
-                text="observation"
-                fontFamily="sm00ch"
-                fontSize={120}
-                speed={0.6}
-                volatility={0.25}
-              />
-            </div>
-            </div>
-          <div className="portfolio">
-            {/* second Row - Desktop */}
-            <div className="project-wrapper">
-                  <span className="text-fit">
-                    <span><span>mr-rat</span></span>
-                    <span aria-hidden="true">mr-rat</span>
-                  </span>         
-            </div>
-
-            {/* third Row - Desktop */}
-            <div className="project-wrapper">
-                  <span className="text-fit">
-                    <span><span>Eviljis</span></span>
-                    <span aria-hidden="true">Eviljis</span>
-                  </span>
-            </div>
-            {/* fourth Row - Desktop */}
-            <div className="project-wrapper">
-                    <span className="text-fit">
-                    <span><span>Tender</span></span>
-                    <span aria-hidden="true">Tender</span>
-                  </span>
-            </div>
+            
+            <span className="text-fit">
+              <span><span>développeur créatif</span></span>
+              <span aria-hidden="true">développeur créatif</span>
+            </span>
+            
+            <span className="text-fit">
+              <span><span>design • identité • développement front-end • typographie</span></span>
+              <span aria-hidden="true">design • identité • développement front-end • typographie</span>
+            </span>
           </div>
-          </div>
-        )}
+        </div>
+      </div>
+    </div>
+    
+    {/* Second Row - Desktop */}
+    <div className="project-wrapper">
+      <span className="text-fit">
+        <span><span>https://mr-rat.netlify.app/</span></span>
+        <span aria-hidden="true">https://mr-rat.netlify.app/</span>
+      </span>   
+      <span className="text-fit">
+        <span><span>https://eviljis.netlify.app/</span></span>
+        <span aria-hidden="true">https://eviljis.netlify.app/</span>
+      </span>   
+      <span className="text-fit">
+        <span><span>https://tendrr.netlify.app/</span></span>
+        <span aria-hidden="true">https://tendrr.netlify.app/</span>
+      </span>   
+      {/* <span className="text-fit">
+        <span><span>mr-rat</span></span>
+        <span aria-hidden="true">mr-rat</span>
+      </span>          */}
+    </div>
+
+    {/* Third Row - Desktop */}
+    {/* <div className="project-wrapper">
+      <span className="text-fit">
+        <span><span>Eviljis</span></span>
+        <span aria-hidden="true">Eviljis</span>
+      </span>
+    </div> */}
+    
+    {/* Fourth Row - Desktop */}
+    {/* <div className="project-wrapper">
+      <span className="text-fit">
+        <span><span>Tender</span></span>
+        <span aria-hidden="true">Tender</span>
+      </span>
+    </div> */}
+  </div>
+)}
       
 
         {/* Mobile layout */}
@@ -171,12 +185,12 @@ const App = () => {
                       <span aria-hidden="true">développeur créatif</span>
                     </span>
                     <span className="text-fit">
-                      <span><span>design - développement web</span></span>
-                      <span aria-hidden="true">design - développement web</span>
+                      <span><span>design • développement web</span></span>
+                      <span aria-hidden="true">design • développement web</span>
                     </span>
                     <span className="text-fit">
-                      <span><span>identité visuelle - typographie</span></span>
-                      <span aria-hidden="true">identité visuelle - typographie</span>
+                      <span><span>identité visuelle • typographie</span></span>
+                      <span aria-hidden="true">identité visuelle • typographie</span>
                     </span>
                   </div>
                 </div>
