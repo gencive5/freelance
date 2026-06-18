@@ -277,11 +277,6 @@ html, body, #root {
   align-self: flex-end;
 }
 
-/* Desktop deuxième row */
-.desktop-deuxieme-row{
-  display: flex;
-  flex-direction: column;
-}
 
 /* Desktop second row */
 .desktop-second-row {
@@ -345,10 +340,6 @@ html, body, #root {
   position: relative;
   z-index: 3;
 }
-
-
-
-
 
 /* Firefox Mobile Base Styles */
 html.firefox-mobile,

@@ -89,7 +89,7 @@ const App = () => {
        <main role="main">
 
       <div className="container">
-        {/* First Row - Desktop */}
+        {/* First Rows - Desktop */}
         {!isMobile && (
           <div className="desktop-first-row">
             <div className="overlay-text">
@@ -124,35 +124,33 @@ const App = () => {
                 volatility={0.25}
               />
             </div>
-          </div>
-        )}
 
-         {/* Second Row - Desktop */}
-        {!isMobile && (
-          <div className="desktop-deuxieme-row">
- 
+            
             <div className="project-wrapper">
                   <span className="text-fit">
                     <span><span>mr-rat</span></span>
                     <span aria-hidden="true">mr-rat</span>
                   </span>
-                
-               
             </div>
+
+            {/* third Row - Desktop */}
             <div className="content-wrapper">
                   <span className="text-fit">
                     <span><span>Eviljis</span></span>
                     <span aria-hidden="true">Eviljis</span>
                   </span>
             </div>
+            {/* fourth Row - Desktop */}
             <div className="project-wrapper">
                     <span className="text-fit">
                     <span><span>Tender</span></span>
                     <span aria-hidden="true">Tender</span>
                   </span>
             </div>
+          
           </div>
         )}
+      
 
         {/* Mobile layout */}
         {isMobile && (
@@ -198,7 +196,7 @@ const App = () => {
           </>
         )}
 
-        {/* Third Row - Only on Desktop */}
+        {/* Fifth Row - Only on Desktop */}
         {!isMobile && (
           <div className="desktop-second-row">
             <ContactForm />
