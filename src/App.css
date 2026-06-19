@@ -235,6 +235,13 @@ body {
   height: 100%;
 }
 
+@media (max-width: 768px) {
+  .distort-wrapper {
+    height: 200%;
+ }
+  }
+
+
 /* Desktop First Row */
 .desktop-first-row {
   position: relative;

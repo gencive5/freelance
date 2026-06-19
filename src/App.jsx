@@ -211,7 +211,11 @@ const App = () => {
         {isMobile && (
   <>
   
-      <div className="distort-wrapper">
+      
+      
+      {/* First Row - Mobile */}
+      <div className="mobile-first-row">
+        <div className="distort-wrapper">
         <Distortion
           text="welcome"
           fontFamily="sm00ch"
@@ -220,9 +224,6 @@ const App = () => {
           volatility={0.25}
         />
       </div>
-      
-      {/* First Row - Mobile */}
-      <div className="mobile-first-row">
         <div className="overlay-text">
           <div className="flexcontainer">
             <div className="text-column Figure-Demo">
@@ -249,6 +250,7 @@ const App = () => {
       
       {/* Second Row - Mobile Links */}
       <div className="mobile-links-row">
+        
         <div className="overlay-text">
           <div className="flexcontainer">
             <div className="text-column Figure-Demo">
