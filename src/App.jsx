@@ -169,7 +169,7 @@ const App = () => {
           onTouchEnd={handleLinkLeave}
           style={{ pointerEvents: 'auto' }}
         >
-        <span><span>https://mr-rat.netlify.app/</span></span>
+        <a href="https://mr-rat.netlify.app/" target="_blank"><span><span>https://mr-rat.netlify.app/</span></span></a>
         <span aria-hidden="true">https://mr-rat.netlify.app/</span>
       </span>   
             <span 
@@ -180,7 +180,7 @@ const App = () => {
         onTouchEnd={handleLinkLeave}
         style={{ pointerEvents: 'auto' }}
       >
-        <span><span>https://eviljis.netlify.app/</span></span>
+        <a href="https://eviljis.netlify.app/" target="_blank"><span><span>https://eviljis.netlify.app/</span></span></a>
         <span aria-hidden="true">https://eviljis.netlify.app/</span>
       </span>   
             <span 
@@ -191,7 +191,7 @@ const App = () => {
         onTouchEnd={handleLinkLeave}
         style={{ pointerEvents: 'auto' }}
       >
-        <a><span><span>https://tendrr.netlify.app/</span></span></a>
+        <a href="https://tendrr.netlify.app/" target="_blank"><span><span>https://tendrr.netlify.app/</span></span></a>
         <span aria-hidden="true">https://tendrr.netlify.app/</span>
       </span>   
     </div>
@@ -262,7 +262,7 @@ const App = () => {
           onTouchEnd={handleLinkLeave}
           style={{ pointerEvents: 'auto' }}
         >
-          <span><span>mr-rat</span></span>
+          <a href="https://mr-rat.netlify.app/" target="_blank"><span><span>mr-rat</span></span></a>
           <span aria-hidden="true">mr-rat</span>
         </span>   
         <span 
@@ -273,7 +273,7 @@ const App = () => {
           onTouchEnd={handleLinkLeave}
           style={{ cursor: 'pointer', pointerEvents: 'auto' }}
         >
-          <span><span>eviljis</span></span>
+          <a href="https://eviljis.netlify.app/" target="_blank"><span><span>eviljis</span></span></a>
           <span aria-hidden="true">eviljis</span>
         </span>   
                 <span 
@@ -284,7 +284,7 @@ const App = () => {
           onTouchEnd={handleLinkLeave}
           style={{ cursor: 'pointer', pointerEvents: 'auto' }}
         >
-          <span><span>tender</span></span>
+          <a href="https://tendrr.netlify.app/" target="_blank"><span><span>tender</span></span></a>
           <span aria-hidden="true">tender</span>
         </span>   
       </div>
