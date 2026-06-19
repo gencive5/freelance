@@ -162,7 +162,7 @@ const App = () => {
     <div className="project-wrapper">
       <div className="overlay-text">
       <span 
-          className="text-fit rat"
+          className="text-fit-italic rat"
           onMouseEnter={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
           onMouseLeave={handleLinkLeave}
           onTouchStart={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
@@ -173,7 +173,7 @@ const App = () => {
         <span aria-hidden="true">https://mr-rat.netlify.app/</span>
       </span>   
             <span 
-        className="text-fit eviljis"
+        className="text-fit-italic eviljis"
         onMouseEnter={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
         onMouseLeave={handleLinkLeave}
         onTouchStart={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
@@ -184,14 +184,14 @@ const App = () => {
         <span aria-hidden="true">https://eviljis.netlify.app/</span>
       </span>   
             <span 
-        className="text-fit tender"
+        className="text-fit-italic tender"
         onMouseEnter={() => handleLinkHover('var(--color-tender)', 'tender')}
         onMouseLeave={handleLinkLeave}
         onTouchStart={() => handleLinkHover('var(--color-tender)', 'tender')}
         onTouchEnd={handleLinkLeave}
         style={{ pointerEvents: 'auto' }}
       >
-        <span><span>https://tendrr.netlify.app/</span></span>
+        <a><span><span>https://tendrr.netlify.app/</span></span></a>
         <span aria-hidden="true">https://tendrr.netlify.app/</span>
       </span>   
     </div>
@@ -255,7 +255,7 @@ const App = () => {
           <div className="flexcontainer">
             <div className="text-column Figure-Demo">
                 <span 
-          className="text-fit rat"
+          className="text-fit-italic rat"
           onMouseEnter={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
           onMouseLeave={handleLinkLeave}
           onTouchStart={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
@@ -266,7 +266,7 @@ const App = () => {
           <span aria-hidden="true">mr-rat</span>
         </span>   
         <span 
-          className="text-fit eviljis"
+          className="text-fit-italic eviljis"
           onMouseEnter={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
           onMouseLeave={handleLinkLeave}
           onTouchStart={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
@@ -277,7 +277,7 @@ const App = () => {
           <span aria-hidden="true">eviljis</span>
         </span>   
                 <span 
-          className="text-fit tender"
+          className="text-fit-italic tender"
           onMouseEnter={() => handleLinkHover('var(--color-tender)', 'tender')}
           onMouseLeave={handleLinkLeave}
           onTouchStart={() => handleLinkHover('var(--color-tender)', 'tender')}
