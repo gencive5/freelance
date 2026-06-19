@@ -132,6 +132,7 @@ const App = () => {
     
     {/* Second Row - Desktop */}
     <div className="project-wrapper">
+      <div className="overlay-text">
       <span className="text-fit rat">
         <span><span>https://mr-rat.netlify.app/</span></span>
         <span aria-hidden="true">https://mr-rat.netlify.app/</span>
@@ -145,7 +146,7 @@ const App = () => {
         <span aria-hidden="true">https://tendrr.netlify.app/</span>
       </span>   
     </div>
-
+    </div>
   </div>
 )}
 
