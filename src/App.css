@@ -209,6 +209,8 @@ body {
 .eviljis { color: var(--color-eviljis); }
 .tender { color: var(--color-tender); }
 
+
+
 /* ============================================
    DESKTOP LAYOUT
    ============================================ */
@@ -469,6 +471,7 @@ body {
     z-index: 1;
   }
 }
+
 
 /* ============================================
    FIREFOX MOBILE FIXES

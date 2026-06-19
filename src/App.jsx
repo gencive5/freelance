@@ -9,6 +9,33 @@ import MetallicCursor from './MetallicCursor';
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isFirefoxMobile, setIsFirefoxMobile] = useState(false);
+  
+    // State for background color
+  const [bgColor, setBgColor] = useState('var(--color-primary)');
+
+  // Apply background color to body when it changes
+  useEffect(() => {
+    console.log('Background color changing to:', bgColor);
+    document.body.style.backgroundColor = bgColor;
+    document.documentElement.style.backgroundColor = bgColor;
+    
+    // Also update any container elements
+    const container = document.querySelector('.container');
+    if (container) {
+      container.style.backgroundColor = bgColor;
+    }
+  }, [bgColor]);
+
+  // Handle link hover events
+  const handleLinkHover = (color, linkName) => {
+    console.log(`Hovering over: ${linkName}, setting color to: ${color}`);
+    setBgColor(color);
+  };
+
+  const handleLinkLeave = () => {
+    console.log('Leaving link, resetting to default color');
+    setBgColor('var(--color-primary)');
+  };
 
   // Detect if it's Firefox on mobile
   useEffect(() => {
@@ -77,6 +104,7 @@ const App = () => {
     };
   }, [isFirefoxMobile]);
 
+  
   return (
 
     <MetallicScrollbar style={{
@@ -133,15 +161,36 @@ const App = () => {
     {/* Second Row - Desktop */}
     <div className="project-wrapper">
       <div className="overlay-text">
-      <span className="text-fit rat">
+      <span 
+          className="text-fit rat"
+          onMouseEnter={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
+          onMouseLeave={handleLinkLeave}
+          onTouchStart={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
+          onTouchEnd={handleLinkLeave}
+          style={{ pointerEvents: 'auto' }}
+        >
         <span><span>https://mr-rat.netlify.app/</span></span>
         <span aria-hidden="true">https://mr-rat.netlify.app/</span>
       </span>   
-      <span className="text-fit eviljis">
+            <span 
+        className="text-fit eviljis"
+        onMouseEnter={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
+        onMouseLeave={handleLinkLeave}
+        onTouchStart={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
+        onTouchEnd={handleLinkLeave}
+        style={{ pointerEvents: 'auto' }}
+      >
         <span><span>https://eviljis.netlify.app/</span></span>
         <span aria-hidden="true">https://eviljis.netlify.app/</span>
       </span>   
-      <span className="text-fit tender">
+            <span 
+        className="text-fit tender"
+        onMouseEnter={() => handleLinkHover('var(--color-tender)', 'tender')}
+        onMouseLeave={handleLinkLeave}
+        onTouchStart={() => handleLinkHover('var(--color-tender)', 'tender')}
+        onTouchEnd={handleLinkLeave}
+        style={{ pointerEvents: 'auto' }}
+      >
         <span><span>https://tendrr.netlify.app/</span></span>
         <span aria-hidden="true">https://tendrr.netlify.app/</span>
       </span>   
@@ -203,15 +252,36 @@ const App = () => {
         <div className="overlay-text">
           <div className="flexcontainer">
             <div className="text-column Figure-Demo">
-        <span className="text-fit rat">
+                <span 
+          className="text-fit rat"
+          onMouseEnter={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
+          onMouseLeave={handleLinkLeave}
+          onTouchStart={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
+          onTouchEnd={handleLinkLeave}
+          style={{ pointerEvents: 'auto' }}
+        >
           <span><span>mr-rat</span></span>
           <span aria-hidden="true">mr-rat</span>
         </span>   
-        <span className="text-fit eviljis">
+        <span 
+          className="text-fit eviljis"
+          onMouseEnter={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
+          onMouseLeave={handleLinkLeave}
+          onTouchStart={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
+          onTouchEnd={handleLinkLeave}
+          style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+        >
           <span><span>eviljis</span></span>
           <span aria-hidden="true">eviljis</span>
         </span>   
-        <span className="text-fit tender">
+                <span 
+          className="text-fit tender"
+          onMouseEnter={() => handleLinkHover('var(--color-tender)', 'tender')}
+          onMouseLeave={handleLinkLeave}
+          onTouchStart={() => handleLinkHover('var(--color-tender)', 'tender')}
+          onTouchEnd={handleLinkLeave}
+          style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+        >
           <span><span>tender</span></span>
           <span aria-hidden="true">tender</span>
         </span>   
