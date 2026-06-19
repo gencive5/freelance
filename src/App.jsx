@@ -160,7 +160,7 @@ const App = () => {
         {/* Mobile layout */}
         {isMobile && (
   <>
-    <div className="mobile-content">
+  
       <div className="distort-wrapper">
         <Distortion
           text="welcome"
@@ -199,6 +199,8 @@ const App = () => {
       
       {/* Second Row - Mobile Links */}
       <div className="mobile-links-row">
+        <div className="overlay-text2">
+          <div className="flexcontainer">
         <span className="text-fit rat">
           <span><span>mr-rat</span></span>
           <span aria-hidden="true">mr-rat</span>
@@ -212,7 +214,9 @@ const App = () => {
           <span aria-hidden="true">tender</span>
         </span>   
       </div>
-    </div>
+      </div>
+      </div>
+  
 
     {/* Third Row - MobileContact Form */}
     <div className="mobile-second-row">

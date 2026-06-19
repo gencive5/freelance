@@ -221,6 +221,16 @@ html, body, #root {
 
 }
 
+.overlay-text2 {
+  position: absolute;
+  top: auto;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  z-index: 10;
+  pointer-events: none;
+}
+
+
 .text-fit {
   font-family: 'tex', sans-serif;
   display: flex;

@@ -12,7 +12,7 @@
   padding: 1rem;
   box-sizing: border-box;
   font-family: 'tex', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #02bebe !important;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
   border: 0px solid #02bebe;
   background: rgba(2, 190, 190, 0.1)!important;
   font-family: inherit;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   outline: none;
   border-radius: 50px;
   transition: all 0.3s ease;
@@ -64,7 +64,7 @@
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
   .contact-form {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   
   .contact-form__group {
@@ -78,7 +78,7 @@
   
   .contact-form__input {
     width: 100%;
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 12px 15px;
     border-radius: 25px;
   }
@@ -215,14 +215,14 @@
 /* txt input boxes*/
 .contact-form__group:has(textarea) {
   position: relative;
-  min-height: 7rem; 
+  min-height: 5rem; 
 }
 
 .contact-form__group textarea {
   resize: none; 
-  height: 6rem; 
-  min-height: 6rem;
-  max-height: 6rem;
+  height: 5rem; 
+  min-height: 5rem;
+  max-height: 8rem;
   line-height: 1.4; 
   padding: 15px 20px; 
 }
@@ -231,14 +231,13 @@
 @media (max-width: 768px) {
 .contact-form__group:has(textarea) {
   position: relative;
-  min-height: 13rem; 
+  min-height: 11rem; 
 }
 
 .contact-form__group textarea {
-  resize: none; 
-  height: 12rem; 
-  min-height: 12rem;
-  max-height: 12rem;
+  resize: vertical; 
+  min-height: 11rem;
+  max-height: 15rem;
   line-height: 1.4;
   padding: 15px 20px; 
 }
@@ -255,8 +254,6 @@ input:-webkit-autofill:active {
     -webkit-text-fill-color: #02bebe !important;
     background-clip: content-box !important;
 }
-
-
 
 
 /* firefox */

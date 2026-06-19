@@ -193,9 +193,9 @@ const ContactForm = () => {
         {isMobile && (
           <span className="text-fit marginb">
             <span>
-              <span>Contactez moi</span>
+              <span>parlez moi de vos idées</span>
             </span>
-            <span aria-hidden="true">Contactez moi</span>
+            <span aria-hidden="true">parlez moi de vos idées</span>
           </span>                     
         )}
         {!isMobile && (
