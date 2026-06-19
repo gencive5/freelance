@@ -199,8 +199,9 @@ const App = () => {
       
       {/* Second Row - Mobile Links */}
       <div className="mobile-links-row">
-        <div className="overlay-text2">
+        <div className="overlay-text">
           <div className="flexcontainer">
+            <div className="text-column Figure-Demo">
         <span className="text-fit rat">
           <span><span>mr-rat</span></span>
           <span aria-hidden="true">mr-rat</span>
@@ -216,6 +217,8 @@ const App = () => {
       </div>
       </div>
       </div>
+      </div>
+      
   
 
     {/* Third Row - MobileContact Form */}
