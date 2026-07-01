@@ -1,3 +1,4 @@
+
 .contact-form-container {
   position: relative;
   display: flex;
@@ -12,7 +13,7 @@
   padding: 1rem;
   box-sizing: border-box;
   font-family: 'tex', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #02bebe !important;
   display: flex;
   flex-direction: column;
@@ -50,7 +51,7 @@
   border: 0px solid #02bebe;
   background: rgba(2, 190, 190, 0.1)!important;
   font-family: inherit;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   outline: none;
   border-radius: 50px;
   transition: all 0.3s ease;
@@ -64,7 +65,7 @@
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
   .contact-form {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   
   .contact-form__group {
@@ -78,7 +79,7 @@
   
   .contact-form__input {
     width: 100%;
-    font-size: 1rem;
+    font-size: 1.1rem;
     padding: 12px 15px;
     border-radius: 25px;
   }
@@ -96,8 +97,8 @@
 .contact-form__input--success:-webkit-autofill:focus,
 .contact-form__input--success:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important; 
-    -webkit-text-fill-color: #02bebe !important; 
+    -webkit-box-shadow: 0 0 0px 1000px #a6bf04 inset !important; /* Green background */
+    -webkit-text-fill-color: #02bebe !important; /* Teal text */
     background-clip: content-box !important;
 }
 
@@ -115,10 +116,10 @@
 }
 
 
+/* Create a modified version of text-fit for the submit button */
 .contact-form__submit .text-fit {
-  z-index: 0;
-  position: relative;
-  --min-font-size: 1.4rem; 
+  /* Keep all the original text-fit properties but adjust spacing */
+  --min-font-size: 1.4rem; /* Adjust as needed */
   
   & > :not([aria-hidden]) > * {
     line-height: 0.3;
@@ -134,11 +135,11 @@
 }
 
 .submit-label:hover {
-  color: #a69cce;
+  color: #02bebe;
 }
 
 .submit-label--active {
-  color: #a69cce !important;
+  color: #02bebe !important;
 }
 
 @media (max-width: 768px) {
@@ -215,31 +216,33 @@
 /* txt input boxes*/
 .contact-form__group:has(textarea) {
   position: relative;
-  min-height: 5rem; 
+  min-height: 120px; /* Adjust as needed */
 }
 
 .contact-form__group textarea {
-  resize: none; 
-  height: 5rem; 
-  min-height: 5rem;
-  max-height: 8rem;
-  line-height: 1.4; 
-  padding: 15px 20px; 
+  resize: none; /* Prevent manual resizing */
+  height: 6rem; /* Set fixed height */
+  min-height: 6rem;
+  max-height: 6rem;
+  line-height: 1.4; /* Match input line-height */
+  padding: 15px 20px; /* Match input padding exactly */
 }
 
 
 @media (max-width: 768px) {
 .contact-form__group:has(textarea) {
   position: relative;
-  min-height: 11rem; 
+  min-height: 200px; /* Adjust as needed */
 }
 
 .contact-form__group textarea {
-  resize: vertical; 
-  min-height: 11rem;
-  max-height: 15rem;
-  line-height: 1.4;
-  padding: 15px 20px; 
+  resize: none; /* Prevent manual resizing */
+  height: 12rem; /* Set fixed height */
+  min-height: 12rem;
+  max-height: 12rem;
+
+  line-height: 1.4; /* Match input line-height */
+  padding: 15px 20px; /* Match input padding exactly */
 }
 }
 
@@ -256,10 +259,14 @@ input:-webkit-autofill:active {
 }
 
 
-/* firefox */
+
+
+/* firefox apparently */
 input {
   filter: none;
 }
+
+
 
 
 /* Firefox Mobile Form Adjustments */

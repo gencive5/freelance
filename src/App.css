@@ -1,59 +1,33 @@
-/* ============================================
-   ROOT & BASE STYLES
-   ============================================ */
+
 :root {
-  /* Colors */
-  --color-primary: #02bebe;
-  --color-text: #f7f0f0ff;
-  --color-rat: #574dec;
-  --color-eviljis: #2dffb2;
-  --color-tender: #ff66ff;
-  
-  /* Typography */
   font-family: 'sm00ch', 'tex', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  
-  /* Theme */
+
   color-scheme: light dark;
-  color: var(--color-text);
-  background-color: var(--color-primary);
-  
+  color: #f7f0f0ff;
+  background-color: #02bebe;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ============================================
-   RESET
-   ============================================ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body, #root {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
 
 body {
+  margin: 0;
   min-width: 320px;
   min-height: 100%;
 }
 
-/* ============================================
-   FONTS
-   ============================================ */
+
 @font-face {
   font-family: "sm00ch";
   src: url("/fonts/sm00ch.woff2") format("woff2");
   font-display: block;
 }
+
 
 @font-face {
   font-family: "tex";
@@ -61,15 +35,202 @@ body {
   font-display: swap;
 }
 
-@font-face {
-  font-family: "tex-italic";
-  src: url("/fonts/tex-italic.woff2") format("woff2");
-  font-display: swap;
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* ============================================
-   CUSTOM PROPERTIES (for dynamic heights)
-   ============================================ */
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100) !important;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.overlay-text .text-fit > :not([aria-hidden]) > span {
+  color: #f7f0f0ff !important;
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
+.overlay-text .text-fit [aria-hidden] {
+  opacity: 0; 
+}
+
+.text-column {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-right: 14px;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  align-items: end;
+  margin-bottom: -2rem;
+}
+
+.flexcontainer {
+  display: flex;
+  align-items: flex-end;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  flex-direction: column;
+}
+
+
+.Figure-Demo {
+  padding: 1rem;
+}
+
+.textfit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 60%;
+}
+
+
+@media (max-width: 768px) {
+  .overlay-text {
+    position: absolute;
+    top: auto;
+    width: 100%;
+    height: calc(var(--vh, 1vh) * 100);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .flexcontainer {
+    display: flex;
+    align-items: flex-end;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+
+  .text-column {
+    width: 100%;
+    margin-bottom: 0rem;
+  }
+
+  .Figure-Demo .text-fit > :not([aria-hidden]) > span,
+  .overlay-text .text-fit > :not([aria-hidden]) > span {
+    color: #f7f0f0ff !important;
+    opacity: 1 !important;
+  }
+
+  .Figure-Demo .text-fit [aria-hidden],
+  .overlay-text .text-fit [aria-hidden] {
+    opacity: 0; 
+  }
+
+  .textfit-container {
+    align-items: center;
+    gap: 1rem; 
+  }
+
+ 
+  .content-wrapper {
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+
+  .overlay-text,
+  .overlay-text *,
+  .text-column,
+  .text-column *,
+  .text-fit,
+  .text-fit * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+}
+
+.text-fit {
+  font-family: 'tex', sans-serif;
+  display: flex;
+  container-type: inline-size;
+  width: 100%; /* ← from second block */
+  
+  --captured-length: initial;
+  --support-sentinel: var(--captured-length, 9999px);
+
+  & > [aria-hidden] {
+    visibility: hidden;
+  }
+
+  & > :not([aria-hidden]) {
+    flex-grow: 1;
+    container-type: inline-size;
+
+    --captured-length: 100cqi;
+    --available-space: var(--captured-length);
+
+    & > * {
+      --support-sentinel: inherit;
+      --captured-length: 100cqi;
+      --ratio: tan(atan2(
+        var(--available-space),
+        var(--available-space) - var(--captured-length)
+      ));
+      --font-size: clamp(
+        1em,
+        1em * var(--ratio),
+        var(--max-font-size, infinity * 1px) - var(--support-sentinel) /* ← fixed from second block */
+      );
+      inline-size: var(--available-space);
+      display: block; /* ← from second block */
+      font-size: var(--font-size);
+      white-space: nowrap; /* ← from second block */
+
+      @container (inline-size > 0) {
+        white-space: nowrap; 
+      }
+
+      &:not(.text-fit) {
+        display: block;
+        font-size: var(--font-size);
+
+        @container (inline-size > 0) {
+          white-space: nowrap;
+        }
+      }
+
+      &.text-fit {
+        --captured-length2: var(--font-size);
+        font-variation-settings:
+          'opsz'
+          tan(atan2(var(--captured-length2), 1px));
+      }
+    }
+  }
+}
+
 @property --captured-length {
   syntax: "<length>";
   initial-value: 0px;
@@ -82,255 +243,20 @@ body {
   inherits: true;
 }
 
-/* ============================================
-   LAYOUT HELPERS
-   ============================================ */
-.container {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
 
-/* Dynamic height utility */
-.full-height {
-  height: calc(var(--vh, 1vh) * 100) !important;
-}
-
-/* ============================================
-   OVERLAY TEXT SYSTEM
-   ============================================ */
-.overlay-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(var(--vh, 1vh) * 100) !important;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.overlay-text .text-fit > :not([aria-hidden]) > span {
-  color: var(--color-text) !important;
-  opacity: 1 !important;
-  pointer-events: none !important;
-}
-
-.overlay-text .text-fit-italic > :not([aria-hidden]) > span {
-  color: var(--color-text) !important;
-  opacity: 1 !important;
-  pointer-events: none !important;
-}
-
-.overlay-text .text-fit [aria-hidden] {
-  opacity: 0;
-}
-
-/* ============================================
-   FLEX CONTAINERS
-   ============================================ */
-.flexcontainer {
-  display: flex;
-  align-items: flex-end;
-  height: calc(var(--vh, 1vh) * 100);
-}
-
-.text-column {
-  display: flex;
-  flex-direction: column;
-  padding-left: 1rem;
-  padding-right: 14px;
-  width: 100%;
-  height: calc(var(--vh, 1vh) * 100);
-  align-items: flex-end;
-  margin-bottom: -2rem;
-}
-
-.Figure-Demo {
-  padding: 1rem;
-}
-
-/* ============================================
-   TEXT-FIT COMPONENT
-   ============================================ */
-.text-fit {
-  font-family: 'tex', sans-serif;
-  display: flex;
-  container-type: inline-size;
-  width: 100%;
-  
-  --captured-length: initial;
-  --support-sentinel: var(--captured-length, 9999px);
-
-  & > [aria-hidden] {
-    visibility: hidden;
-  }
-
-  & > :not([aria-hidden]) {
-    flex-grow: 1;
-    container-type: inline-size;
-    --captured-length: 100cqi;
-    --available-space: var(--captured-length);
-
-    & > * {
-      --support-sentinel: inherit;
-      --captured-length: 100cqi;
-      --ratio: tan(atan2(
-        var(--available-space),
-        var(--available-space) - var(--captured-length)
-      ));
-      --font-size: clamp(
-        1em,
-        1em * var(--ratio),
-        var(--max-font-size, infinity * 1px) - var(--support-sentinel)
-      );
-      inline-size: var(--available-space);
-      display: block;
-      font-size: var(--font-size);
-      white-space: nowrap;
-
-      @container (inline-size > 0) {
-        white-space: nowrap;
-      }
-
-      &:not(.text-fit) {
-        display: block;
-        font-size: var(--font-size);
-
-        @container (inline-size > 0) {
-          white-space: nowrap;
-        }
-      }
-
-      &.text-fit {
-        --captured-length2: var(--font-size);
-        font-variation-settings: 'opsz' tan(atan2(var(--captured-length2), 1px));
-      }
-    }
-  }
-}
-
-.text-fit-italic {
-  font-family: 'tex-italic', sans-serif;
-  display: flex;
-  container-type: inline-size;
-  width: 100%;
-  
-  --captured-length: initial;
-  --support-sentinel: var(--captured-length, 9999px);
-
-  & > [aria-hidden] {
-    visibility: hidden;
-  }
-
-  & > :not([aria-hidden]) {
-    flex-grow: 1;
-    container-type: inline-size;
-    --captured-length: 100cqi;
-    --available-space: var(--captured-length);
-
-    & > * {
-      --support-sentinel: inherit;
-      --captured-length: 100cqi;
-      --ratio: tan(atan2(
-        var(--available-space),
-        var(--available-space) - var(--captured-length)
-      ));
-      --font-size: clamp(
-        1em,
-        1em * var(--ratio),
-        var(--max-font-size, infinity * 1px) - var(--support-sentinel)
-      );
-      inline-size: var(--available-space);
-      display: block;
-      font-size: var(--font-size);
-      white-space: nowrap;
-
-      @container (inline-size > 0) {
-        white-space: nowrap;
-      }
-
-      &:not(.text-fit) {
-        display: block;
-        font-size: var(--font-size);
-
-        @container (inline-size > 0) {
-          white-space: nowrap;
-        }
-      }
-
-      &.text-fit {
-        --captured-length2: var(--font-size);
-        font-variation-settings: 'opsz' tan(atan2(var(--captured-length2), 1px));
-      }
-    }
-  }
-}
-
-.text-fit-name {
+.text-fit1 {
   width: 30%;
 }
 
-/* ============================================
-   LINK COLORS
-   ============================================ */
-.rat { color: var(--color-rat); }
-.eviljis { color: var(--color-eviljis); }
-.tender { color: var(--color-tender); }
 
-
-
-/* ============================================
-   DESKTOP LAYOUT
-   ============================================ */
-.desktop-content {
-  position: relative;
-  height: calc(var(--vh, 1vh) * 200);
+.desktop-first-row .text-fit {
+  margin-bottom: -0.1rem; 
+  line-height: 1.1;
 }
 
-/* Distortion Layer */
-.distort-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: auto;
-}
-
-.distort-wrapper > * {
-  width: 100%;
-  height: 100%;
-}
-
-@media (max-width: 768px) {
-  .distort-wrapper {
-    height: 200%;
- }
-  }
-
-
-/* Desktop First Row */
-.desktop-first-row {
-  position: relative;
-  z-index: 2;
-  height: calc(var(--vh, 1vh) * 100);
-  padding: 1rem;
-}
-
-.desktop-first-row .overlay-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  pointer-events: none;
-}
 
 .desktop-first-row .flexcontainer {
-  align-items: flex-end;
+  align-items: flex-end; 
   height: auto;
   min-height: calc(var(--vh, 1vh) * 100);
 }
@@ -354,205 +280,72 @@ body {
   align-self: flex-end;
 }
 
-.desktop-first-row .text-fit {
-  margin-bottom: -0.1rem;
-  line-height: 1.1;
-}
-
-/* Desktop Project Row */
-.project-wrapper {
-  position: relative;
-  z-index: 2;
-  height: calc(var(--vh, 1vh) * 100);
-  padding: 1rem;
-
-  display: flex; /* Add flex */
-  flex-direction: column; /* Stack items vertically */
-  justify-content: flex-end; /* Push content to bottom */
-  align-items: center
-}
-
-.project-wrapper .overlay-text {
-  position: relative;
-  top: 3rem;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  pointer-events: none;
-}
-
-/* Desktop Contact Row */
-.desktop-contact-row {
+.desktop-second-row {
   display: flex;
   flex-direction: column;
-  background-color: var(--color-text);
-  color: var(--color-primary);
+  background-color: #f7f0f0ff;
+  color: #02bebe ;
   position: relative;
   z-index: 1;
   height: calc(var(--vh, 1vh) * 100);
 }
 
-/* ============================================
-   MOBILE LAYOUT
-   ============================================ */
-@media (max-width: 768px) {
-  /* Override overlay-text for mobile */
-  .overlay-text {
-    position: absolute;
-    top: auto;
-    width: 100%;
-    height: calc(var(--vh, 1vh) * 100);
-    z-index: 10;
-    pointer-events: none;
-  }
 
-  .flexcontainer {
-    align-items: flex-end;
-    height: calc(var(--vh, 1vh) * 100);
-  }
+.mobile-first-row .flexcontainer {
+  align-items: flex-end; 
+  height: calc(var(--vh, 1vh) * 100);
+  bottom: 0;
+}
 
-  .text-column {
-    width: 100%;
-    margin-bottom: 0;
-  }
+.mobile-first-row .text-column.Figure-Demo {
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--vh, 1vh) * 100);
 
-  /* Prevent selection on mobile */
-  .overlay-text,
-  .overlay-text *,
-  .text-column,
-  .text-column *,
-  .text-fit,
-  .text-fit * {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-  }
+  justify-content: flex-end;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
 
-  .Figure-Demo .text-fit > :not([aria-hidden]) > span,
-  .overlay-text .text-fit > :not([aria-hidden]) > span {
-    color: var(--color-text) !important;
-    opacity: 1 !important;
-  }
+.mobile-first-row .text-column.Figure-Demo > :first-child {
+  margin-top: 0;
+  align-self: flex-start;
+}
 
-  .Figure-Demo .text-fit [aria-hidden],
-  .overlay-text .text-fit [aria-hidden] {
-    opacity: 0;
-  }
-
-  /* Mobile First Row */
-  .mobile-first-row {
-    position: relative;
-    z-index: 2;
-    height: calc(var(--vh, 1vh) * 100);
-  }
-
-  .mobile-first-row .flexcontainer {
-    align-items: flex-end;
-    height: calc(var(--vh, 1vh) * 100);
-    bottom: 0;
-  }
-
-  .mobile-first-row .text-column.Figure-Demo {
-    display: flex;
-    flex-direction: column;
-    height: calc(var(--vh, 1vh) * 100);
-    justify-content: flex-end;
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-  }
-
-  .mobile-first-row .text-column.Figure-Demo > :first-child {
-    margin-top: 0;
-    align-self: flex-start;
-  }
-
-  .mobile-first-row .text-column.Figure-Demo > :nth-child(2),
-  .mobile-first-row .text-column.Figure-Demo > :nth-child(3),
-  .mobile-first-row .text-column.Figure-Demo > :nth-child(4) {
-    margin-bottom: 0;
-    align-self: flex-end;
-  }
-
-  .mobile-first-row .text-fit {
-    bottom: 0;
-    line-height: 1.3;
-  }
-
-  /* Mobile Links Row */
-  .mobile-links-row {
-    position: relative;
-    z-index: 2;
-    height: calc(var(--vh, 1vh) * 100);
-    min-height: calc(var(--vh, 1vh) * 100);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    gap: 2rem;
-    overflow: hidden;
-  }
-
-  .mobile-links-row .flexcontainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .mobile-links-row .text-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    gap: 1rem;
-    padding: 0;
-  }
-
-  .mobile-links-row .text-fit {
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-    width: 100%;
-    text-align: center;
-  }
-
-  /* Make links clickable on mobile */
-  .mobile-links-row .text-fit > :not([aria-hidden]) {
-    pointer-events: auto;
-    cursor: pointer;
-  }
-
-  .mobile-links-row .text-fit > :not([aria-hidden]) > span {
-    color: inherit;
-  }
-
-  /* Mobile Second Row (Contact Form) */
-  .mobile-second-row {
-    display: flex;
-    flex-direction: column;
-    height: calc(var(--vh, 1vh) * 100);
-    background-color: var(--color-text);
-    color: var(--color-primary);
-    position: relative;
-    z-index: 1;
-  }
+.mobile-first-row .text-column.Figure-Demo > :nth-child(2),
+.mobile-first-row .text-column.Figure-Demo > :nth-child(3),
+.mobile-first-row .text-column.Figure-Demo > :nth-child(4) {
+  margin-bottom: 0;
+  align-self: flex-end;
 }
 
 
-/* ============================================
-   FIREFOX MOBILE FIXES
-   ============================================ */
-/* Base Firefox Mobile */
+.mobile-first-row .text-fit {
+  bottom: 0;
+  line-height: 1.3;
+}
+
+.mobile-second-row {
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: #f7f0f0ff;
+  color: #02bebe ;
+  position: relative;
+  z-index: 1;
+}
+
+
+.metallic-button {
+  position: relative;
+  z-index: 3;
+}
+
+
+
+/* Add to your existing App.css */
+
+/* Firefox Mobile Base Styles */
 html.firefox-mobile,
 body.firefox-mobile,
 #root.firefox-mobile {
@@ -567,23 +360,23 @@ body.firefox-mobile,
   overflow: visible !important;
 }
 
-/* Use 100vh instead of --vh */
+/* Firefox Mobile - Use 100vh instead of --vh */
 .firefox-mobile .overlay-text,
 .firefox-mobile .flexcontainer,
 .firefox-mobile .text-column,
 .firefox-mobile .content-wrapper,
-.firefox-mobile .desktop-contact-row,
+.firefox-mobile .desktop-second-row,
 .firefox-mobile .mobile-second-row {
   height: 100vh !important;
   min-height: 100vh !important;
 }
 
-/* Input Focus Mode - Allow scrolling */
+/* Firefox Mobile Input Focus Mode - Allow scrolling */
 .firefox-mobile-input-focus .container,
 .firefox-mobile-input-focus .mobile-first-row,
 .firefox-mobile-input-focus .mobile-second-row,
 .firefox-mobile-input-focus .desktop-first-row,
-.firefox-mobile-input-focus .desktop-contact-row,
+.firefox-mobile-input-focus .desktop-second-row,
 .firefox-mobile-input-focus .content-wrapper,
 .firefox-mobile-input-focus .flexcontainer,
 .firefox-mobile-input-focus .text-column {
@@ -602,12 +395,21 @@ body.firefox-mobile,
   z-index: 1000;
 }
 
+/* Ensure form elements are accessible when keyboard is open */
 .firefox-mobile-input-focus .contact-form {
   position: relative;
   z-index: 1001;
 }
 
-/* Firefox Mobile Responsive */
+/* Add smooth transitions */
+.overlay-text,
+.flexcontainer,
+.text-column,
+.content-wrapper {
+  transition: height 0.2s ease-out;
+}
+
+/* Responsive adjustments for Firefox Mobile */
 @media (max-width: 768px) {
   .firefox-mobile .mobile-first-row {
     height: 100vh !important;
@@ -619,33 +421,19 @@ body.firefox-mobile,
     position: relative;
   }
   
+  /* When input is focused on mobile, make more space */
   .firefox-mobile-input-focus .mobile-second-row {
-    padding-bottom: 50vh;
+    padding-bottom: 50vh; /* Give enough space for keyboard */
   }
 }
 
-/* ============================================
-   TRANSITIONS
-   ============================================ */
+/* Keep existing --vh styles for non-Firefox browsers */
 .overlay-text,
 .flexcontainer,
 .text-column,
 .content-wrapper {
-  transition: height 0.2s ease-out;
+  height: calc(var(--vh, 1vh) * 100) !important;
 }
 
-/* ============================================
-   MISCELLANEOUS
-   ============================================ */
-.metallic-button {
-  position: relative;
-  z-index: 3;
-}
-
-.content-wrapper {
-  position: relative;
-  z-index: 1;
-  height: calc(var(--vh, 1vh) * 100);
-  display: flex;
-  flex-direction: column;
-}
+/* Remove the old .ff-input-focus styles since we're replacing them */
+/* Delete or comment out the entire .ff-input-focus section in your existing CSS */

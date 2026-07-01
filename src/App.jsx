@@ -9,33 +9,6 @@ import MetallicCursor from './MetallicCursor';
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isFirefoxMobile, setIsFirefoxMobile] = useState(false);
-  
-    // State for background color
-  const [bgColor, setBgColor] = useState('var(--color-primary)');
-
-  // Apply background color to body when it changes
-  useEffect(() => {
-    console.log('Background color changing to:', bgColor);
-    document.body.style.backgroundColor = bgColor;
-    document.documentElement.style.backgroundColor = bgColor;
-    
-    // Also update any container elements
-    const container = document.querySelector('.container');
-    if (container) {
-      container.style.backgroundColor = bgColor;
-    }
-  }, [bgColor]);
-
-  // Handle link hover events
-  const handleLinkHover = (color, linkName) => {
-    console.log(`Hovering over: ${linkName}, setting color to: ${color}`);
-    setBgColor(color);
-  };
-
-  const handleLinkLeave = () => {
-    console.log('Leaving link, resetting to default color');
-    setBgColor('var(--color-primary)');
-  };
 
   // Detect if it's Firefox on mobile
   useEffect(() => {
@@ -104,7 +77,6 @@ const App = () => {
     };
   }, [isFirefoxMobile]);
 
-  
   return (
 
     <MetallicScrollbar style={{
@@ -117,192 +89,101 @@ const App = () => {
        <main role="main">
 
       <div className="container">
-      
-        {/* Desktop */}
-        {/* First Row - Desktop */}
+        {/* First Row - Only on Desktop */}
         {!isMobile && (
-  <div className="desktop-content">
-    <div className="distort-wrapper">
-      <Distortion
-        text="welcome"
-        fontFamily="sm00ch"
-        fontSize={120}
-        speed={0.6}
-        volatility={0.25}
-      />
-    </div>
-    
-    {/* First Row - Desktop */}
-    <div className="desktop-first-row">
-      <div className="overlay-text">
-        <div className="flexcontainer">
-          <div className="text-column Figure-Demo">
-            <div className="text-fit-name"> 
-              <span className="text-fit">
-                <span><span>gencives</span></span>
-                <span aria-hidden="true">gencives</span>
-              </span>
+          <div className="desktop-first-row">
+            <div className="overlay-text">
+              <div className="flexcontainer">
+                <div className="text-column Figure-Demo">
+                  <div className="text-fit1"> 
+                    <span className="text-fit">
+                      <span><span>gencives</span></span>
+                      <span aria-hidden="true">gencives</span>
+                    </span>
+                  </div>
+                  
+                  <span className="text-fit">
+                    <span><span>développeur créatif</span></span>
+                    <span aria-hidden="true">développeur créatif</span>
+                  </span>
+                  
+                  <span className="text-fit">
+                    <span><span>design - image de marque - développement - typographie</span></span>
+                    <span aria-hidden="true">design - image de marque - développement - typographie</span>
+                  </span>
+                </div>
+              </div>
             </div>
-            
-            <span className="text-fit">
-              <span><span>développeur créatif</span></span>
-              <span aria-hidden="true">développeur créatif</span>
-            </span>
-            
-            <span className="text-fit">
-              <span><span>design • identité • développement front-end • typographie</span></span>
-              <span aria-hidden="true">design • identité • développement front-end • typographie</span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    {/* Second Row - Desktop */}
-    <div className="project-wrapper">
-      <div className="overlay-text">
-      <span 
-          className="text-fit-italic rat"
-          onMouseEnter={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
-          onMouseLeave={handleLinkLeave}
-          onTouchStart={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
-          onTouchEnd={handleLinkLeave}
-          style={{ pointerEvents: 'auto' }}
-        >
-        <a href="https://mr-rat.netlify.app/" target="_blank"><span><span>https://mr-rat.netlify.app/</span></span></a>
-        <span aria-hidden="true">https://mr-rat.netlify.app/</span>
-      </span>   
-            <span 
-        className="text-fit-italic eviljis"
-        onMouseEnter={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
-        onMouseLeave={handleLinkLeave}
-        onTouchStart={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
-        onTouchEnd={handleLinkLeave}
-        style={{ pointerEvents: 'auto' }}
-      >
-        <a href="https://eviljis.netlify.app/" target="_blank"><span><span>https://eviljis.netlify.app/</span></span></a>
-        <span aria-hidden="true">https://eviljis.netlify.app/</span>
-      </span>   
-            <span 
-        className="text-fit-italic tender"
-        onMouseEnter={() => handleLinkHover('var(--color-tender)', 'tender')}
-        onMouseLeave={handleLinkLeave}
-        onTouchStart={() => handleLinkHover('var(--color-tender)', 'tender')}
-        onTouchEnd={handleLinkLeave}
-        style={{ pointerEvents: 'auto' }}
-      >
-        <a href="https://tendrr.netlify.app/" target="_blank"><span><span>https://tendrr.netlify.app/</span></span></a>
-        <span aria-hidden="true">https://tendrr.netlify.app/</span>
-      </span>   
-    </div>
-    </div>
-  </div>
-)}
 
-{/* Third Row - Desktop Contact Form */}
-{!isMobile && (
-          <div className="desktop-contact-row">
-            <ContactForm />
+            <div className="content-wrapper">
+              <Distortion
+  text="observation"
+  fontFamily="sm00ch"
+  fontSize={120}
+  speed={0.6}
+  volatility={0.25}
+/>
+
+            </div>
           </div>
         )}
-      
 
         {/* Mobile layout */}
         {isMobile && (
-  <>
-  
-      
-      
-      {/* First Row - Mobile */}
-      <div className="mobile-first-row">
-        <div className="distort-wrapper">
-        <Distortion
-          text="welcome"
-          fontFamily="sm00ch"
-          fontSize={120}
-          speed={0.6}
-          volatility={0.25}
-        />
-      </div>
-        <div className="overlay-text">
-          <div className="flexcontainer">
-            <div className="text-column Figure-Demo">
-              <span className="text-fit">
-                <span><span>gencives</span></span>
-                <span aria-hidden="true">gencives</span>
-              </span>
-              <span className="text-fit">
-                <span><span>développeur créatif</span></span>
-                <span aria-hidden="true">développeur créatif</span>
-              </span>
-              <span className="text-fit">
-                <span><span>design • développement web</span></span>
-                <span aria-hidden="true">design • développement web</span>
-              </span>
-              <span className="text-fit">
-                <span><span>identité visuelle • typographie</span></span>
-                <span aria-hidden="true">identité visuelle • typographie</span>
-              </span>
+          <>
+            <div className="mobile-first-row">
+              <div className="overlay-text">
+                <div className="flexcontainer">
+                  <div className="text-column Figure-Demo">
+                    <span className="text-fit">
+                      <span><span>gencives</span></span>
+                      <span aria-hidden="true">gencives</span>
+                    </span>
+                    <span className="text-fit">
+                      <span><span>développeur créatif</span></span>
+                      <span aria-hidden="true">développeur créatif</span>
+                    </span>
+                    <span className="text-fit">
+                      <span><span>design - développement web</span></span>
+                      <span aria-hidden="true">design - développement web</span>
+                    </span>
+                    <span className="text-fit">
+                      <span><span>identité visuelle - typographie</span></span>
+                      <span aria-hidden="true">identité visuelle - typographie</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="content-wrapper">
+                <Distortion
+  text="observation"
+  fontFamily="sm00ch"
+  fontSize={120}
+  speed={0.6}
+  volatility={0.25}
+/>
+
+              </div>
             </div>
+
+            <div className="mobile-second-row">
+
+              <ContactForm />
+            </div>
+          </>
+        )}
+
+        {/* Second Row - Only on Desktop */}
+        {!isMobile && (
+          <div className="desktop-second-row">
+                    
+            <ContactForm />
+         
+            
           </div>
-        </div>
+        )}
       </div>
-      
-      {/* Second Row - Mobile Links */}
-      <div className="mobile-links-row">
-        
-        <div className="overlay-text">
-          <div className="flexcontainer">
-            <div className="text-column Figure-Demo">
-                <span 
-          className="text-fit-italic rat"
-          onMouseEnter={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
-          onMouseLeave={handleLinkLeave}
-          onTouchStart={() => handleLinkHover('var(--color-rat)', 'mr-rat')}
-          onTouchEnd={handleLinkLeave}
-          style={{ pointerEvents: 'auto' }}
-        >
-          <a href="https://mr-rat.netlify.app/" target="_blank"><span><span>mr-rat</span></span></a>
-          <span aria-hidden="true">mr-rat</span>
-        </span>   
-        <span 
-          className="text-fit-italic eviljis"
-          onMouseEnter={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
-          onMouseLeave={handleLinkLeave}
-          onTouchStart={() => handleLinkHover('var(--color-eviljis)', 'eviljis')}
-          onTouchEnd={handleLinkLeave}
-          style={{ cursor: 'pointer', pointerEvents: 'auto' }}
-        >
-          <a href="https://eviljis.netlify.app/" target="_blank"><span><span>eviljis</span></span></a>
-          <span aria-hidden="true">eviljis</span>
-        </span>   
-                <span 
-          className="text-fit-italic tender"
-          onMouseEnter={() => handleLinkHover('var(--color-tender)', 'tender')}
-          onMouseLeave={handleLinkLeave}
-          onTouchStart={() => handleLinkHover('var(--color-tender)', 'tender')}
-          onTouchEnd={handleLinkLeave}
-          style={{ cursor: 'pointer', pointerEvents: 'auto' }}
-        >
-          <a href="https://tendrr.netlify.app/" target="_blank"><span><span>tender</span></span></a>
-          <span aria-hidden="true">tender</span>
-        </span>   
-      </div>
-      </div>
-      </div>
-      </div>
-      
-  
 
-    {/* Third Row - MobileContact Form */}
-    <div className="mobile-second-row">
-      <ContactForm />
-    </div>
-  </>
-)}
-
-      </div>
-   
       </main>
       
     </MetallicScrollbar>
