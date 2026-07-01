@@ -126,11 +126,6 @@ body {
   opacity: 0;
 }
 
-.overlay-text a {
-  text-decoration-color: var(--color-text);
-  text-underline-offset: 0.2em;
-}
-
 /* ============================================
    FLEX CONTAINERS
    ============================================ */
